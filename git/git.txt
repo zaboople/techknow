@@ -1,5 +1,28 @@
 # Checkout a repo:
+#Be careful, your umask should at least allow u+rwx, esp. x
 git clone git@github.com:civitaslearning/dataplatform.git
+
+# Get up to date with master branch:
+git pull origin master
+
+# Create local repo and put it on github
+# Initialize:
+git init
+# Push over ssh:
+git remote add origin git@github.com:username/Hello-World.git
+# Push over http:
+git remote add origin https://github.com/username/Hello-World.git
+
+
+# Add changes
+git add .
+git add --all
+#The latter version seems to pick up deletes better.
+
+
+# Commit
+git commit -m 'first commit'
+
 
 # WHAT branch am I on?
 git branch
@@ -16,9 +39,18 @@ git checkout branchname
 # COMPARE/DIFF branches:
 git diff branch1 branch2
 # Also use "w" to page up because page up doesn't work because git sucks
+# Diff after you do git add:
+git diff HEAD
+# Diff against remote (you NEED the slash here)
+git diff origin/master
+
 
 # PUSH a branch
 git push --set-upstream origin branchname
+# Well once it knows that, push to master:
+git push origin master
+
+
 
 # MERGE
 # To merge a ***remote*** branch into yours do this. Note how we use
@@ -63,3 +95,15 @@ git reset --hard HEAD
   added = yellow
   changed = green
   untracked = cyan
+
+
+#SSH
+#  Get off of https!
+    get remote -v
+#  Generate your public/private key
+#  Upload your public key to github.com, all of it
+#  Don't worry about starting ssh-agent. stupid.
+#  Verify with
+ssh -T git@github.com
+ git remote set-url origin git@github.com:zaboople/klonk.git
+
