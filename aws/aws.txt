@@ -1,0 +1,21 @@
+# Install AWS cli mac osx:
+sudo pip install awscli --ignore-installed six
+
+aws ec2 describe-instances
+aws redshift describe-clusters
+aws s3 ls
+
+To run queries against your json etc:
+  aws blah blah --query
+  aws redshift describe-cluster-snapshots --query "Snapshots[*].{Owner:OwnerAccount,Snapshot:SnapshotIdentifier}" > $TEMP/SnapShotsToRevoke.txt
+
+Get your user id when you only have your keys:
+  aws iam get-user
+
+Make a bucket with mb:
+  aws s3 mb s3://troymotte
+List a bucket
+  aws s3 ls s3://troymotte
+NOTE: You only make a top level bucket. Otherwise, "directories" are really just names. If they don't exist, they get created when you add files to them.
+
+

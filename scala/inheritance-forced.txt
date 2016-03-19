@@ -1,0 +1,37 @@
+trait AllAbstract {
+  def filledin():Unit
+}
+
+trait Awkward {
+  buzzard: AllAbstract=> //WTF
+  
+  def awk() {
+    println("Awkward calling AllAbstract")
+    buzzard.filledin
+  }
+}
+
+class Main extends Awkward with AllAbstract{
+  def filledin() {
+    println("Main version of filledin")
+  }
+}
+
+
+
+trait Clean extends AllAbstract{
+  def sensible(){
+    println("Clean.sensible calling filledin")
+    filledin()
+  }
+}
+class Main2 extends Clean {
+  def filledin() {
+    println("Main2 version of filledin")
+  }
+}
+
+
+
+new Main().awk()
+new Main2().sensible()

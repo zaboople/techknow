@@ -1,0 +1,65 @@
+# Checkout a repo:
+git clone git@github.com:civitaslearning/dataplatform.git
+
+# WHAT branch am I on?
+git branch
+
+# WHAT other branches are there remotely?
+git branch -r
+
+# MAKE a branch and switch to it
+git checkout -b branchname
+
+# SWITCH to a branch:
+git checkout branchname
+
+# COMPARE/DIFF branches:
+git diff branch1 branch2
+# Also use "w" to page up because page up doesn't work because git sucks
+
+# PUSH a branch
+git push --set-upstream origin branchname
+
+# MERGE
+# To merge a ***remote*** branch into yours do this. Note how we use
+# "origin/" to specify the remote branch:
+git merge origin/<branchname>
+# Other ways:
+git checkout targetbranch
+git pull
+git merge -m 'Merged sourcebranch into targetbranch' sourcebranch
+#... deal with conflicts, which will be individual commits. git add will automatically conclude you've resolved conflict
+git push --set-upstream origin targetbranch
+
+# !! DELETE a branch:
+git branch -d branchname
+# !! DELETE a branch remotely:
+git push origin --delete <branch>
+
+# Clean up local copies of branches doesn't work
+git remote prune origin
+# That doesn't work, maybe try this doesn't work
+git fetch --prune
+# When that doesn't work (this probably won't work either):
+git branch --merged master | grep -v 'master$' | xargs git branch -d
+
+# !! UNDO whatever uncommitted crap I left around
+git reset --hard HEAD
+
+
+# COLORS edit your ~/.gitconfig
+[color]
+  ui = auto
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan

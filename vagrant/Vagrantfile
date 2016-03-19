@@ -1,0 +1,24 @@
+# Make sure your AWS creds are in the environment before provisioning
+$provision_script = <<SCRIPT
+echo "Creating ~/.bash_profile"
+cat <<BASH_PROFILE > /home/vagrant/.bash_profile
+# File created automatically on `date`
+. ~/.bashrc
+BASH_PROFILE
+
+SCRIPT
+
+VAGRANTFILE_API_VERSION = "2"
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "ubuntu/precise64"
+  config.vm.synced_folder ".", "/srv/splorgh/"
+  config.vm.network "private_network", ip: "172.22.22.22"
+
+  config.vm.provider :virtualbox do |vb|
+    vb.name="NGinx Gateway Testing 2"
+    vb.memory = 512
+    vb.customize [ "guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 59000 ]
+  end
+
+  config.vm.provision "shell", inline: $provision_script
+end

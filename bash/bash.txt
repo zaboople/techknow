@@ -1,0 +1,12 @@
+Read without echo
+  read -s
+
+Send stdin & stdout to the same file
+  command &> file
+
+Export a variable name with a default
+  #If you run this over & over, you get
+  #the same value repeatedly, because it
+  #starts by agreeing to accept the existing value.
+  #Then it takes your value otherwise.
+  export MINE=${MINE:-something}

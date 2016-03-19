@@ -1,0 +1,4 @@
+List all projects in build:
+  projects
+Switch project
+  project projectname  

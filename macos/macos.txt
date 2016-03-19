@@ -1,0 +1,17 @@
+-Hide all the other windows:
+  command-option-h
+-Page up/down:
+  fn up arrow down arrow
+-Screenshot:
+  command-shift-4 and move the crosshairs around
+-Spotlight search:
+  command-spacebar
+-Terminal
+  -Copy to clipboard in terminal:
+    pbcopy
+  -Browse to directory in finder from terminal:
+    open <path>
+-Chrome address bar:
+  command-L
+-Resize fonts:
+  command +- big/small

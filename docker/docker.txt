@@ -1,0 +1,78 @@
+# Tricks:
+# Run an interactive terminal? Yeah
+docker run -it ubuntu:12.04 /bin/bash
+# Shell into your docker
+docker exec -it ${container_id} /bin/bash
+
+
+# DOCKER-MACHINE
+# Create a docker virtual machine. "hubba" here is the name
+docker-machine create --driver virtualbox hubba
+# So this is how we make it where we can talk insecurely
+docker-machine create --driver virtualbox \
+  --engine-insecure-registry docker-registry.civitas.internal:5000 dev
+# List the virtual machines
+docker-machine ls
+# Get what you need to send docker commands to your VM
+docker-machine env hubba
+# If you didn't notice what that told you, it said to just run this
+# to get all the environment variables from above:
+eval "$(docker-machine env dev)"
+# Vagrant-like things:
+docker-machine stop hubba
+docker-machine start hubba
+# SSH into it???? Sure
+docker-machine ssh
+# WARNING removes the VM:
+docker-machine rm hubba
+
+# MAKING IMAGES
+# docker build makes images.
+#   usually you want to give it a name with -t
+#   and a dir as the alst param
+docker build -t myslate .
+# To clean up old crap images, do this.
+# Note that rmi removes *images*; use rm to remove *containers*
+docker rmi $(docker images -f "dangling=true" -q)
+
+# LIST IMAGES
+docker images
+
+# START THINGS UP:
+# This runs a thing in your docker. The hello-world image is built in:
+docker run hello-world
+# But that's not good enough usually. Use
+#    -d to keep it running
+#    -p to expose ports to your own host so you can interact with it. The internal port goes on the
+#       right, external on the left
+#    --name so you have a name to further control it with it with:
+#    -v for volume, to mount my $TEMP as nginx's html dir
+# (we are using an nginx image here)
+docker run -d -p 8080:7999 --name myweb -v $TEMP:/usr/share/nginx/html nginx
+
+# CHECK ON THEM:
+# So what's running then?
+docker ps
+# This will give you info about ports, but it's confusing, so, the left side of the arrow has
+# The right port numbers to talk to, but the wrong IP. You can find out the correct IP
+# from the docker-machine command. I guess if you were ON that VM, these would actually work.
+PORTS
+0.0.0.0:32769->80/tcp, 0.0.0.0:32768->443/tcp
+# Or use this docker shortcut, which isn't any more helpful but hey:
+# (web is the name we're using)
+docker port myweb
+# Find out the IP for your docker-machine so you can talk to it:
+docker ip hubba
+
+# Can I get stdout from a running image? YES just get the id from docker ps
+docker logs awfoijawefoijwefoi
+
+# STOP THEM AND KILL THEM:
+# Stop the darn thing. Using "web" because that's the --name we started with:
+docker stop myweb
+# And forever:
+docker rm myweb
+
+# WHAT ABOUT THINGS I STOPPED AND DIDN'T DELETE
+docker ps -a
+

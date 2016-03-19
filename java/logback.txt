@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- I just saved this for if I want to turn file logging on-->
+<configuration>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.out</target>
+        <encoder>
+            <pattern>%X{akkaTimestamp} %-5level[%thread] %logger{0} - %msg%n</pattern>
+        </encoder>
+        <!--filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter-->
+    </appender>
+
+    <!--appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>log/akka.log</file>
+        <append>false</append>
+        <encoder>
+            <pattern>%d %-5level[%thread] %logger{1} - %msg%n</pattern>
+        </encoder>
+    </appender-->
+
+    <logger name="akka" level="INFO" />
+    <logger name="slick" level="INFO" />
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <!--appender-ref ref="FILE"/-->
+    </root>
+
+</configuration>

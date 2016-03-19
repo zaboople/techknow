@@ -1,0 +1,12 @@
+# Get everything named bar under things named .foo
+jq '.foo.bar'
+
+# This will get the entire array named Clusters - all elements in the array
+jq '.Clusters[]'
+
+# This will get both attributes in the array of stuff under Clusters, but instead
+# of pairing them up, it will split them out:
+jq '.Clusters[]["MasterUsername","Tags"]'
+
+# OK f that. Amazon makes it easy:
+aws redshift describe-clusters --query 'Clusters[*].{user:MasterUsername,tags:Tags}' | less

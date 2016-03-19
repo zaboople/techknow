@@ -1,0 +1,32 @@
+*********************
+-- Multipart forms
+  - boundary: This is how you define separation of parts, but it's weird. If your boundary is "zzzzz", then
+    - Used in between, you always add -- to the front, i.e. "--zzzzz"
+    - Used at the end, you add -- to the front AND back, i.e. "--zzzzz--"
+  - Content-Disposition: Note how we specify parameter names in the "name" field. Apparently you could also use "Form-Name: <name>" on its own line, but that never worked for me.
+
+curl -v -X POST http://localhost:5000/import/v1/tables \
+  -H 'Content-Type: multipart/form-data; boundary=zzzzz' \
+  -d '--zzzzz
+Content-Disposition: form-data; name="datadef"
+Content-Type: application/x-yaml
+
+descr: Data to store some stuff
+fields:
+  - name: FOO_ID
+    type: int
+  - name: FOO_NAME
+    type: text
+--zzzzz
+Content-Disposition: form-data; name="table"
+Content-Type: application/json
+
+{
+  "institution": "lager",
+  "schema": "tardo",
+  "table": "table_one",
+  "iteration_type": "full",
+  "processing": "full"
+}
+--zzzzz--
+'

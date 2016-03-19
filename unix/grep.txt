@@ -1,0 +1,4 @@
+*** Grepping for blanks/spaces/tabs
+  [[:blank:]]
+Example gets all non-comment lines from a conf file:
+  egrep -v '^[[:blank:]]*#' postgresql.conf

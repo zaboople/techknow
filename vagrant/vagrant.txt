@@ -1,0 +1,21 @@
+Vagrant works as long as you have a Vagrantfile in your current directory
+
+#Start up your vm:
+vagrant up
+
+#SSH into it:
+vagrant ssh
+
+#Suspend your vm so it stops running:
+vagrant suspend
+
+#And start it back up:
+vagrant resume
+
+#Torch your vm (you can skip vagrant suspend):
+vagrant destroy
+
+#This setting fixes ms windows vagrants:
+config.vm.provider "virtualbox" do |v|
+    v.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
+end

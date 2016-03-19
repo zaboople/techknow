@@ -1,0 +1,8 @@
+#Make a zip
+zip -r mydir.zip mydir
+
+#List contents
+unzip -l mydir.zip
+
+#Unpack to CURRENT directory:
+unzip mydir.zip
