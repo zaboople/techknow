@@ -1,0 +1,13 @@
+//This is not that great; you have to remember to loop on the previous thing.     
+for (a <- Arguments(args);
+     p1 <- a.ask("-pp", 1);
+     p2 <- p1.ask("-q");
+     p3 <- p2.ask()
+     ){
+  if (!p3.valid)
+    println("SHIT")
+  else {
+    process arguments
+  }
+}
+  

@@ -1,0 +1,11 @@
+Currently on 688.
+
+I wrote this while hacking my way through Programming in Scala, Edition 2. I tried to show examples of every concept I encountered, including a lot of things the book doesn't spell out completely. Scala has a lot of nuance and weirdness. Documenting everything is quite a challenge.
+
+Most example files are standalone, so you can just type "scala foo/bar.scala" and watch it go. The demo directory has some larger programs that don't document a specific feature but are just showing off or something.
+
+I last stopped at page 450, but I blew off Import & Package. I thought they were overcomplicated and I guess I was having a bad day and got irritable. They're good things, they just have too many features.
+
+ToDo: Futures & Promises
+  http://docs.scala-lang.org/overviews/core/futures.html
+ToDo: _root_ imports

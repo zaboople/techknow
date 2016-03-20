@@ -1,13 +1,16 @@
+# CHECKOUT:
 # Checkout a repo:
 #Be careful, your umask should at least allow u+rwx, esp. x
 git clone git@github.com:civitaslearning/dataplatform.git
 
+# PULL:
 # Get up to date with master branch:
 git pull origin master
 
-# Create local repo and put it on github
-# Initialize:
+# CREATE A NEW REPO:
 git init
+
+# PUSH:
 # Push over ssh:
 git remote add origin git@github.com:username/Hello-World.git
 # Push over http:
@@ -15,6 +18,8 @@ git remote add origin https://github.com/username/Hello-World.git
 # When you try to push over ssh and it fights you
 git remote rm origin
 git remote add origin git@github.com:<user>/<repo>.git
+# And it my fight you some more
+git push --set-upstream origin master
 
 
 # Add changes

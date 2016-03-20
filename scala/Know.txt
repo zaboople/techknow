@@ -1,0 +1,1 @@
+String operators are in scala.collection.immutable.StringOps
