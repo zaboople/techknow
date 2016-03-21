@@ -7,10 +7,8 @@ import scala.concurrent.duration.{Duration, MILLISECONDS}
 
 // This allows us to extract the real value of the future in cases where we darn well
 // want it now.
-
 def getOrDie[T](f : Future[T], ms : Int = 1000) : T =
   Await.result(f, Duration(ms, MILLISECONDS))
-
 try {
   println(
     getOrDie(
@@ -20,7 +18,6 @@ try {
 } catch {
   case e : Exception => println("Caught!")
 }
-
 println(
   getOrDie(
     Future(1 * 100 + 12)
