@@ -7,6 +7,8 @@ import scala.concurrent.duration.{Duration, MILLISECONDS}
 // 1. flatMap() allows you to "aggregate" futures together, invisibly. This allows
 //    you to do cute things in for comprehensions as well.
 // 2. map() is for converting the value inside the future.
+
+
 def makeFuture(ms:Int)=Future{
   println("Sleeping "+ms)
   Thread.sleep(ms)
@@ -14,16 +16,36 @@ def makeFuture(ms:Int)=Future{
   ms
 }
 
+{
+  // Let's see flatmap in action:
+  println("\nEXAMPLE 1:")
+  val (a, b, c)=(makeFuture(4000), makeFuture(2000), makeFuture(1000))
+  val q:Future[Int]=a
+    .flatMap(_ => b)
+    .flatMap(_ => c)
 
-val (a, b, c)=(makeFuture(4000), makeFuture(2000), makeFuture(1000))
-val q:Future[Int]=c
-  .flatMap(_ => b)
-  .flatMap(_ => a)
+  // This will wait on _all_ the futures, not just the last one:
+  println("Awaiting")
+  Await.result(q, Duration(4000, MILLISECONDS))
 
-// This will wait on _all_ the futures, not just the last one:
-println("Awaiting")
-Await.result(q, Duration(4100, MILLISECONDS))
+  // This only prints the last value. Also note that even though our future
+  // runs to completion, this executes concurrently and will very likely
+  // print out in the middle of our next example.
+  for (x <- q)
+    println("Example 1 Complete (am I overrunning the next example?): "+x)
+}
 
-// This only prints the last value
-for (x <- q)
-  println("Complete: "+x)
+
+
+{
+  // Now let's do for comprehensions
+  // This is us merging 3 futures into 1 that we can wait on:
+  println("\n\nEXAMPLE 2:")
+  val (h, g, f)=(makeFuture(3000), makeFuture(2000), makeFuture(1000))
+  val qqq=
+    for (zz <- h; yy <- g; aa <- f)
+      yield ()
+  println("Program is running")
+  Await.result(qqq, Duration(15000, MILLISECONDS))
+  println("Program is done")
+}
