@@ -1,3 +1,17 @@
+# QUOTING: You don't HAVE to quote things, but you'll have less problems if you always do.
+# 1. Surround your expression with single quotes first, so that unix will leave the inside of
+# those quotes alone
+# 2. Inside the single quotes, put double quotes around names that jq might get fussy with.
+#
+# This works:
+jq -M .dog.cat
+#
+# But this works too:
+jq -M '.dog.cat'
+#
+# And this works no matter how funky the names are:
+jq -M '."do-g"."c@at"'
+
 # Get everything named bar under things named .foo
 jq '.foo.bar'
 
