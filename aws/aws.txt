@@ -19,3 +19,5 @@ List a bucket
 NOTE: You only make a top level bucket. Otherwise, "directories" are really just names. If they don't exist, they get created when you add files to them.
 
 
+aws cloudformation delete-stack --stack-name XXX
+aws cloudformation describe-stack-events --stack-name XXX

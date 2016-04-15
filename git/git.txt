@@ -115,3 +115,15 @@ git reset --hard HEAD
 ssh -T git@github.com
  git remote set-url origin git@github.com:zaboople/klonk.git
 
+
+# SQUASH
+# This is for when your stupid coworkers say you have too many commit messages and
+# want them to go away. You can make smush the whole shebang into one as follows:
+# Make the refreshing new branch:
+git checkout master
+git checkout -b my-brand-NEW-branch
+# Squash the old turdy one into it:
+git merge --squash my-ollllddd-branch
+git commit -m 'I just squashed my old branch into one commit'
+# Push it as usual so you can do a PR
+git push --set-upstream origin my-brand-NEW-branch

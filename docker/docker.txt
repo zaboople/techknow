@@ -8,9 +8,20 @@ docker exec -it ${container_id} /bin/bash
 # DOCKER-MACHINE
 # Create a docker virtual machine. "hubba" here is the name
 docker-machine create --driver virtualbox hubba
+# But you won't have enough memory or anything else:
+docker-machine create --driver virtualbox \
+                      --virtualbox-memory 4096 \
+                      --virtualbox-disk-size 120000 \
+                      dev
+
 # So this is how we make it where we can talk insecurely
 docker-machine create --driver virtualbox \
-  --engine-insecure-registry docker-registry.civitas.internal:5000 dev
+  --engine-insecure-registry docker-registry.private.civitaslearning.com:5000 dev
+# But don't worry, you can fix that after you create
+# and the line to `EXTRA_ARGS`:
+vi /var/lib/boot2docker/profile
+--insecure-registry docker-registry.private.civitaslearning.com:5000
+
 # List the virtual machines
 docker-machine ls
 # Get what you need to send docker commands to your VM
@@ -53,6 +64,8 @@ docker run -d -p 8080:7999 --name myweb -v $TEMP:/usr/share/nginx/html nginx
 # CHECK ON THEM:
 # So what's running then?
 docker ps
+# ... and has ever run?
+docker ps -a
 # This will give you info about ports, but it's confusing, so, the left side of the arrow has
 # The right port numbers to talk to, but the wrong IP. You can find out the correct IP
 # from the docker-machine command. I guess if you were ON that VM, these would actually work.
