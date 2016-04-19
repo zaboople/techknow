@@ -1,2 +1,0 @@
-dirs  Gives a list of dirs on the stack
-pushd With no arguments swaps the top two dirs (awesome)

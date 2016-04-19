@@ -1,0 +1,6 @@
+dirs
+  Gives a list of dirs on the stack
+  -p Prints vertically instead of the stupid way
+pushd
+  With no arguments swaps the top two dirs (awesome)
+  You can also give it +# and -#

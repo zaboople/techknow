@@ -127,3 +127,10 @@ git merge --squash my-ollllddd-branch
 git commit -m 'I just squashed my old branch into one commit'
 # Push it as usual so you can do a PR
 git push --set-upstream origin my-brand-NEW-branch
+# SQUASH ALTERNATIVE
+# This probably will fail with errors. You give it however many commits (here, 100) to go back
+# and pray that it doesn't screw you over. Just change "pick" to "s" in the editor
+# (yay, vim) that comes up for each commit you want to squish. After that you'll be given
+# a second editor where you can make a new message for everything you're squashing
+# together; by default it will contain all the messages.
+git rebase --interactive HEAD~100
