@@ -3,4 +3,21 @@ dirs
   -p Prints vertically instead of the stupid way
 pushd
   With no arguments swaps the top two dirs (awesome)
-  You can also give it +# and -#
+
+  You can also give it +# and -#, like so
+    pushd +1
+    pushd -3
+  The trick here is to look at the output of dirs,
+  and pick your directory based on position. So if dirs says
+    a b c d
+  Then + counts from the left
+    pushd +0 goes to a
+    pushd +1 goes to b
+    pushd +2 goes to c
+    and so  on...
+  But also
+    pushd -0 goes to d
+    pushd -1 goes to c
+    pushd -2 goes to b
+  Of course if you did dirs -p, + counts from the top down
+  and - counts from the bottom up.
