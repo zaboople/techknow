@@ -21,3 +21,11 @@ NOTE: You only make a top level bucket. Otherwise, "directories" are really just
 
 aws cloudformation delete-stack --stack-name XXX
 aws cloudformation describe-stack-events --stack-name XXX
+
+# LOGS:
+aws logs describe-log-groups
+aws logs get-log-events --log-group-name $blah
+aws logs describe-log-streams --log-group-name
+# or the easy way is once you have the group name, type
+awslogs $groupname
+
