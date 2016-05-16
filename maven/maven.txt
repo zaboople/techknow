@@ -1,0 +1,9 @@
+Skip tests:
+  -Dmaven.test.skip=true
+
+  Example:
+    mvn -Dmaven.test.skip=true install
+
+Run one test:
+  mvn test -Dtest=classname
+  mvn test -Dtest=classname#function

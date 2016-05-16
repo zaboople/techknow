@@ -134,3 +134,6 @@ git push --set-upstream origin my-brand-NEW-branch
 # a second editor where you can make a new message for everything you're squashing
 # together; by default it will contain all the messages.
 git rebase --interactive HEAD~100
+
+# Or you can try doing a rebase against
+git rebase --interactive jumblything

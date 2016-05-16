@@ -19,7 +19,7 @@ docker-machine create --driver virtualbox \
   --engine-insecure-registry docker-registry.private.civitaslearning.com:5000 dev
 # But don't worry, you can fix that after you create
 # and the line to `EXTRA_ARGS`:
-vi /var/lib/boot2docker/profile
+sudo vi /var/lib/boot2docker/profile
 --insecure-registry docker-registry.private.civitaslearning.com:5000
 
 # List the virtual machines

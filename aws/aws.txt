@@ -29,3 +29,10 @@ aws logs describe-log-streams --log-group-name
 # or the easy way is once you have the group name, type
 awslogs $groupname
 
+# KMS
+# This would be straightforward except that
+# 1) KMS emits base64 output in all cases
+# 2) KMS decrypt only accepts binary input
+# So what we do is store the encrypted information in a file in binary.
+aws kms encrypt --key-id xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --plaintext "abcd" --query CiphertextBlob --output text | base64 -D > $TEMP/junk
+aws kms decrypt --ciphertext-blob fileb://$TEMP/junk --query Plaintext --output text | base64 -D
