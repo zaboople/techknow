@@ -12,27 +12,42 @@ To run queries against your json etc:
 Get your user id when you only have your keys:
   aws iam get-user
 
+# S3:
+# NOTE: You only make a top level bucket. Otherwise, "directories" are really just names. If they don't exist, they get created when you add files to them.
 Make a bucket with mb:
   aws s3 mb s3://troymotte
 List a bucket
   aws s3 ls s3://troymotte
-NOTE: You only make a top level bucket. Otherwise, "directories" are really just names. If they don't exist, they get created when you add files to them.
+Rip the guts of a directory out:
+  aws s3 rm --recursive s3://troymotte/backups/201601
 
 
-aws cloudformation delete-stack --stack-name XXX
-aws cloudformation describe-stack-events --stack-name XXX
 
 # LOGS:
 aws logs describe-log-groups
+  #or better yet:
+  aws logs describe-log-groups | jq .logGroups[].logGroupName
 aws logs get-log-events --log-group-name $blah
 aws logs describe-log-streams --log-group-name
 # or the easy way is once you have the group name, type
-awslogs $groupname
+awslogs get $groupname
 
 # KMS
+# List keys:
+# These keys can be used directly for encryption/decryption. Note that they are id's, not the keys themselves.
+# You can only use them if your user account has an IAM role that grants access.
+  aws kms list-keys
 # This would be straightforward except that
-# 1) KMS emits base64 output in all cases
-# 2) KMS decrypt only accepts binary input
+#   - KMS emits base64 output in all cases
+#   - KMS decrypt only accepts binary input
 # So what we do is store the encrypted information in a file in binary.
+# It's also worth noting that aws decrypt doesn't require a key id.
 aws kms encrypt --key-id xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --plaintext "abcd" --query CiphertextBlob --output text | base64 -D > $TEMP/junk
 aws kms decrypt --ciphertext-blob fileb://$TEMP/junk --query Plaintext --output text | base64 -D
+
+# CloudFormation / ECS status
+aws cloudformation delete-stack --stack-name XXX
+aws cloudformation describe-stack-events --stack-name XXX
+
+# On the console, go to
+CloudFormation  > Stack List > Stack Detail: <your stack name>

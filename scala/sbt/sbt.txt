@@ -1,4 +1,9 @@
 List all projects in build:
   projects
 Switch project
-  project projectname  
+  project projectname
+
+Run a main class
+  run-main com.jerk.QueueSchedulerQueryDriver 123 true
+  test:run-main com.jerk.QueueSchedulerQueryDriver 123 true
+http://www.postgresql.org/docs/9.5/static/runtime-config-locks.html
