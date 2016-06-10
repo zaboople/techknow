@@ -15,11 +15,11 @@ Get your user id when you only have your keys:
 # S3:
 # NOTE: You only make a top level bucket. Otherwise, "directories" are really just names. If they don't exist, they get created when you add files to them.
 Make a bucket with mb:
-  aws s3 mb s3://troymotte
+  aws s3 mb s3://hugebutt
 List a bucket
-  aws s3 ls s3://troymotte
+  aws s3 ls s3://hugebutt
 Rip the guts of a directory out:
-  aws s3 rm --recursive s3://troymotte/backups/201601
+  aws s3 rm --recursive s3://hugebutt/backups/201601
 
 
 

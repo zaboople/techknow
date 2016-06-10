@@ -10,3 +10,9 @@ Export a variable name with a default
   #starts by agreeing to accept the existing value.
   #Then it takes your value otherwise.
   export MINE=${MINE:-something}
+
+Get name of current file
+  #This works when you are sourcing a file, i.e. "."'ing it
+  echo "${BASH_SOURCE[0]}"
+  #This works for regular scripts
+  echo $0
