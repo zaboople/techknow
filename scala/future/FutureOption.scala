@@ -9,26 +9,26 @@ import scala.concurrent.duration.Duration
 // where we call g() if f() returns None. This looks easy at
 // first, but we end up with <Future|Option> inside a Future
 // and before long we're nesting for comprehensions
-// and/or map/flatMaps in grotesque ways.
+// and/or map-flatMaps in grotesque ways.
 
-// 1. Our "imaginary" functions that struggle to get us what we want:
+// 1. Our general-purpose wrappers that we use to chain the functions:
+def begin[T, Input](f: (Input)=> Future[Option[T]], u: Input): Future[Option[T]] =
+  continue(None, f, u)
+def continue[T, U](o: Option[T], f: (U)=> Future[Option[T]], u: U): Future[Option[T]] =
+  o match {
+    case x: Some[T] => Future.successful(x)
+    case _ => f(u)
+  }
+def finish[T, U](o: Option[T], f: (U)=> Future[T], u: U): Future[T] =
+  o.map(Future.successful).getOrElse(f(u))
+
+// 2. Our "imaginary" functions that struggle to get us what we want:
 def futNone(i:Int): Future[Option[Int]]=
   Future{None}
 def futSome(i:Int): Future[Option[Int]]=
   Future{Some(i)}
 def fut(i:Int): Future[Int]=
   Future{i}
-
-// 2. Our general-purpose wrappers that we use to chain the functions:
-def begin[T, Input](f: (Input)=> Future[Option[T]], u: Input): Future[Option[T]] =
-  continue(None, f, u)
-def finish[T, U](o: Option[T], f: (U)=> Future[T], u: U): Future[T] =
-  o.map(Future.successful).getOrElse(f(u))
-def continue[T, U](o: Option[T], f: (U)=> Future[Option[T]], u: U): Future[Option[T]] =
-  o match {
-    case x: Some[T] => Future.successful(x)
-    case _ => f(u)
-  }
 
 // 3. Some sample usages:
 for {
