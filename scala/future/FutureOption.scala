@@ -14,13 +14,15 @@ import scala.concurrent.duration.Duration
 // 1. Our general-purpose wrappers that we use to chain the functions:
 def begin[T, Input](f: (Input)=> Future[Option[T]], u: Input): Future[Option[T]] =
   continue(None, f, u)
-def continue[T, U](o: Option[T], f: (U)=> Future[Option[T]], u: U): Future[Option[T]] =
-  o match {
+def continue[T, Input](
+    option: Option[T], f: (Input)=> Future[Option[T]], input: Input
+  ): Future[Option[T]] =
+  option match {
     case x: Some[T] => Future.successful(x)
-    case _ => f(u)
+    case _ => f(input)
   }
-def finish[T, U](o: Option[T], f: (U)=> Future[T], u: U): Future[T] =
-  o.map(Future.successful).getOrElse(f(u))
+def finish[T, Input](option: Option[T], f: (Input)=> Future[T], input: Input): Future[T] =
+  option.map(Future.successful).getOrElse(f(input))
 
 // 2. Our "imaginary" functions that struggle to get us what we want:
 def futNone(i:Int): Future[Option[Int]]=
