@@ -67,7 +67,7 @@ docker ps
 # ... and has ever run?
 docker ps -a
 # This will give you info about ports, but it's confusing, so, the left side of the arrow has
-# The right port numbers to talk to, but the wrong IP. You can find out the correct IP
+# the right port numbers to talk to, but the wrong IP. You can find out the correct IP
 # from the docker-machine command. I guess if you were ON that VM, these would actually work.
 PORTS
 0.0.0.0:32769->80/tcp, 0.0.0.0:32768->443/tcp
@@ -89,3 +89,6 @@ docker rm myweb
 # WHAT ABOUT THINGS I STOPPED AND DIDN'T DELETE
 docker ps -a
 
+# DOCKER-COMPOSE
+# Just a warning, docker-compose may ignore config changes until you use the "rm" command;
+# restart / stop / start isn't going to do it

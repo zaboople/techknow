@@ -49,3 +49,11 @@ def makeFuture(ms:Int)=Future{
   Await.result(qqq, Duration(15000, MILLISECONDS))
   println("Program is done")
 }
+
+{
+  val x=Future{20}
+  val y=Future{"hello"}
+  val list=List(1, 2, 3)
+  for (num <- x; str <- y; i <- list)
+    println(str+" "+i)
+}

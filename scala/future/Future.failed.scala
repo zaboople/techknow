@@ -17,9 +17,16 @@ val f=Future{
     throw new NullPointerException("Ha ha splat")
   12
 }
+
+// This won't do anything because it failed:
+f.map(x => println(x))
+
 // Get the failed projection:
 val fail=f.failed
 val failResult=Await.result(
   fail, Duration(1000, MILLISECONDS)
 )
 println(failResult)
+// This prints the exception as well:
+fail.map(x => println(x))
+
