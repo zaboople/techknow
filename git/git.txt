@@ -137,3 +137,8 @@ git rebase --interactive HEAD~100
 
 # Or you can try doing a rebase against
 git rebase --interactive jumblything
+
+
+# What commits will be reported when I do my PR?
+git checkout master
+git log ..my-branch-name
