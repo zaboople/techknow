@@ -1,0 +1,5 @@
+# How to dump a query to standard out (there are other ways, this is least painful)
+  echo 'select * from datadefs;' | psql -d database
+# Don't try to use -c to do this, it will force it into interactive and then you'll
+# end up trying to do -f to get around that and fuck it
+

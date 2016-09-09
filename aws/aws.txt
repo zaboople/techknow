@@ -30,7 +30,12 @@ aws logs describe-log-groups
 aws logs get-log-events --log-group-name $blah
 aws logs describe-log-streams --log-group-name
 # or the easy way is once you have the group name, type
+awslogs groups
 awslogs get $groupname
+awslogs get /monoplatform/test/cupid-service -s "3 hours ago" | sort -k 2
+# Oh and here is a way to get it for an EC2, note that I had to put the name as a space afterwards
+awslogs get /monoplatform/stage/ecs-agent i-4b1770b3 --start "2016-09-01" --end "2016-09-02"
+
 
 # KMS
 # List keys:
