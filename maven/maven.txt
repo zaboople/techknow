@@ -7,3 +7,11 @@ Skip tests:
 Run one test:
   mvn test -Dtest=classname
   mvn test -Dtest=classname#function
+
+Clean up the fucking mess when things are fucked:
+  mvn dependency:purge-local-repository
+Force updates when building, kinda makes it want to refresh the local repo, helps sometimes:
+  mvn -U
+
+Compile tests:
+  test-compile

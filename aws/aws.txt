@@ -34,7 +34,10 @@ awslogs groups
 awslogs get $groupname
 awslogs get /monoplatform/test/cupid-service -s "3 hours ago" | sort -k 2
 # Oh and here is a way to get it for an EC2, note that I had to put the name as a space afterwards
-awslogs get /monoplatform/stage/ecs-agent i-4b1770b3 --start "2016-09-01" --end "2016-09-02"
+awslogs get /monoplatform/stage/ecs-agent i-a1177059 --start "2016-09-01" --end "2016-09-02"
+awslogs get /monoplatform/stage/ecs-agent --start "2016-09-15" --end "2016-09-16"
+awslogs get /monoplatform/stage/dd-agent
+awslogs get /monoplatform/stage/cfn-signal
 
 
 # KMS
