@@ -1,0 +1,27 @@
+// Get proper output when testing:
+test {
+  testLogging.showStandardStreams = true
+  testLogging.exceptionFormat = 'full'
+}
+
+
+//Configuring subprojects is insanely hard
+
+subprojects {
+
+  // Convenient "style" task makes it easy to run checkstyle alone:
+  task style {
+    dependsOn{[checkstyleMain, checkstyleTest]}
+    group = "Verification"
+    description = "Run checkstyle plugin without running tests first"
+  }
+
+  // By default gradle dumps testing output to a file. We'd rather
+  // get it on stdout/err:
+  afterEvaluate {
+    test {
+      testLogging.showStandardStreams = true
+    }
+  }
+
+}

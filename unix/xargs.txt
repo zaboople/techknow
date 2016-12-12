@@ -1,0 +1,3 @@
+ls | xargs -I {} mv {} ~/old.files
+
+ls | xargs -I SPAZ mv SPAZ ~/old.files
