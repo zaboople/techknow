@@ -25,3 +25,10 @@ subprojects {
   }
 
 }
+
+// Test only certain things:
+gradle test --tests *StupidThing*
+
+// Run subproject tasks
+gradle subproject:task
+gradle subproject:test --tests *StupidThing*

@@ -66,6 +66,8 @@ docker run -d -p 8080:7999 --name myweb -v $TEMP:/usr/share/nginx/html nginx
 docker ps
 # ... and has ever run?
 docker ps -a
+# do a docker rm on all of those and then
+docker images -q | xargs docker rmi -f
 # This will give you info about ports, but it's confusing, so, the left side of the arrow has
 # the right port numbers to talk to, but the wrong IP. You can find out the correct IP
 # from the docker-machine command. I guess if you were ON that VM, these would actually work.
