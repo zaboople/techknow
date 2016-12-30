@@ -4,11 +4,15 @@
 # 2. Inside the single quotes, put double quotes around names that jq might get fussy with.
 #
 # This works:
-jq -M .dog.cat
-#
+jq .dog.cat
 # But this works too:
-jq -M '.dog.cat'
-#
+jq '.dog.cat'
+# Don't format strings in double quotes:
+jq -r .dog.cat
+# Monochrome is -M
+jq -M .dog.cat
+
+
 # And this works no matter how funky the names are:
 jq -M '."do-g"."c@at"'
 

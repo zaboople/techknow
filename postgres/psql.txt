@@ -5,3 +5,6 @@ psql -h 192.168.99.100 -p 5432 -d db postgres
 # Don't try to use -c to do this, it will force it into interactive and then you'll
 # end up trying to do -f to get around that and fuck it
 
+# Easy way to avoid interactive login:
+export PGPASSWORD=mypass
+psql -h localhost -p 5432 -U myuser -d postgres

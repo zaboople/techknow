@@ -88,6 +88,12 @@ git branch --merged master | grep g 'master$' | xargs git branch -d
 # !! UNDO whatever uncommitted crap I left around
 git reset --hard HEAD
 
+# Undo not-committed-yet delete
+# 1. Git it out of the temp/working/purgatory thing
+git reset HEAD <filename>
+# 2. Get it from the repo
+git checkout -- <filename>
+
 
 # COLORS edit your ~/.gitconfig
 [color]
