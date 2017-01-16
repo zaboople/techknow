@@ -1,0 +1,5 @@
+- THis supposedly converts PEM to pkcs12
+  openssl pkcs12 -export -out my_laptop_curl.pfx -inkey my_laptop.key -in my_laptop.cert -certfile my_embassy_ca.cert
+
+- Trying web site out with openssl
+  openssl s_client -cert my_laptop.cert -key my_laptop.key -connect localhost:5000 -debug -tls1

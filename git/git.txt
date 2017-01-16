@@ -152,10 +152,15 @@ git rebase --interactive jumblything
 git checkout master
 git log ..my-branch-name
 
-
-# Temporarily ignore:
+# Temporarily ignore (sucks, doesn't really work):
 # First command to ignore, second stops ignoring.
 # File/Directory names are optional in second command; without them, everything
 # previously ignored will stop ignoring:
 git update-index --assume-unchanged <files>
 git update-index --no-assume-unchanged [files]
+
+# STASH
+# This is an excellent way to park changes so you can move them onto a different branch:
+git stash save
+git checkout <branch>
+git stash pop

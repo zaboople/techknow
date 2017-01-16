@@ -12,6 +12,10 @@ jq -r .dog.cat
 # Monochrome is -M
 jq -M .dog.cat
 
+# PURE pretty printing: You must give a filter or piping to other things (like less)
+# well break
+jq "."
+
 
 # And this works no matter how funky the names are:
 jq -M '."do-g"."c@at"'
