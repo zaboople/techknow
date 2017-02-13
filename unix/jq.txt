@@ -16,6 +16,15 @@ jq -M .dog.cat
 # well break
 jq "."
 
+# If the root node is an array, ask for it like:
+.[]
+.[1]
+
+# Get the names of all the dogs in {"dogs": [{name: "spike", ...}, {...}, ...]}
+.dogs[].name
+
+# Get multiple values at the same level
+jq '.first,.second'
 
 # And this works no matter how funky the names are:
 jq -M '."do-g"."c@at"'
@@ -32,3 +41,17 @@ jq '.Clusters[]["MasterUsername","Tags"]'
 
 # OK f that. Amazon makes it easy:
 aws redshift describe-clusters --query 'Clusters[*].{user:MasterUsername,tags:Tags}' | less
+
+echo "Use string interpolation: This is pretty good for printing the contents of a log file:"
+echo '{"aa":"111", "bb":"222", "cc":"333"}{"aa":"112", "bb":"4349", "cc":"hello"}' | jq -r '"#\(.aa) \(.bb) \(.cc)"'
+#111 222 333
+#112 4349 hello
+
+echo "Use string interpolation again: For when the log file is actually an array"
+echo '[{"aa":"111", "bb":"222", "cc":"333"},{"aa":"112", "bb":"4349", "cc":"hello"}]' | jq '.[]' | jq -r '"#\(.aa) \(.bb) \(.cc)"'
+#111 222 333
+#112 4349 hello
+
+echo "Crazy thing rotates maps to arrays:"
+echo '{"aa":"111", "bb":"222", "cc":"333"}{"aa":"112", "bb":"4349", "cc":"hello"}' |   jq 'to_entries' | jq -r  'map(.value) | @csv'
+

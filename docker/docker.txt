@@ -106,3 +106,6 @@ psql -h localhost -p 5432 -U myuser -d postgres
 # If you used sucky docker-machine:
 psql -h $(docker-machine ip dev) -p 5432 -U myuser -d postgres
 
+# FANCY LISTINGS
+# Use --format. The format is {{.ColumnName}}
+docker images --format '{{.Repository}}:{{.Tag}}' | xargs docker rmi

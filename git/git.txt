@@ -30,7 +30,8 @@ git add --all
 
 # Commit
 git commit -m 'first commit'
-
+# Force a commit so you can bump things like PR builders
+git commit -m 'bumping' --allow-empty
 
 # WHAT branch am I on?
 git branch

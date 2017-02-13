@@ -16,3 +16,26 @@ Get name of current file
   echo "${BASH_SOURCE[0]}"
   #This works for regular scripts
   echo $0
+
+# Variable substitution
+${parameter:-defaultValue}	Get default shell variables value
+${parameter:=defaultValue}	Set default shell variables value
+: ${parameter:="8080"}           "    " ... but more robust than previous (numbers break it) (: is a no-op)
+: export ${parameter:="8080"}    "    " ... and the export version
+${parameter:?”Error Message”}	Display an error message if parameter is not set
+${#var}	Find the length of the string
+${var%pattern}	Remove from shortest rear (end) pattern
+${var%%pattern}	Remove from longest rear (end) pattern
+${var:num1:num2}	Substring
+${var#pattern}	Remove from shortest front pattern
+${var##pattern}	Remove from longest front pattern
+${var/pattern/string}	Find and replace (only replace first occurrence)
+${var//pattern/string}	Find and replace all occurrences
+
+
+# Arrays:
+  # Split a line of text into an array:
+  netstat -nr | (while read line; do
+    arr=(${line})
+    echo ${arr[1]}}
+  done;
