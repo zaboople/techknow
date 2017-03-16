@@ -8,3 +8,8 @@ psql -h 192.168.99.100 -p 5432 -d db postgres
 # Easy way to avoid interactive login:
 export PGPASSWORD=mypass
 psql -h localhost -p 5432 -U myuser -d postgres
+
+# Get all tables. Note: The default schema is "public"
+SELECT table_schema,table_name
+FROM information_schema.tables
+ORDER BY table_schema,table_name;

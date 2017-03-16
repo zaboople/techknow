@@ -109,3 +109,7 @@ psql -h $(docker-machine ip dev) -p 5432 -U myuser -d postgres
 # FANCY LISTINGS
 # Use --format. The format is {{.ColumnName}}
 docker images --format '{{.Repository}}:{{.Tag}}' | xargs docker rmi
+
+# MAKE LOCALHOST THE SAME FOR EVERYBODY
+# This makes it where localhost is the same for containers as for anything else on the host.
+docker run --network=host .....
