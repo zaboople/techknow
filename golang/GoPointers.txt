@@ -1,0 +1,138 @@
+GO POINTERS ARE CONFUSING
+
+0. INTRODUCTION
+
+Suppose you are at a programming job interview, and they throw you a softball question:
+
+Interviewer: Does Java have pointers?
+Candidate: Yes.
+
+Interviewer: Wrong!
+Candidate: Then why does Java have NullPointerException's?
+
+For that matter, why does Java have nulls? Because it has pointers. However, these pointers are completely *implicit*: They automatically reference & dereference in an intuitive albeit inflexible manner (well, *some* of us think it's intuitive).
+
+Go chooses to be only partially implicit for the sake of flexibility.
+
+1. PLAIN OLD POINTERS, PLAIN OLD FUNCTIONS, BUSINESS AS USUAL
+
+Suppose you write a Go function like:
+
+	func addSquareOf(p *int) {*p += *p * *p}
+
+Obviously, to invoke this function, you must send it a pointer. You cannot write:
+
+	addSquareOf(10)
+
+Instead you must write something like:
+
+	x:=10
+	addSquareOf(&x)
+
+Among other things, Go pointers give us "pass by reference", something Java can't do with primitive types like ints & floats & so forth - they have to be "pass by value". We'll usually write this function without pointers anyhow (and just return a new int), but it's nice to have flexibility.
+
+(One might also consider Pascal's "var" keyword, which allows one to choose pass-by-reference without pointers. But let's not compare every language we can think of...)
+
+2. OBJECT-ORIENTED POINTERS, IF YOU CAN CALL THEM THAT
+
+Go "methods" are even more flexible. Let's define a struct with one method, like:
+
+	type Location struct {
+		latitude float64; longitude float64;
+	}
+	func (loc *Location) move(distanceLong float64, distanceLat float64){
+		loc.longitude+=distanceLong
+		loc.latitude +=distanceLat
+	}
+
+Notice the "*" in there. The move() method is pointerized, so we write:
+
+	x:=&Location{12, 13}
+	x.move(-1, 100)
+
+Which works just fine... BUT suppose we write:
+
+	y:=Location{12, 13}
+	y.move(-1, 100)
+
+Wait, y is not a pointer! Does this compile? Yes - Go *coerces* y to a pointer & updates it directly. And guess what? If we REMOVE the "*" from our move() method, like so:
+
+	func (location Location) move(distanceLong float64, distanceLat float64){
+		// Same thing...
+	}
+
+Our x & y stuff still compiles! So for method "receivers", pointers & not-pointers coerce BOTH ways. Of course with the new, pointerless version of our move() declaration, you get pass-by-value instead of pass-by-reference, so Go makes a COPY of your struct and that COPY becomes the method receiver - which means now our method is useless. It just throws the new Location in the bit bucket. Of course we could make something more useful like so:
+
+	func (loc Location) moveNew(other Location) Location {
+		loc.move(other.latitude, other.longitude)
+		return loc
+	}
+
+Now we can write things like:
+
+	z:=y.moveNew(Location{2,3})
+
+This is sort of nice, because the method's type signature guarantees "immutability": Without reading the source, we know it can't update the original Location's state. Java can only *imply* such by defining a return value, but can't *guarantee* it.
+
+3. SOME BUT NOT ALL
+
+The catch is, this "pointer coercion" happens ONLY with method receivers, not function or method *parameters*, as our addSquareOf() function demonstrated. But just to drive the point home, we'll define a function called "moveTo()" which accepts a struct pointer like so:
+
+	func (location *Location) moveTo(other *Location){
+		location.longitude+=other.longitude
+		location.latitude +=other.latitude
+	}
+
+And if we write the following?
+
+	x:=Location{10, 20}
+	y:=Location{100, 200}
+	y.moveTo(x)
+
+Nope, that won't work. The moveTo() function takes a pointer as its parameter, so you have to write:
+
+	y.moveTo(&x)
+
+If you want, you can do:
+
+	(&y).moveTo(&x)
+
+You have to use that first set of parentheses to keep precedence rules from fighting you and causing a compiler error. This is a pain, and that's why we have the convenient coercion - and the inconvenient confusion that might come with it.
+
+4. INTERFACES
+
+Go's duck-typed (actually, "structural-typed") interfaces are goofy, but hey, we're getting used to it. So let's add one more method to Location:
+
+	func (loc *Location) String() string {
+		return fmt.Sprintf("<Location: Lat:%0.2f Lon:%0.2f>", loc.latitude, loc.longitude)
+	}
+
+This implements Go's "Stringer" interface, which is handy when printing debug information. It's the Go version of Java's ubiquitous toString(): The built-in fmt.Println() method will use our String() function to format our Locations instead of resorting to Go's built-in defaults. So let's write this:
+
+	x:=&Location(12,13)
+	fmt.Println(x)
+	y:=Location(12,13)
+	fmt.Println(y)
+
+Will we get two lines exactly the same? Nope:
+
+	Location: Lat:13.00 Lon:12.00
+	{13 12}
+
+Our y value gets default formatting because it doesn't get coerced to a pointer as we might have hoped. Note that the fmt.Println() method has the signature:
+
+	func Println(a ...interface{}) (n int, err error)
+
+To make a long story short, that interface{} business is where the trouble starts. Anyhow we can "fix" the problem by just yanking the * out of the method declaration:
+
+	func (loc Location) String() string {...}
+
+Now we get the desired formatting for both x & y, because fmt.Println() can coerce a pointer back to its source's type, but not vice versa. BUT this means any time we print a value, we add pointless (pun intended) garbage collection overhead by creating a copy of the value. In case you aren't aware, no, you can't define TWO String() methods for Location - one pointerized & the other not-pointerized - because Go doesn't allow "overloaded" functions or methods.
+
+Like Java, however, Go does perform some black-magic "escape analysis", where for simpler situations like our String() method, it is likely our extra Location instance will be allocated on the stack instead of the heap because it doesn't get used outside the method. This way it it gets automatically garbage collected on method exit instead of going through even more black magic with heap garbage collection.
+
+5. CONCLUSION
+
+To point, or not to point? For the most part the compiler will force you to mind your &'s and *'s if you mess up. However you should always be careful that other programmers don't fool themselves into thinking your mutable "func (*Location)" is an immutable "func (Location)". And then of course there isn't much we can do about interface{}.
+
+Also, Go really doesn't seem like the best choice to teach beginning computer programmers about pointers or object-oriented programming.
