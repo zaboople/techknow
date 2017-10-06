@@ -7,6 +7,7 @@ func addSquareOf(p *int) {*p +=*p * *p}
 type Location struct {
 	latitude float64; longitude float64;
 }
+// Remove the *, and both struct literals as well as pointers will fail to update anything.
 func (loc *Location) move(distanceLat float64, distanceLon float64){
 	loc.longitude+=distanceLon
 	loc.latitude +=distanceLat
