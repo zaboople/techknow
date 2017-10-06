@@ -1,4 +1,12 @@
+
+# Loop on a number:
 for (( i=1; i <= 105; i++ ))
 do
   curl http://localhost:8080/ &
 done
+
+# Loop thru arguments:
+for drive in "$@"
+  do
+  echo $drive
+  done
