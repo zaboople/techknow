@@ -9,7 +9,7 @@ import (
 // DRIVER: //
 /////////////
 
-func main() {	
+func main() {
 	if iterations:=getIterations(); iterations!=nil {
 		drive(*iterations)
 	}
@@ -42,9 +42,9 @@ func drive(iterations int) {
 	fmt.Println("Iterations", iterations)
 	for _,f:=range funcs {
 		go calc(waitfor, iterations, f.name, f.function);
-	} 
+	}
 	for range funcs {
-		<- waitfor 
+		<- waitfor
 	}
 }
 
@@ -57,19 +57,19 @@ func calc(
 	toCheck:=make(chan int, 2000)
 	success:=make(chan int, 2000)
 	go checker(toCheck, success)
-	
+
 	go func() {
 		for i:=0; i<iterations; i++ {
 			toCheck<-i
 		}
-		close(toCheck)		
+		close(toCheck)
 	}()
-	
+
 	for i:=range success {
 		fmt.Println(prefix, " ", i, " ")
 	}
-	
-	fmt.Println("\n", prefix, "TIME: ", time.Now().Sub(begin), "\n")	
+
+	fmt.Println("\n", prefix, "TIME: ", time.Now().Sub(begin), "\n")
 	waitfor <- 1
 }
 
@@ -81,20 +81,20 @@ func calc(
 
 func mediumHardPrimeCheckChan(vals chan int, ifPrime chan int) {
 	already:=[]int{}
-	
+
 	check:=func (n int)  bool {
-		
+
 		// Compare to known primes:
-		limit:=len(already)		
+		limit:=len(already)
 		for i:=0; i<limit; i++ {
 			compare:=already[i]
 			if (compare > 1) {
 				if (n % compare==0){
 					return false;
-				} 
+				}
 			}
 		}
-		
+
 		// Add to known and return true:
 		already=append(already, n)
 		return true
@@ -179,7 +179,7 @@ func hardPrimeCheckChan(input chan int, ifPrime chan int) {
 					chanAddMax <- i
 				}
 			}
-		}	
+		}
 		if (prime) {
 			ifPrime <- v
 			chanAdd <- v
@@ -198,7 +198,7 @@ const CONTAINS_YES=1
 const CONTAINS_DUNNO=2
 
 type AskContains struct {
-	value int 
+	value int
 	answer chan uint8
 }
 type Primes struct {
