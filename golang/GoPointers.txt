@@ -2,11 +2,10 @@ GO POINTERS ARE CONFUSING
 
 0. INTRODUCTION
 
-Suppose you are at a programming job interview, and they throw you a softball question:
+Suppose you are at a programming job interview, and you get this question:
 
 Interviewer: Does Java have pointers?
 Candidate: Yes.
-
 Interviewer: Wrong!
 Candidate: Then why does Java have NullPointerException's?
 
@@ -33,9 +32,9 @@ Among other things, Go pointers give us "pass by reference", something Java can'
 
 (One might also consider Pascal's "var" keyword, which allows one to choose pass-by-reference without pointers. But let's not compare every language we can think of...)
 
-2. OBJECT-ORIENTED POINTERS, IF YOU CAN CALL THEM THAT
+2. SORT-OF OBJECT-ORIENTED POINTERS
 
-Go "methods" are even more flexible. Let's define a struct with one method, like:
+Go "methods" are even more flexible. Suppose we define a struct with one method, like:
 
 	type Location struct {
 		latitude float64; longitude float64;
@@ -107,7 +106,7 @@ Go's duck-typed (actually, "structural-typed") interfaces are goofy, but hey, we
 		return fmt.Sprintf("<Location: Lat:%0.2f Lon:%0.2f>", loc.latitude, loc.longitude)
 	}
 
-This implements Go's "Stringer" interface, which is handy when printing debug information. It's the Go version of Java's ubiquitous toString(): The built-in fmt.Println() method will use our String() function to format our Locations instead of resorting to Go's built-in defaults. So let's write this:
+This implements Go's "Stringer" interface, which is handy when printing debug information. It's the Go version of Java's ubiquitous toString(): The built-in fmt.Println() method will use our String() function to format our Locations instead of resorting to Go's built-in defaults. So if we write this:
 
 	x:=&Location(12,13)
 	fmt.Println(x)
@@ -135,4 +134,4 @@ Like Java, however, Go does perform some black-magic "escape analysis", where fo
 
 To point, or not to point? For the most part the compiler will force you to mind your &'s and *'s if you mess up. However you should always be careful that other programmers don't fool themselves into thinking your mutable "func (*Location)" is an immutable "func (Location)". And then of course there isn't much we can do about interface{}.
 
-Also, Go really doesn't seem like the best choice to teach beginning computer programmers about pointers or object-oriented programming.
+Also, Go might not be the best choice to teach beginners about pointers or object-oriented programming.
