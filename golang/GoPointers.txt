@@ -2,14 +2,14 @@ GO POINTERS ARE CONFUSING
 
 0. INTRODUCTION
 
-Suppose you are at a programming job interview, and you get this question:
+Suppose you are at a programming job interview:
 
 Interviewer: Does Java have pointers?
 Candidate: Yes.
 Interviewer: Wrong!
 Candidate: Then why does Java have NullPointerException's?
 
-For that matter, why does Java have nulls? Because it has pointers. However, these pointers are completely *implicit*: They automatically reference & dereference in an intuitive albeit inflexible manner (well, some of us think it's intuitive).
+For that matter, why does Java have nulls? Because it has pointers. However, these pointers are *implicit*: They automatically reference & dereference in an intuitive albeit inflexible manner (well, some of us think it's intuitive).
 
 Go chooses to be only partially implicit for the sake of flexibility.
 
