@@ -1,0 +1,14 @@
+Original         | RDP Version   | Description
+----------------------------------------------
+ALT+TAB            ALT+PAGE UP     Switches between programs from left to right.
+ALT+SHIFT+TAB      ALT+PAGE DOWN   Switches between programs from right to left.
+ALT+ESC            ALT+INSERT      Cycles through the programs in the order they were started.
+                   CTRL+ESC        Switches the client between a window and full screen.
+CTRL+ESC           ALT+HOME        Displays the Start menu.
+                   ALT+DELETE      Displays the Windows menu.
+PRINT SCREEN       CTRL+ALT+MINUS  (Use the (–) symbol on the numeric keypad)  Places a snapshot of the active window in the
+                                   Remote Desktop session on the clipboard.
+CTRL+ALT+DEL       CTRL+ALT+END    Displays the Task Manager or Windows Security dialog box. (Only use CTRL+ALT+END to issue
+                                   this command. CTRL+ALT+DEL is always interpreted by the client computer.)
+ALT+PRINT SCREEN   CTRL+ALT+PLUS   (Use the (+) symbol on the numeric keypad) Places a snapshot of the entire Remote Desktop
+                                    session window on the clipboard.
