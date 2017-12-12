@@ -1,0 +1,3 @@
+How to make chrome stop switching to https when you don't want that:
+  chrome://net-internals/#hsts
+  Enter domain under "Delete domain security policy"
