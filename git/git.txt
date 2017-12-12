@@ -33,6 +33,9 @@ git commit -m 'first commit'
 # Force a commit so you can bump things like PR builders
 git commit -m 'bumping' --allow-empty
 
+# Read commit message from stdin (can also use a file instead of -)
+cat myfile | git commit -F -
+
 # WHAT branch am I on?
 git branch
 
