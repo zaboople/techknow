@@ -35,9 +35,9 @@ ${var//pattern/string}	Find and replace all occurrences
 
 # Arrays:
   # Split a line of text into an array:
-  netstat -nr | (while read line; do
+  ps -ef | while read line; do
     arr=(${line})
-    echo ${arr[1]}}
+    echo ${arr[1]} " and " ${arr[2]}
   done;
 
 
