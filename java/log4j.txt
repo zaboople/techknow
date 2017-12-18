@@ -1,0 +1,5 @@
+# Get log4j to up the reporting level for a particular package:
+  # Everything is info:
+  log4j.rootLogger=INFO
+  # This piece of crap gets more:
+  log4j.logger.org.apache.struts2=DEBUG
