@@ -10,3 +10,8 @@ for drive in "$@"
   do
   echo $drive
   done
+
+# Okay while is good too:
+while read line; do
+  echo $line
+done;

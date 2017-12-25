@@ -1,0 +1,8 @@
+How to make chrome stop switching to https when you don't want that:
+  chrome://net-internals/#hsts
+  Enter domain under "Delete domain security policy"
+
+How to customize your user agent
+  Developer Tools -> Select triple-dotted thing at upper right -> More tools -> Network Conditions 
+    Should show a thing at bottom where you can pick a browser user agent for your desired OS etc.
+  Oh but there's also the concentric rectangles in the upper left. That gives you an actual phone screen.

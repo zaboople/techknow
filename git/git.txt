@@ -1,3 +1,6 @@
+https://github.com/blog/2019-how-to-undo-almost-anything-with-git
+http://ohshitgit.com/
+
 # CHECKOUT:
 # Checkout a repo:
 #Be careful, your umask should at least allow u+rwx, esp. x
@@ -36,6 +39,9 @@ git add --all
 git commit -m 'first commit'
 # Force a commit so you can bump things like PR builders
 git commit -m 'bumping' --allow-empty
+
+# Read commit message from stdin (can also use a file instead of -)
+cat myfile | git commit -F -
 
 # WHAT branch am I on?
 git branch
