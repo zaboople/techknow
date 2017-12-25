@@ -20,6 +20,10 @@ git remote rm origin
 git remote add origin git@github.com:<user>/<repo>.git
 # And it my fight you some more
 git push --set-upstream origin master
+#
+# Note: Github says you can push a new repo, but they're lying.
+# You have to create the repo on github first, and then push your
+# local repo on top of it.
 
 
 # Add changes
