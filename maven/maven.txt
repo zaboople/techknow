@@ -15,3 +15,6 @@ Force updates when building, kinda makes it want to refresh the local repo, help
 
 Compile tests:
   test-compile
+
+Maven build up to a war but skip the war part:
+  mvn prepare-package war:exploded

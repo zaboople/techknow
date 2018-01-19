@@ -40,6 +40,16 @@ ${var//pattern/string}	Find and replace all occurrences
     echo ${arr[1]} " and " ${arr[2]}
   done;
 
+# Even better arrays:
+array=(
+    'one' 
+    'two' 
+    'three'
+)
+for x in ${array[@]}
+    do
+    echo $x
+    done
 
 # If tests:
   [ -a FILE ]	True if FILE exists.
