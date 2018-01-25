@@ -1,0 +1,15 @@
+-- Multiline find/replace
+Use perl -0pe
+Example: 
+    Note how I use "(.|\n)*?" to wildcard my way through multiple lines. If necessary, I can use "\r\n" on windows as well (of course the line breaks in $expr & $repl will be the file's line breaks):
+    
+    expr='
+        first(.|\n)*?
+        last
+    '
+    repl='
+        boop
+        beep
+    '
+    perl -0pe "s|$expr|$repl|"
+
