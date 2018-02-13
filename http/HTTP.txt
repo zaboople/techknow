@@ -1,7 +1,8 @@
 CORS - Cross Origin Request Sharing
-  Client sends a normal request, but it should include an "Origin" header like
+  CORS is used when a page served by http://example.com wants to load resources from http://other.com.
+  Client sends a normal request to http://other.com, but it should include an "Origin" header like
     Origin: http://example.com
   Server returns a response header, which will be one of:
-    Access-Control-Allow-Origin: http://example.com    
+    Access-Control-Allow-Origin: http://example.com
     Access-Control-Allow-Origin: *
   The former case allows the original request; the latter promises to allow a request from *anywhere*

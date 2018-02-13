@@ -1,0 +1,4 @@
+# nc, AKA "netcat"
+
+# Test a host/port listener:
+nc -vz host port
