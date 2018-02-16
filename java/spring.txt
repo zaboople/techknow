@@ -9,7 +9,7 @@ Overriding environment variables:
     export FOO_BAR_BASH=....
   You can also do:
     export SPRING_APPLICATION_JSON='{"foo.bar.bash": "...", "blah.beep.burp", 234}'
-  You can also do
+  You can also do a .yaml or .properties file and then point spring at it like so
     java -Dspring.config.location='C:\troy\dev\bin-local\generic_application.yml' -jar blahblah.jar
   And maybe refer to:
     https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-external-config-profile-specific-properties

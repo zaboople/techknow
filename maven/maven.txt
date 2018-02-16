@@ -18,3 +18,25 @@ Compile tests:
 
 Maven build up to a war but skip the war part:
   mvn prepare-package war:exploded
+
+Add memory help and so forth:
+  export MAVEN_OPTS="-Xms256m -Xmx512m"
+
+Allow jar files for distribution to be added:
+  # Add this to pom.xml, and then 'mvn install' will put jar files in target/JARS
+  <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-dependency-plugin</artifactId>
+    <executions>
+      <execution>
+        <id>copy-dependencies</id>
+        <phase>prepare-package</phase>
+        <goals>
+          <goal>copy-dependencies</goal>
+        </goals>
+        <configuration>
+          <outputDirectory>${project.build.directory}/JARS</outputDirectory>
+        </configuration>
+      </execution>
+    </executions>
+  </plugin>
