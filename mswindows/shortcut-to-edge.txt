@@ -1,0 +1,16 @@
+1. Make it
+- open explorer window
+- right-click background
+- select new
+- select shortcut
+- type "microsoft-edge:///" in for the shortcut value, click next/apply/done/ok
+
+2. Make the icon
+- right-click the shortcut
+- select properties
+- select "Change icon"
+- click "browse"
+- go to c:\windows\systemapps
+- there's some garbagey named folder that has "microsoftedge" in that name, click it
+- select the microsoftedge.exe application
+- now you got your icon

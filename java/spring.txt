@@ -1,3 +1,15 @@
 Spring Boot security chapter: http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-security.html
 Spring Boot security configuration class: https://github.com/spring-projects/spring-boot/blob/v1.4.3.RELEASE/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/security/SecurityProperties.java
 Spring Security reference: http://docs.spring.io/spring-security/site/docs/4.1.4.RELEASE/reference/htmlsingle/
+
+Overriding environment variables:
+  If you have this
+    "foo.bar.bash"
+  You override like this:
+    export FOO_BAR_BASH=....
+  You can also do:
+    export SPRING_APPLICATION_JSON='{"foo.bar.bash": "...", "blah.beep.burp", 234}'
+  You can also do a .yaml or .properties file and then point spring at it like so
+    java -Dspring.config.location='C:\troy\dev\bin-local\generic_application.yml' -jar blahblah.jar
+  And maybe refer to:
+    https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-external-config-profile-specific-properties

@@ -1,6 +1,18 @@
 Read without echo
   read -s
 
+Setting your prompt: Put this in your .bash_profile so you can choose between setting window title to
+  the current directory, vs. setting it to an arbitrary string:
+  function setTitle() {
+      export PS1="\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]\n$ "
+      echo -ne "\e]0;$1\a"
+  }
+  function setTitlePath() {
+      export PS1="\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]\n$ "
+  }
+  setTitlePath
+
+
 Send stdin & stdout to the same file
   command &> file
 
@@ -40,6 +52,16 @@ ${var//pattern/string}	Find and replace all occurrences
     echo ${arr[1]} " and " ${arr[2]}
   done;
 
+# Even better arrays:
+array=(
+    'one'
+    'two'
+    'three'
+)
+for x in ${array[@]}
+    do
+    echo $x
+    done
 
 # If tests:
   [ -a FILE ]	True if FILE exists.

@@ -1,0 +1,10 @@
+-- Lambdas:
+  def snot = {x ->
+    println("snot"+x)
+  }
+  snot(1);
+
+  def snot = {
+    println("snot")
+  }
+  snot();
