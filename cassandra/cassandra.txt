@@ -1,0 +1,148 @@
+-------------------
+
+No master/slave, no SPOF; instead peer-to-peer.
+
+Intended to run on commodity hardware; add machines instead of bigger machines.
+
+---
+Replication messes up ACID (Atomicity Consistency Isolation Durability)
+
+CAP Theorem (Consistency Availability Partition tolerance - pick 2): Cassandra gives up on consistency when network  partition happens.
+
+You can choose more consistent vs more available.
+
+Replication factor is how many nodes get copies of your data.
+
+Hinted handoff - replay writes after failure.
+
+Consistency level is set on a per-query basis, and determines when a query is considered resolved:
+  Examples
+    ONE - One replica responds, query is good
+    QUORUM - Majority responds, query is good
+  Lower consistency level allows greater availability (available requires fewer nodes) and faster response
+
+Asynchronous replication
+
+Replication factor is PER KEYSPACE, not database-wide.
+
+---
+
+Coordinator node receives write request; this concept of "coordinator" is a temporary designation.
+
+Commit log is append-only, deletes are "tombstones"
+
+Every *column* in a given write receives a timestamp; goes into an in-memory "memtable"; serializes to a sstable in disk. sstable is immutable.
+
+sstables are merged via compaction; latest timestamp on an sstable's columns wins vs other sstables' copies.
+
+"read repair chance" is a percentage setting that sets the odds that a read will check with other nodes
+
+---
+
+Data can be geographically close to clients
+
+--
+
+State jump normal means booted
+---
+
+Keyspace is a schema
+USE <Keyspace>;
+Create table is just like SQL/DDL
+Int is 32 bit
+UUID & TimeUUID
+  - uuid() is a built-in function
+  - uuid's apparently don't need to be quoted
+Copy command is great at pulling data in from CSV.
+
+
+---
+
+Parititioner takes a partition key and creates a token.
+
+--
+
+DO NOT use cassandra on SAN
+3-5K transactions per core, 1-3 TB per node
+Vertical scaling means bigger servers; horizontal means more nodes.
+Nodes can be decommissioned and thus scale back.
+
+---
+
+Virtual Nodes - VNodes are for partitioning. Rather than having just one partition per node, we can break it down further (configurable in 3.0)
+
+cassandra.yml num_tokens Configures how many vnodes you get per node.
+
+Gossip transmits cluster metadata
+  Heartbeat state: generation/version
+  Application state: Status/DataCenter/Rack/Schema Version/Load/Severity
+  Sends three values: EP (host IP), HB, LOAD
+
+---
+
+Snitch
+  - All nodes must use the same snitch
+  - Changing network topology requires restarting all nodes
+  - Run repair on each node after restart to allow data redistribution
+  - Types
+    - SimpleSnitch default that needs to be changed
+    - PropertyFileSnitch sucks only slightly less
+    - Gossping Property File Snitch is the good one
+    - Dynamic Snitch can wrap other snitches, and tries to figure which nodes are most responsive/least loaded, on by default
+
+---
+
+-- Replication -
+  Strategy must be selected when creating keyspace.
+  Also nodes-per-datacenter is selected; so you can decide how many nodes in each datacenter you want to replicate to.
+
+-- Consistency
+  - With RF=2, Consistency Level=Quorum, a quorum will require 2; but with RF=3 it still requires only 2, so we pay little penalty for odd-numbered clusters/datacenters.
+  - Note that going from write to read, if we write with a quorum and read with a quorum, we always hook up with one node that has the latest data.
+  - Can do write CL=ALL, and then read CL=ONE, and our read is (roughly) guaranteed correct.
+  - Remember that consistency levels only govern *acknowledgement*; the replication doesn't change.
+
+-- Clustering column
+  create table users(state text, city text, name text, id uuid,
+    PRIMARY key((state), city, name, id)
+  ) with clustering order by(city desc, name asc)
+  Primary key ((state), city, name, id) - State is partition key, city + name + id is "clustering column", which is just how data is sorted.
+  When querying, you have to provide equalities = first, inequalities != after.
+
+-- You must always query using your partition key
+unless you use ALLOW FILTERING, although this is bad and will kill the db.
+
+-- DATA REPAIR
+  -- Hinted handoff
+    -- If a node targeted for write is down, the coordinator node hangs on to the data for it, and that. This counts as a "hint". The cassandra.yaml file can disable hinted handoff, and stores the time limit for how long a coordinator will hang onto it.
+    -- Consistency level ANY means that a "hint" is sufficient for writes; all replicas for a partition can be offline.
+
+  -- Read repair
+    -- When a coordinator asks for data, nearest node provides it, others (based on Consistency Level) provide digest values. If the digests don't all match, then timestamps are checked, and latest timestamp wins. Out of sync nodes are given the data.
+    -- Read repair chance/probability is used when you consistency level is less than ALL. (In all honesty, this is some kind of stupid "boost" to your consistency level enforced by a sys admin
+
+  -- Nodetool repair
+    -- Manual tool to repair nodes. Recommended as a maintenance task every XX days.
+
+
+-- Write path
+  -- Order
+    -- Commit log
+    -- Memtable - in Memory. Write is acknowledged. Data is sorted according to clustering rules
+    -- SSTable - on disk. Data is flushed into here. Data is removed from commit log. Immutable. When two sstables have a copy of same data, last write wins.
+    -- SSTable compaction - combines SSTable.
+  -- Recommended: Run commit log on separate disk.
+
+-- Read path: SSTable can have more than one partition. To find partitions
+  -- There is an in-memory Bloom filter: Answers "No" or "Maybe" for which files a partition might be in.
+  -- There is also an in-memory Key Cache of recently accessed partition index
+  -- There is an in-memory Partition Summary index that gives ranges of Partition Tokens in the Partition Index
+  -- SSTable has a Partition Index with offsets of each partition
+  -- * Warning: I'm not so sure about things being only in-memory
+  -- Also note that apparently the different layers exist one-to-one per sstable.
+
+-- Deleted records do not necessarily dissapear during SSTable merge. The "tombstone" stays around until "GC Grace"
+
+-- Compaction
+
+-- Memtables & SSTables are combined using merge sort (in memory, I think).
