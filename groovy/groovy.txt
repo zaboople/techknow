@@ -8,3 +8,29 @@
     println("snot")
   }
   snot();
+
+-- Elvis & Safe navigation operators:
+  // foo will end up null
+  Foo foo = blah()?.maybe()?.probablyNull()?.probablyNullTo();
+  Foo foo2 = foo ?: lookElsewhere();
+
+-- All the groovy operators:
+http://groovy-lang.org/operators.html#_conditional_operators
+
+-- Get head of a list safely with alternate:
+    println(
+      Arrays.asList().find({true}) ?: "alternate"
+    )
+    println(
+      Arrays.asList().find({true}) ?: {
+        println("Executing!")
+        "alternate"
+      }()
+    )
+
+-- Typed lambdas:
+  def makeList = {int i ->
+    blah=[]
+    for (int j=0; j<i; j++) blah.add("x")
+    blah
+  }
