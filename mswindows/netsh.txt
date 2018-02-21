@@ -1,0 +1,3 @@
+# The netsh command is the windows swiss army knife of network stuff.
+# It's way better than ipconfig.
+netsh interface dump | less
