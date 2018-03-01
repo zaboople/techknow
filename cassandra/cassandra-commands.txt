@@ -1,0 +1,58 @@
+Quick Info:
+
+- Programs:
+  Start it up:
+  D:\Programs\apache-cassandra-3.11.1\bin\cassandra.bat
+
+  Query client:
+  D:\Programs\apache-cassandra-3.11.1\bin\cqlsh
+
+-Use a particular keyspace:
+  use big_name;
+
+- Run a script:
+  SOURCE './foo.sql';
+
+-Describe a table:
+    describe big_name.table_name;
+    describe table_name;
+  Also, describe gives you a table create statement that you can use to recreate the table elsewhere.
+
+-Cluster info:
+  select cluster_name, listen_address from system.local;
+
+-Keyspace info:
+  # Now:
+    select * from system_schema.keyspaces;
+  # Then - Formerly known as system.schema_keyspaces in 2.0. Sigh:
+    select * from system.schema_keyspaces;
+
+- Table info:
+    SELECT columnfamily_name from system.schema_columnfamilies
+      where keyspace_name='foo' ;
+
+-Truncate table:
+  truncate tablename;
+
+- UDT (User defined types)
+    CREATE TYPE video_encoding (
+      bit_rates set<text>,
+      encoding text,
+      height int,
+      width int
+    );
+
+- Alter table
+  Supposedly you can add multiple columns at once, but it doesn't actually work. Derp!
+    ALTER TABLE videos add name text;
+    ALTER TABLE videos add encoding frozen <video_encoding>;
+    ALTER TABLE videos add tags set<text>;
+
+- Copy command
+  Great at pulling data in from CSV.
+      Copy table1(col1, col2, col3) from 'table.csv' with header=TRUE
+  You can leave columns out but you might get screwed in the process.
+
+- Do range query on a partition key: Token
+    select * from videos_by_genre where token(genre) > token('Future');
+  Okay that might be dumb, since token generates some randomy number.

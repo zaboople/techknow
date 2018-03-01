@@ -1,0 +1,96 @@
+- You cannot add & remove from the primary key after table create, but you can add & remove non-key columns.
+
+- Composite partition key: PRIMARY key((state, name))
+
+-------------------------------
+
+Upsert:
+- Cassandra does not read before writing, so, given a table with primary key named "key":
+  - If you do
+      update foo set bar='blah' where key=123
+    and there is no record... cassandra will create it!
+  - If you do
+      insert foo (key, bar) values (123, 'another')
+    and the record _already_ exists... cassandra will update it!
+- So inserts can become updates and updates can become inserts. I'm not sure there's any good reason to differentiate, really.
+
+-------------------------------
+Clustering columns:
+- These are part of the primary key, specified after the partition key, e.g.
+    create table foo(
+      a int, b text, c text, d text,
+      primary key((a), b, c)
+    );
+  The clustering columns are b & c. They are used as part of the "cell" name. They group things within a partition.
+- We can fancy things up to control the sorting of the clustering column as:
+    create table foo(
+      a int, b text, c text, d text,
+      primary key((a), b, c)
+    ) with clustering order by (b desc, c asc);
+  Note that in this case our "(a)" could be just "a" because we've clarified things with our explicit "with clustering".
+  Best practice is to do both: Extra parentheses around the partition key, and explicit "with clustering".
+  (Be aware that you can have more than one column in a partition key).
+- Clustering columns create ADDITIONAL uniqueness! So if we do
+    insert into foo (a, b, c, d) values (2, 'b1', 'c1', 'd1');
+    insert into foo (a, b, c, d) values (2, 'b1', 'c2', 'd1');
+  then we get two rows in spite of our upsert rules, because in each case a+b+c is unique. Whereas this:
+    insert into foo (a, b, c, d) values (2, 'b1', 'c1', 'd1');
+    insert into foo (a, b, c, d) values (2, 'b1', 'c1', 'd2');
+  would result in one row with 2, b1, c1, d2 - the original insert plus an insert implicitly converted to upsert.
+- We still MUST query using partition key, but we can optionally add SOME or ALL of our clustering columns to our where clause;
+- We can do range criteria in our where clause - such as >, <, >=, <= - but ONLY against clustering columns, NOT against the primary key:
+    select * from foo where a=2 and b>'a';
+  HOWEVER we cannot do
+    select * from foo where a=2 and c>'a';
+  because we left out b!!! Instead we need to do something like
+    select * from foo where a=2 and b>'a' and  c>'a';
+- We can do order by, but we have to use the clustering columns in order. So we can do:
+    select * from foo order by b;
+  but NOT
+    select * from foo order by c;
+  because we didn't specify b first! Furthermore, if we try:
+    select * from foo order by b, c;
+  we STILL get screwed, because we didn't specify the only allowed sorting, which is:
+    select * from foo order by b desc, c asc;
+  That query actually works.
+- SO:
+  - To get the where's and order by's you need, your table create MUST add clustering columns, and add them in the expected order of your where's and order by's, from most important to least important.
+    So if you have partition key
+      a
+    And clustering columns
+      b, c, d
+    Then the only legal WHERE queries would be:
+      A
+      A B
+      A B C
+      A B C D
+    In other words, you CAN'T do a WHERE on C alone; you must include A & B. And to WHERE on D, you have to also WHERE A, B, & C.
+    (And no, you can't say "where a='*' and b='*' and c='*'")
+    Same applies to order by, but here it's
+      B
+      B C
+      B C D
+    That's only different because you're not ALLOWED to sort by A.
+  - And again: Anything that must go in a WHERE / ORDER BY becomes part of your primary key
+  - Wow. Dang.
+
+- Note that if you do a DESCRIBE TABLE on a table, columns are ordered by
+    - partition keys
+    - clustering columns
+    - and then alphabetical order of the remaining columns.
+    I have noticed this:
+      CREATE TABLE killrvideo.foo (
+          a int,
+          b text,
+          c text,
+          d text,
+          PRIMARY KEY (a, b, c)
+      ) WITH CLUSTERING ORDER BY (b DESC, c ASC);
+    So really, "PRIMARY KEY((a), b, c)" isn't any different from "PRIMARY KEY (a, b, c)".
+    But note that if we handle things in the "WITH CLUSTERING..." we MUST specify desc/asc in there.
+
+
+- Also note: When querying, you have to provide equalities = first, inequalities != after.
+
+
+

@@ -1,0 +1,45 @@
+- Int is 32 bit
+
+- UUID & TimeUUID
+  - uuid() is a built-in function
+  - uuid's apparently don't need to be quoted
+  - now() gives you a timeuuid
+  - sorting by timeuuid means sorting by actual time
+  - note that third set of numbers in xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx
+    is "4" for UUID, "1" for TimeUUID
+
+- Timestamp is 64-bit number, since january 1 1970 000 GMT; displayed as GMT.
+
+- Collection columns: Think java collections, e.g.
+  SET<text>
+  LIST<text>
+  MAP<int, text>
+
+- UDT User defined types - these can be used as column types:
+    CREATE TYPE xx_address (
+      street text, city text, zip_code int,
+      phones SET<text>
+    );
+  But you gotta put "frozen" on 'em like this:
+    CREATE TABLE xx_users (
+      name text,
+      user_address frozen <xx_address>,
+      primary key(name)
+    );
+
+- Counter
+  - Safe for concurrency; kind of like a semaphore
+  - Increment & decrement only; cannot be assigned directly. Initializes to zero.
+  - Apparently if one column is counter, all columns except the partition key must also be counter.
+
+- Static
+  - Apparently same across entire table. Bizarro.
+
+- Tuple
+  -?
+
+- Secondary index?
+  CREATE CUSTOM INDEX  fn_prefix ON cyclist_name (firstname)
+    USING 'org.apache.cassandra.index.sasi.SASIIndex';
+  SELECT * FROM cyclist_name WHERE firstname LIKE 'M%';
+  SELECT * FROM cyclist_name WHERE firstname LIKE 'Mic%';

@@ -1,8 +1,10 @@
 -------------------
 
-No master/slave, no SPOF; instead peer-to-peer.
+No master/slave, no SPOF (single point of failure); instead peer-to-peer.
 
 Intended to run on commodity hardware; add machines instead of bigger machines.
+
+Cassandra does not support joins natively
 
 ---
 Replication messes up ACID (Atomicity Consistency Isolation Durability)
@@ -49,12 +51,6 @@ State jump normal means booted
 Keyspace is a schema
 USE <Keyspace>;
 Create table is just like SQL/DDL
-Int is 32 bit
-UUID & TimeUUID
-  - uuid() is a built-in function
-  - uuid's apparently don't need to be quoted
-Copy command is great at pulling data in from CSV.
-
 
 ---
 
@@ -107,10 +103,10 @@ Snitch
     PRIMARY key((state), city, name, id)
   ) with clustering order by(city desc, name asc)
   Primary key ((state), city, name, id) - State is partition key, city + name + id is "clustering column", which is just how data is sorted.
-  When querying, you have to provide equalities = first, inequalities != after.
+
 
 -- You must always query using your partition key
-unless you use ALLOW FILTERING, although this is bad and will kill the db.
+unless you use ALLOW FILTERING, although this is bad and will kill the db, or secondary indexes which tend to be bad too.
 
 -- DATA REPAIR
   -- Hinted handoff

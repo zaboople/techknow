@@ -1,0 +1,11 @@
+3 types of model
+  - Conceptual - entities & relationships
+  - Logical
+  - Physical
+
+Mapping rules:
+  - Entities and relationships: Figuring out conceptually what conceptual data we need
+  - Equality search attributes: Columns that must come first in key
+  - Inequality search attributes: Columns that come next
+  - Ordering attributes: More columns
+  - Key attributes: Extra columns we need to guarantee uniqueness and avoid upserts
