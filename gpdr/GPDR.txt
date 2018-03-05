@@ -1,0 +1,11 @@
+The rights of the user (AKA “data subject” in the regulation) 
+- Right to erasure: The right to be forgotten/deleted from the system 
+- Right to restriction of processing: You still keep the data, but mark it as “restricted” and don’t touch it without further consent by the user 
+- Right to data portability: The ability to export one’s data in a machine-readable format 
+- Right to rectification: The ability to get personal data fixed 
+- Right to be informed: Getting human-readable information, rather than long terms and conditions 
+- Right of access: The user should be able to see all the data you have about them
+
+Also
+- Data minimization: One should not collect more data than necessary
+- Integrity and confidentiality: All security measures to protect data that you can think of + measures to guarantee that the data has not been inappropriately modified.

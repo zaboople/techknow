@@ -23,6 +23,9 @@ Export a variable name with a default
   #Then it takes your value otherwise.
   export MINE=${MINE:-something}
 
+Get background process PID:
+  pid=$!
+
 Get name of current file
   #This works when you are sourcing a file, i.e. "."'ing it
   echo "${BASH_SOURCE[0]}"

@@ -1,0 +1,26 @@
+-- Doing a minimal apache reverse proxy:
+
+  In httpd.conf:
+    - Change the DocumentRoot to something correct
+    - Change LogLevel to "debug"
+    - Uncomment Include conf/extra/httpd-vhosts.conf
+    - Uncomment LoadModule proxy_module modules/mod_proxy.so
+    - Uncomment LoadModule proxy_http_module modules/mod_proxy_http.so
+    - Uncomment LoadModule headers_module modules/mod_headers.so
+  In extra/httpd-vhosts.conf, remove everything and add this:
+    <VirtualHost *:80>
+      ServerAdmin webmaster@dummy-host.example.com
+      ServerName localhost
+      ServerAlias localhost
+      ErrorLog "logs/error.log"
+      CustomLog "logs/access.log" common
+
+      ProxyPass "/Symphony"  "http://localhost:8080/Symphony"
+      ProxyPassReverse "/Symphony"  "http://localhost:8080/Symphony"
+
+      ProxyPass "/comment-service"  "http://localhost:8081/comment-service"
+      ProxyPassReverse "/comment-service"  "http://localhost:8081/comment-service"
+    </VirtualHost>
+
+  On MS Windows, to create a service:
+    httpd.exe -k install

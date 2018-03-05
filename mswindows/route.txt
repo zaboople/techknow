@@ -1,0 +1,6 @@
+1. To get your interface index:
+  route print -4
+Interfaces will be listed in the first half of output
+
+2. This adds a gatweway of 192.168.13.2 subnet 136.157 to interface 10
+  route -p add 136.157.0.0 mask 255.255.0.0 192.168.13.2 if 10
