@@ -28,6 +28,9 @@ git push --set-upstream origin master
 # You have to create the repo on github first, and then push your
 # local repo on top of it.
 
+# Github ssh broken as usual:
+# When they drop port 22, which tends to not work (because your OS? i dunno) you can try ssh over 443:
+ssh://git@ssh.github.com:443/user/repo.git
 
 # Add changes
 git add .
