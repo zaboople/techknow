@@ -1,5 +1,8 @@
 - You cannot add & remove from the primary key after table create, but you can add & remove non-key columns.
 
+-- You must always query using your partition key
+unless you use ALLOW FILTERING, although this is bad and will kill the db, or secondary indexes which tend to be bad too.
+
 - Composite partition key: PRIMARY key((state, name))
 
 -------------------------------

@@ -30,7 +30,7 @@
 - Counter
   - Safe for concurrency (not actually); kind of like a semaphore
   - Increment & decrement only; cannot be assigned directly. Initializes to zero.
-  - Apparently if one column is counter, all columns except the partition key must also be counter.
+  - Apparently if one column is counter, all columns except the partition key & clustering columns must also be counter.
   - Performance penalty
 
 - Static

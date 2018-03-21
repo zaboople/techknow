@@ -1,2 +1,15 @@
 Cassandra has "lightweight transactions" aka LWT's
-Correctness is guaranteed
+  - Correctness is guaranteed
+  - Note that Inserts, Updates & Deletes are guaranteed to be Atomic, Isolated and Durable. Consistency depends on the usual table/query setup constraints.
+
+This is an example of a LWT:
+    insert into users(name, x, y, z) values ('ralph', 1, 2, 3)
+    IF NOT EXISTS
+Supposedly this will guarantee a duplicate is not created, even if thousands of instances of this query are running simultaneously. Obviously this guarantee is only by node, so different users could run the same query against different nodes without cassandra noticing until it starts syncing things up between nodes.
+
+Here is another:
+    update user_county set counter_column = counter_column + 1 where id=1
+    IF COUNTER_COLUMN = 12
+The IF gives our LWT again
+
+

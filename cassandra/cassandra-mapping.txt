@@ -4,7 +4,7 @@
   - Physical
 
 Mapping rules:
-  - Entities and relationships: Figuring out conceptually what conceptual data we need
+  - Entities and relationships: Figuring out what conceptual data we need
   - Equality search attributes: Columns that must come first in key
   - Inequality search attributes: Columns that come next
   - Ordering attributes: More columns

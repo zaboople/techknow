@@ -7,6 +7,14 @@ Quick Info:
   Query client:
   D:\Programs\apache-cassandra-3.11.1\bin\cqlsh
 
+- Create keyspace (i.e. schema):
+  DROP KEYSPACE IF EXISTS my_keyspace;
+  CREATE KEYSPACE my_keyspace WITH replication = {'class': 'SimpleStrategy', 'replication_factor':3}
+
+- GRANT
+  grant all permissions
+    on mykeyspace.table_a to user_a;
+
 -Use a particular keyspace:
   use big_name;
 
@@ -31,16 +39,8 @@ Quick Info:
     SELECT columnfamily_name from system.schema_columnfamilies
       where keyspace_name='foo' ;
 
--Truncate table:
+- Truncate table:
   truncate tablename;
-
-- UDT (User defined types)
-    CREATE TYPE video_encoding (
-      bit_rates set<text>,
-      encoding text,
-      height int,
-      width int
-    );
 
 - Alter table
   Supposedly you can add multiple columns at once, but it doesn't actually work. Derp!
@@ -53,6 +53,9 @@ Quick Info:
       Copy table1(col1, col2, col3) from 'table.csv' with header=TRUE
   You can leave columns out but you might get screwed in the process.
 
+- You can try using "logged batch" with all the massive data duplication; it "ensures" the batch completes. I dunno. It's not a bulk loading tool, just a batch-query executor.
+
 - Do range query on a partition key: Token
     select * from videos_by_genre where token(genre) > token('Future');
   Okay that might be dumb, since token generates some randomy number.
+

@@ -76,7 +76,7 @@ Clustering columns:
       A B C
       A B C D
     In other words, you CAN'T do a WHERE on C alone; you must include A & B. And to WHERE on D, you have to also WHERE A, B, & C.
-    (And no, you can't say "where a='*' and b='*' and c='*'")
+    (And no, you can't say "where a='*' and b='*' and c='*'") (wait actually i think you can do where a=a and b=b and c=c)
     Same applies to order by, but here it's
       B
       B C

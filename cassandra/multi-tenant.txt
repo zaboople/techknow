@@ -1,0 +1,4 @@
+Three
+  - Shared table: Add a tenant_key to the partition key on each table
+  - Shared keyspace (schema): Each customer gets their own tables. But this can overwhelm a cluster with too many tables, in which case we start making more clusters.
+  - Shared instance: I.E., each customer gets their own keyspace/schema.

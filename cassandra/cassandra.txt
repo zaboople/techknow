@@ -13,7 +13,7 @@ CAP Theorem (Consistency Availability Partition tolerance - pick 2): Cassandra g
 
 You can choose more consistent vs more available.
 
-Replication factor is how many nodes get copies of your data.
+Replication factor is how many nodes get copies of your data. Replication factor is PER KEYSPACE (i.e. per table), not database-wide.
 
 Hinted handoff - replay writes after failure.
 
@@ -25,7 +25,8 @@ Consistency level is set on a per-query basis, and determines when a query is co
 
 Asynchronous replication
 
-Replication factor is PER KEYSPACE, not database-wide.
+Vertical scaling means bigger servers; horizontal means more nodes.
+Nodes can be decommissioned and thus scale back.
 
 ---
 
@@ -57,11 +58,6 @@ Create table is just like SQL/DDL
 Parititioner takes a partition key and creates a token.
 
 --
-
-Vertical scaling means bigger servers; horizontal means more nodes.
-Nodes can be decommissioned and thus scale back.
-
----
 
 Virtual Nodes - VNodes are for partitioning. Rather than having just one partition per node, we can break it down further (configurable in 3.0)
 
@@ -95,16 +91,6 @@ Snitch
   - Note that going from write to read, if we write with a quorum and read with a quorum, we always hook up with one node that has the latest data.
   - Can do write CL=ALL, and then read CL=ONE, and our read is (roughly) guaranteed correct.
   - Remember that consistency levels only govern *acknowledgement*; the replication doesn't change.
-
--- Clustering column
-  create table users(state text, city text, name text, id uuid,
-    PRIMARY key((state), city, name, id)
-  ) with clustering order by(city desc, name asc)
-  Primary key ((state), city, name, id) - State is partition key, city + name + id is "clustering column", which is just how data is sorted.
-
-
--- You must always query using your partition key
-unless you use ALLOW FILTERING, although this is bad and will kill the db, or secondary indexes which tend to be bad too.
 
 -- DATA REPAIR
   -- Hinted handoff
@@ -140,3 +126,4 @@ unless you use ALLOW FILTERING, although this is bad and will kill the db, or se
 -- Compaction
 
 -- Memtables & SSTables are combined using merge sort (in memory, I think).
+

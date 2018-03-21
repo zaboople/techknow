@@ -24,3 +24,6 @@ Values per partition (cells per partition) < 2billion
       adds the size of its column name
 
 As a result, extra key columns reduce the cells per partition (good) but increase the size of the partition because they get added to each cell.
+
+
+Note that each table requires its own MemTable on the java heap. More tables means more heap.
