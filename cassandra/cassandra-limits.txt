@@ -1,0 +1,26 @@
+Limits:
+DO NOT use cassandra on SAN
+3-5K transactions per core, 1-3 TB per node
+
+Values per partition (cells per partition) < 2billion
+  To calculate cells per partition:
+    NV = (NR x (NC - NPK - NS)) + NS
+    NV: Number of values aka cells
+    NR: Number of rows
+    NC: Total number of columns
+    NPK: Number of primary key columns (because they don't count)
+    NS: Number of static columns (because they don't count, except at the very end)
+
+2.0 and earlier should be < 100MB per partition; 2.1 can do several 100's
+  Calculating size of partition:
+    Each Key column (partition & clustering columns) adds its own size
+    Each Static column
+      adds its own size
+      adds an 8 byte timestamp
+    Each cell
+      adds its own data's size
+      uses an 8-byte timestamp
+      has a copy of the clustering columns, so adds their size too
+      adds the size of its column name
+
+As a result, extra key columns reduce the cells per partition (good) but increase the size of the partition because they get added to each cell.

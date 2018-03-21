@@ -1,0 +1,2 @@
+Cassandra has "lightweight transactions" aka LWT's
+Correctness is guaranteed

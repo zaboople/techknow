@@ -28,12 +28,13 @@
     );
 
 - Counter
-  - Safe for concurrency; kind of like a semaphore
+  - Safe for concurrency (not actually); kind of like a semaphore
   - Increment & decrement only; cannot be assigned directly. Initializes to zero.
   - Apparently if one column is counter, all columns except the partition key must also be counter.
+  - Performance penalty
 
 - Static
-  - Apparently same across entire table. Bizarro.
+  - Stored once per partition key value. (Clustering columns don't count)
 
 - Tuple
   -?

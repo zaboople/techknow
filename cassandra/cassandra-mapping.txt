@@ -9,3 +9,7 @@ Mapping rules:
   - Inequality search attributes: Columns that come next
   - Ordering attributes: More columns
   - Key attributes: Extra columns we need to guarantee uniqueness and avoid upserts
+
+
+  - 1:1 table: Pick your keys from either table
+  - 1:N table: Need the keys from the N table

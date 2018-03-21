@@ -58,8 +58,6 @@ Parititioner takes a partition key and creates a token.
 
 --
 
-DO NOT use cassandra on SAN
-3-5K transactions per core, 1-3 TB per node
 Vertical scaling means bigger servers; horizontal means more nodes.
 Nodes can be decommissioned and thus scale back.
 
