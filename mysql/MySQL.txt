@@ -3,7 +3,6 @@ select user,host from mysql.user;
 show grants for user @ host;
 show grants for bob @ '%';
 
-
 # Get stats on your tables
 SELECT table_schema, table_name, table_rows,
   ROUND((data_length + index_length) / (1024 * 1024), 2 ) AS "MB"
@@ -14,3 +13,6 @@ order by table_schema;
 
 # Schemas
 select * from information_schema.SCHEMATA order by schema_name;
+
+# MySQLDump
+mysqldump --lock-tables=false -h SERVER -u USER --password SCHEMA TABLE
