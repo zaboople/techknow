@@ -1,0 +1,1 @@
+println(String.format("%10.4f", 100D/2234D))

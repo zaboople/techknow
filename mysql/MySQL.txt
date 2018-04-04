@@ -8,6 +8,7 @@ SELECT table_schema, table_name, table_rows,
   ROUND((data_length + index_length) / (1024 * 1024), 2 ) AS "MB"
 FROM information_schema.TABLES
 where table_schema not in ('mysql', 'information_schema', 'sys')
+and table_name='polltable'
 and table_rows > 0
 order by table_schema;
 

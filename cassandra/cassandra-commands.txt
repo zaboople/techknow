@@ -11,6 +11,22 @@ Quick Info:
   DROP KEYSPACE IF EXISTS my_keyspace;
   CREATE KEYSPACE my_keyspace WITH replication = {'class': 'SimpleStrategy', 'replication_factor':3}
 
+- Create table
+
+DROP TABLE IF EXISTS test1.table1;
+CREATE TABLE test1.table1 (
+    clientid int,
+    siteid int,
+    local_year int,
+    local_day_of_year int,
+    srckey text,
+    ts timestamp,
+    value double,
+    raw int,
+    PRIMARY KEY ( (clientid, siteid, local_year, local_day_of_year), ts, srckey)
+) WITH CLUSTERING ORDER BY (ts DESC, anakey ASC);
+
+
 - GRANT
   grant all permissions
     on mykeyspace.table_a to user_a;
