@@ -52,6 +52,9 @@ CREATE TABLE test1.table1 (
     select * from system.schema_keyspaces;
 
 - Table info:
+  # Now
+    select * from system_schema.tables;
+  # Then
     SELECT columnfamily_name from system.schema_columnfamilies
       where keyspace_name='foo' ;
 

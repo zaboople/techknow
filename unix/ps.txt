@@ -1,0 +1,2 @@
+# Get the virtual (vsz) and resident memory (rss)
+ps -eo pid,vsz,rss,%cpu,args
