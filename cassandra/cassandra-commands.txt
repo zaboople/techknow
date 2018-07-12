@@ -9,7 +9,8 @@ Quick Info:
 
 - Create keyspace (i.e. schema):
   DROP KEYSPACE IF EXISTS my_keyspace;
-  CREATE KEYSPACE my_keyspace WITH replication = {'class': 'SimpleStrategy', 'replication_factor':3}
+  # Note that the replication factor here is 1, i.e. for a single-node cluster.
+  CREATE KEYSPACE my_keyspace WITH replication = {'class': 'SimpleStrategy', 'replication_factor':1}
 
 - Create table
 
@@ -78,3 +79,6 @@ CREATE TABLE test1.table1 (
     select * from videos_by_genre where token(genre) > token('Future');
   Okay that might be dumb, since token generates some randomy number.
 
+- Get partition size
+    ./nodetool.bat tablestats zzzz.time_series
+    Look for "Compacted partition maximum bytes"

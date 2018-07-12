@@ -10,7 +10,6 @@ bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
 # List topic
 bin/kafka-console-consumer.sh --bootstrap-server localhost:9092  --from-beginning --topic A1
 
-
 #Kafka will screw up trying to mess with files on windows.
 Stop the Zookeeper process.
 Go to your Zookeeper logs folder zookeeper-3.x.x\bin\zookeeper-3.x.xdata\version-2\ and delete the latest log.xx files.
