@@ -3,11 +3,12 @@ To verify you're really compiling to java 7 not 8:
     java.util.Arrays.parallelSort(ray)
 
 Disable stupid dock on osx
-  -Dapple.awt.UIElement=true 
+  -Dapple.awt.UIElement=true
 
-How to install old javas:  
+How to install old javas:
   http://www.oracle.com/technetwork/java/archive-139210.html
   http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-javase6-419409.html
-  
 
-  
+
+Get system uptime:
+    System.out.println("Uptime "+java.lang.management.ManagementFactory.getRuntimeMXBean().getUptime());

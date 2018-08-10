@@ -13,3 +13,14 @@ psql -h localhost -p 5432 -U myuser -d postgres
 SELECT table_schema,table_name
 FROM information_schema.tables
 ORDER BY table_schema,table_name;
+
+# Run postgres in docker
+docker pull postgres:9.4
+docker run -p 5432:5432 -d --env POSTGRES_USER=myuser --env POSTGRES_PASSWORD=mypass "postgres:9.4"
+docker ps
+export PGPASSWORD=mypass
+# Connecting:
+# If you don't suck:
+psql -h localhost -p 5432 -U myuser -d postgres
+# If you used sucky docker-machine:
+psql -h $(docker-machine ip dev) -p 5432 -U myuser -d postgres
