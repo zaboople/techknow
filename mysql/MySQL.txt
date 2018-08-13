@@ -1,3 +1,7 @@
+# Get output into text file:
+mysql ... -e 'select * from'
+mysql ... < query.sql
+
 # List users
 select user,host from mysql.user;
 show grants for user @ host;
