@@ -24,7 +24,7 @@ Quick Info:
 - Create keyspace (i.e. schema):
   DROP KEYSPACE IF EXISTS my_keyspace;
   # Note that the replication factor here is 1, i.e. for a single-node cluster.
-  CREATE KEYSPACE time_series WITH replication = {'class': 'SimpleStrategy', 'replication_factor':3}
+  CREATE KEYSPACE time_series_ptest WITH replication = {'class': 'SimpleStrategy', 'replication_factor':3}
 
 - Create table
 
