@@ -24,3 +24,13 @@ sdf.setTimeZone(TimeZone.getTimeZone("US/Mountain"))
 println(sdf.parse("12-01-2012 00:00:00"))
 sdf.setTimeZone(TimeZone.getTimeZone("US/Pacific"))
 println(sdf.parse("12-01-2012 00:00:00"))
+
+
+println("\nFormatting dates using the quirky format API: ");
+import java.util.Arrays
+import java.util.stream.Collectors
+//String prefix="%1\$t"
+println("Format $format2s")
+println(
+    String.format(format2s, new java.util.Date())
+)
