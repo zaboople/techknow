@@ -1,2 +1,5 @@
 # Get the virtual (vsz) and resident memory (rss)
 ps -eo pid,vsz,rss,%cpu,args
+
+# Sorting the above by rss memory
+ps -eo pid,vsz,rss,%cpu,args | sort -k 3 -n
