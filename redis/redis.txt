@@ -1,0 +1,5 @@
+# Run redis in docker:
+docker run --name some-redis -d -p 6379:6379 redis
+docker stop some-redis; docker rm some-redis
+
+# https://docs.docker.com/samples/library/redis/#start-a-redis-instance

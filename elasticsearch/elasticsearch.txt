@@ -1,0 +1,5 @@
+# Run redis in docker:
+docker run -d --name elearch -p 9200:9200 -p 9300:9300 -p 27017:27017 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:6.3.1
+docker stop elearch; docker rm elearch
+
+# https://docs.docker.com/samples/library/redis/#start-a-redis-instance

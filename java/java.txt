@@ -19,3 +19,7 @@ Failing java preferences (copied from stackoverflow):
   and/or
     HKEY_LOCAL_MACHINE\Software\WOW6432Node\JavaSoft
   Create a new key named "Prefs" here.
+
+Get system uptime:
+    System.out.println("Uptime "+java.lang.management.ManagementFactory.getRuntimeMXBean().getUptime());
+

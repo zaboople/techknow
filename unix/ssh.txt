@@ -1,0 +1,10 @@
+# Port forwarding for the client's sake:
+#
+# In this case
+#    I want to get to lockedaway.com:8500
+#    I'll expose it as 127.0.0.1:8501 on my own computer
+#    I'll use accessible.com as my "proxy"
+# Note that the 127.0.0.1 keeps other people from using my box as an open proxy; I could leave it off.
+# Also the -nNT
+ssh -nNT -L 127.0.0.1:8501:lockedaway.com:8500 myuser@accessible.com
+

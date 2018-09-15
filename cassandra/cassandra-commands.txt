@@ -7,9 +7,40 @@ Quick Info:
   Query client:
   D:\Programs\apache-cassandra-3.11.1\bin\cqlsh
 
+
+-Keyspace info:
+  # Now:
+    select * from system_schema.keyspaces;
+  # Then - Formerly known as system.schema_keyspaces in 2.0. Sigh:
+    select * from system.schema_keyspaces;
+
+- Table info:
+  # Now
+    select * from system_schema.tables;
+  # Then
+    SELECT columnfamily_name from system.schema_columnfamilies
+      where keyspace_name='foo' ;
+
 - Create keyspace (i.e. schema):
   DROP KEYSPACE IF EXISTS my_keyspace;
-  CREATE KEYSPACE my_keyspace WITH replication = {'class': 'SimpleStrategy', 'replication_factor':3}
+  # Note that the replication factor here is 1, i.e. for a single-node cluster.
+  CREATE KEYSPACE time_series_ptest WITH replication = {'class': 'SimpleStrategy', 'replication_factor':3}
+
+- Create table
+
+DROP TABLE IF EXISTS test1.table1;
+CREATE TABLE test1.table1 (
+    clientid int,
+    siteid int,
+    local_year int,
+    local_day_of_year int,
+    srckey text,
+    ts timestamp,
+    value double,
+    raw int,
+    PRIMARY KEY ( (clientid, siteid, local_year, local_day_of_year), ts, srckey)
+) WITH CLUSTERING ORDER BY (ts DESC, anakey ASC);
+
 
 - GRANT
   grant all permissions
@@ -29,15 +60,6 @@ Quick Info:
 -Cluster info:
   select cluster_name, listen_address from system.local;
 
--Keyspace info:
-  # Now:
-    select * from system_schema.keyspaces;
-  # Then - Formerly known as system.schema_keyspaces in 2.0. Sigh:
-    select * from system.schema_keyspaces;
-
-- Table info:
-    SELECT columnfamily_name from system.schema_columnfamilies
-      where keyspace_name='foo' ;
 
 - Truncate table:
   truncate tablename;
@@ -59,3 +81,6 @@ Quick Info:
     select * from videos_by_genre where token(genre) > token('Future');
   Okay that might be dumb, since token generates some randomy number.
 
+- Get partition size
+    ./nodetool.bat tablestats zzzz.time_series
+    Look for "Compacted partition maximum bytes"
