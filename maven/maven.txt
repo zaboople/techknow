@@ -7,6 +7,9 @@ Skip tests:
   Example:
     mvn -Dmaven.test.skip=true install
 
+Find out where local maven repo is
+  mvn help:evaluate -Dexpression=settings.localRepository
+
 Run one test:
   mvn test -Dtest=classname
   mvn test -Dtest=classname#function

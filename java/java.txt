@@ -10,5 +10,16 @@ How to install old javas:
   http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-javase6-419409.html
 
 
+Failing java preferences (copied from stackoverflow):
+    "java.util.prefs.WindowsPreferences <init>
+    WARNING: Could not open/create prefs root node Software\JavaSoft\Prefs
+    at root 0x80000002. Windows RegCreateKeyEx(...) returned error code 5."
+  In regedit, Navigate to path
+    HKEY_LOCAL_MACHINE\Software\JavaSoft
+  and/or
+    HKEY_LOCAL_MACHINE\Software\WOW6432Node\JavaSoft
+  Create a new key named "Prefs" here.
+
 Get system uptime:
     System.out.println("Uptime "+java.lang.management.ManagementFactory.getRuntimeMXBean().getUptime());
+

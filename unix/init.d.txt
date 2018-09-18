@@ -1,0 +1,6 @@
+First add the script to /etc/init.d
+
+Then do:
+sudo update-rc.d <service> defaults
+
+But I think that requires comments in the script detailing which run levels are what

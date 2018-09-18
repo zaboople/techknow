@@ -178,3 +178,13 @@ git update-index --no-assume-unchanged [files]
 git stash save
 git checkout <branch>
 git stash pop
+
+
+# TAGS
+# Make tag
+git tag "tagname"
+git push origin "tagname"
+# List remote tags:
+git ls-remote --tags origin
+# Delete remote tag
+git push --delete origin 'pre-microservice-device-time-series'

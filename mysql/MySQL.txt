@@ -1,3 +1,9 @@
+# Get output into text file:
+mysql ... -e 'select * from'
+mysql ... < query.sql
+# Note here that -t gives me nice formatting; otherwise it's TSV
+cat xxx.sql | mysql -t -h $HOST -u $USER --password=$PASS
+
 # List users
 select user,host from mysql.user;
 show grants for user @ host;
