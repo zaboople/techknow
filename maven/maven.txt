@@ -1,3 +1,6 @@
+Alternate settings file:
+  -gs foo.xml
+
 Skip tests:
   -Dmaven.test.skip=true
 
