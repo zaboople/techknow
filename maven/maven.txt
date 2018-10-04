@@ -1,31 +1,31 @@
-Skip tests:
+#Skip tests:
   -Dmaven.test.skip=true
 
   Example:
     mvn -Dmaven.test.skip=true install
 
-Find out where local maven repo is
+#Find out where local maven repo is
   mvn help:evaluate -Dexpression=settings.localRepository
 
-Run one test:
+#Run one test:
   mvn test -Dtest=classname
   mvn test -Dtest=classname#function
 
-Clean up the fucking mess when things are fucked:
+#Clean up the fucking mess when things are fucked:
   mvn dependency:purge-local-repository
-Force updates when building, kinda makes it want to refresh the local repo, helps sometimes:
+#Force updates when building, kinda makes it want to refresh the local repo, helps sometimes:
   mvn -U
 
-Compile tests:
+#Compile tests:
   test-compile
 
-Maven build up to a war but skip the war part:
+#Maven build up to a war but skip the war part:
   mvn prepare-package war:exploded
 
-Add memory help and so forth:
+#Add memory help and so forth:
   export MAVEN_OPTS="-Xms256m -Xmx512m"
 
-Allow jar files for distribution to be added:
+# Allow jar files for distribution to be added:
   # Add this to pom.xml, and then 'mvn install' will put jar files in target/JARS
   <plugin>
     <groupId>org.apache.maven.plugins</groupId>
@@ -33,7 +33,7 @@ Allow jar files for distribution to be added:
     <executions>
       <execution>
         <id>copy-dependencies</id>
-        <phase>prepare-package</phase>
+        <phase>initialize</phase>
         <goals>
           <goal>copy-dependencies</goal>
         </goals>
@@ -43,3 +43,34 @@ Allow jar files for distribution to be added:
       </execution>
     </executions>
   </plugin>
+
+
+# Shade plugin for uberjar:
+<project>
+    <build>
+        <plugins>
+            ....
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                    <goal>shade</goal>
+                    </goals>
+                    <configuration>
+                    <transformers>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                        <mainClass>com.siemens.Boot</mainClass>
+                        </transformer>
+                    </transformers>
+                    </configuration>
+                </execution>
+                </executions>
+            </plugin>
+            ....
+        </plugins>
+    </build>
+</project>
