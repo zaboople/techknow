@@ -1,5 +1,8 @@
 Get all the ports being listened on:
     netstat -plunt
+
 The -u gets you UDP in addition to TCP.
 
 The PID of the process listening will be in the far right column
+
+Disable reverse dns with -n

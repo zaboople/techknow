@@ -1,3 +1,7 @@
+
+# Sort keys
+jq --sort-keys
+
 # QUOTING: You don't HAVE to quote things, but you'll have less problems if you always do.
 # 1. Surround your expression with single quotes first, so that unix will leave the inside of
 # those quotes alone
