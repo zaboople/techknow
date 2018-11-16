@@ -1,6 +1,10 @@
 Read without echo
   read -s
 
+Read an entire file:
+  mystring=$(cat)
+
+
 Setting your prompt: Put this in your .bash_profile so you can choose between setting window title to
   the current directory, vs. setting it to an arbitrary string:
   function setTitle() {
