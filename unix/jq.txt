@@ -24,20 +24,39 @@ jq "."
 .[]
 .[1]
 
+# Multi-level drill down:
+    # Get everything named bar under things named .foo
+    jq '.foo.bar'
+
+    # Get multiple values at the same level
+    jq '.first,.second'
+
+    # And this works no matter how funky the names are:
+    jq -M '."do-g"."c@at"'
+
+## ARRAYS:
 # Get the names of all the dogs in {"dogs": [{name: "spike", ...}, {...}, ...]}
 .dogs[].name
 
-# Get multiple values at the same level
-jq '.first,.second'
+# Multiple values from array members
+    # Prints them on separate lines - not so great:
+    echo '[ {"ts":"ts1", "key": "key1"}, {"ts":"ts2", "key":"key2"} ]' | jq '.[] | .ts,.key'
 
-# And this works no matter how funky the names are:
-jq -M '."do-g"."c@at"'
+    # Prints them as space delimited lines using + operator - but this will fail on numbers ha ha
+    echo '[ {"ts":"ts1", "key": "key1"}, {"ts":"ts2", "key":"key2"} ]' | jq -r '.[] | .ts +" "+ .key'
 
-# Get everything named bar under things named .foo
-jq '.foo.bar'
+    # Okay this actually works:
+    echo '[ {"ts":"ts1", "key": "key1"}, {"ts":"ts2", "key":"key2"} ]' | jq -r '.[] | "\(.ts) \(.key)"'
+
+    # Okay this is utterly wicked - transform one array into another:
+    echo '[ {"ts":"ts1", "key": "key1", "junk":"balkd"}, {"ts":"ts2", "key":"key2", "junk":"balkdwefw"} ]' \
+        | jq -r '[.[] | {ts: .ts, key:.key}]'
 
 # This will get the entire array named Clusters - all elements in the array
 jq '.Clusters[]'
+
+
+# BELOW HERE I DUNNO
 
 # This will get both attributes in the array of stuff under Clusters, but instead
 # of pairing them up, it will split them out:
