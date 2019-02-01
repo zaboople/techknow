@@ -5,6 +5,7 @@ import java.util.Date
 import java.time.format.DateTimeFormatter
 import java.time.ZonedDateTime
 import java.time.Instant
+import java.time.ZoneId
 
 class DateMaster {
 
@@ -61,13 +62,19 @@ class DateMaster {
         testDate("2018-05-01T15:55:20-0500")
         testDate("2018-11-01T13:30:00-0700")
         testDate("2018-05-01T15:55:20-05:15")
+        testDate("2018-05-01T15:55:20 America/New_York")
         testDate("Friday, May 25, 2018 8:53:52 AM CDT")
         testDate("Monday, Jan 1, 2018 8:53:52 AM CDT")
         testDate("Mon, Jan 1, 2018 8:53:52 AM CDT")
         testDate("Mon, January 1, 2018 8:53:52 AM CDT")
         testDate("Mon, January 1, 2018 8:53:52 AM Central Daylight Time")
         testDate("Friday, July 6, 2018 12:00:00 AM CDT");
+        testDate("Friday, July 6, 2018 12:00:00 AM America/Chicago");
 
         testDate(DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL).format(new java.util.Date()))
+
+        testDate("2019-01-09T00:00:00-0600")
+        ZoneId zone=ZoneId.of("GMT");
+        println(zone)
     }
 }

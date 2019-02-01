@@ -14,6 +14,11 @@ println(sdf.parse("12-01-2012 00:00:00 -0600"))
 println(sdf.parse("12-01-2012 00:00:00 -0700"))
 println(sdf.parse("12-01-2012 00:00:00 -0800"))
 
+println("\nISO")
+sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz", Locale.ENGLISH);
+println(sdf.parse("2013-03-15T10:00:02+0000"))
+
+
 println("\nNo time zone in date string, alternate route:")
 sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.ENGLISH);
 sdf.setTimeZone(TimeZone.getTimeZone("US/Eastern"))
@@ -26,11 +31,28 @@ sdf.setTimeZone(TimeZone.getTimeZone("US/Pacific"))
 println(sdf.parse("12-01-2012 00:00:00"))
 
 
-println("\nFormatting dates using the quirky format API: ");
-import java.util.Arrays
-import java.util.stream.Collectors
+//println("\nFormatting dates using the quirky format API: ");
+//import java.util.Arrays
+//import java.util.stream.Collectors
 //String prefix="%1\$t"
-println("Format $format2s")
-println(
-    String.format(format2s, new java.util.Date())
-)
+//println("Format \$format2s")
+//println(
+//    String.format(format2s, new java.util.Date())
+//)
+
+
+
+println("\nGrabbing midnight in a different time zone")
+Calendar cal = Calendar.getInstance();
+setMidnight(cal)
+System.out.println(cal.getTime())
+cal.setTimeZone(TimeZone.getTimeZone("US/Pacific"))
+setMidnight(cal)
+System.out.println(cal.getTime())
+
+static def setMidnight(Calendar cal) {
+    cal.set(Calendar.HOUR_OF_DAY, 0)
+    cal.set(Calendar.MINUTE, 0)
+    cal.set(Calendar.SECOND, 0)
+    cal.set(Calendar.MILLISECOND,0)
+}

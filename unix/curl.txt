@@ -1,6 +1,12 @@
 Proxy: --proxy
 
 
+# POST
+#   When posting json data, always do
+      -H 'Content-Type: application/json'
+#   because otherwise curl tries to url-encode it
+
+
 *********************
 -- Multipart forms
   - boundary: This is how you define separation of parts, but it's weird. If your boundary is "zzzzz", then
