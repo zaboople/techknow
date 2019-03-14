@@ -22,3 +22,6 @@ I have had problems with losing permissions to my own files
   Change to:
     none /cygdrive cygdrive binary,noacl,posix=0,user 0 0
 This is apparently caused by cygwin trying to interpret the owner of the C drive (which is usually administrator).
+
+And finally the super-magic permission fix!
+    setfacl -b .

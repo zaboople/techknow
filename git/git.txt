@@ -1,6 +1,9 @@
 https://github.com/blog/2019-how-to-undo-almost-anything-with-git
 http://ohshitgit.com/
 
+# Ignore line delimiter changes in git diff
+git diff --ignore-cr-at-eol
+
 # CHECKOUT:
 # Checkout a repo:
 #Be careful, your umask should at least allow u+rwx, esp. x
@@ -188,3 +191,5 @@ git push origin "tagname"
 git ls-remote --tags origin
 # Delete remote tag
 git push --delete origin 'pre-microservice-device-time-series'
+
+

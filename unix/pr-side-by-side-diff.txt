@@ -1,0 +1,2 @@
+# -w is the number of columns
+pr -w 120 -m -t file1 file2

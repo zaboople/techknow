@@ -3,3 +3,8 @@
   log4j.rootLogger=INFO
   # This piece of crap gets more:
   log4j.logger.org.apache.struts2=DEBUG
+  
+# This is another way to force control of logging, when it fights you
+# We've defined a logger named "dinkus", so we're going to set its threshold.
+# This doesn't give us thresholding by package, but fine, it helps shut everyone up:
+log4j.appender.dinkus.threshold=INFO
