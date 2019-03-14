@@ -23,3 +23,7 @@ select * from information_schema.SCHEMATA order by schema_name;
 
 # MySQLDump
 mysqldump --lock-tables=false -h SERVER -u USER --password SCHEMA TABLE
+
+# Process list
+# This is much better than `show full processlist`
+select * from information_schema.processlist where command<>'Sleep';

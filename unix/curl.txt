@@ -1,5 +1,11 @@
-Proxy: --proxy
+*********************
+# Compress: -- compress
 
+*********************
+
+# Proxy: --proxy
+
+*********************
 
 # POST
 #   When posting json data, always do

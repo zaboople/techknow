@@ -4,3 +4,8 @@ Then do:
 sudo update-rc.d <service> defaults
 
 But I think that requires comments in the script detailing which run levels are what
+
+# The systemctl way
+systemctl stop service
+systemctl start service
+systemctl restart service

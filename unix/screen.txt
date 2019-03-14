@@ -1,0 +1,8 @@
+# Startup a screen:
+screen -S <name>
+
+# Detach so it can keep running
+ctrl-a ctrl-d
+
+# Connect back to it
+screen -r resume
