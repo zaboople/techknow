@@ -1,0 +1,1 @@
+Turn off aero-peek in system->advanced settings->Performance->enable aero peek
