@@ -1,3 +1,5 @@
+# Loop thru some strings
+for i in "1" "2" "3"; do  echo $i; done
 
 # Loop on a number:
 for (( i=1; i <= 105; i++ ))

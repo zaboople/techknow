@@ -1,3 +1,5 @@
+Default port is 9042
+
 -------------------
 
 No master/slave, no SPOF (single point of failure); instead peer-to-peer.

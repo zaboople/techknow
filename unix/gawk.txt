@@ -1,0 +1,2 @@
+Pass a variable with -v
+gawk -v x="hello" '{print $x $0}'

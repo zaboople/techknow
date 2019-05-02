@@ -27,3 +27,10 @@ mysqldump --lock-tables=false -h SERVER -u USER --password SCHEMA TABLE
 # Process list
 # This is much better than `show full processlist`
 select * from information_schema.processlist where command<>'Sleep';
+
+# Get transaction isolation
+SELECT @@global.tx_isolation;
+
+# When you use older mysql and you get error on type=INNODB use Engine=InnoDB instead
+ CREATE TABLE `meta_grouping` (...
+) ENGINE=InnoDB
