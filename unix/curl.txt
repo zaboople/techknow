@@ -12,6 +12,7 @@
       -H 'Content-Type: application/json'
 #   because otherwise curl tries to url-encode it
 
+curl -d "param1=x&pram2=y"
 
 *********************
 -- Multipart forms

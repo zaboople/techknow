@@ -1,3 +1,6 @@
+# Skip column names
+--skip-column-names
+
 # Get output into text file:
 mysql ... -e 'select * from'
 mysql ... < query.sql

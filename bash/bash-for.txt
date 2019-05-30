@@ -13,7 +13,12 @@ for drive in "$@"
   echo $drive
   done
 
+for x in ${@}; do
+    echo $x
+done
+
 # Okay while is good too:
 while read line; do
   echo $line
 done;
+

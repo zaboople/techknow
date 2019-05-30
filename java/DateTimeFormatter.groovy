@@ -10,14 +10,15 @@ import java.time.ZoneId
 class DateMaster {
 
     // This allows for retarded time zone name, time zone offset with/without ':', the "T" in the middle (or not)
-    static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd['T'][' ']HH:mm:ss[XXX][XX][X][' 'zzzz]")
+    private final static DateTimeFormatter dtfAnything =
+        DateTimeFormatter.ofPattern("yyyy-MM-dd['T'][' ']HH:mm:ss[XXX][XX][X][' 'zzzz]")
     private final static DateTimeFormatter dfFormatWithOffset=
         DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss[XXXX]")
 
     private static void testDate(String sdate) {
         System.out.println("\nTesting "+sdate)
         try {
-            ZonedDateTime date=ZonedDateTime.parse(sdate, dtf)
+            ZonedDateTime date=ZonedDateTime.parse(sdate, dtfAnythingy)
             Date oldDate=Date.from(date.toInstant());
             System.out.println("ZonedDateTime:    "+date)
             System.out.println("With nice offset: "+dfFormatWithOffset.format(date))

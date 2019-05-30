@@ -193,3 +193,6 @@ git ls-remote --tags origin
 git push --delete origin 'pre-microservice-device-time-series'
 
 
+# Proxying to git:
+#   Add this to your ~/.ssh/config, where 194.etc is the host/port i'm proxying through:
+ProxyCommand /usr/bin/nc -X connect -x 194.145.60.1:9400 %h %p
