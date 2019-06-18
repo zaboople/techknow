@@ -6,9 +6,11 @@ public class Goober {
 // time zone is.
 
     public static void main(String[] args) {
-        println("\nISO")
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz");
-        println(sdf.parse("2013-03-15T10:00:02+0000"))
+        println("\nISO - X is the magical thing")
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX");
+        println(sdf.parse("2013-03-15T10:00:01+0000"))
+        println(sdf.parse("2013-03-15T10:00:02Z"))
+        println(sdf.parse("2013-03-15T10:00:03-0500"))
 
         println("\nNo time zone in date string, alternate route:")
         sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");

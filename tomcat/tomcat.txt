@@ -1,0 +1,9 @@
+# If you are getting errors about stupid reflection things, try 
+# changing $CATALINA_HOME/conf/catalina.policy:
+
+grant codeBase "file:${catalina.base}/webapps/MyLittleApp/WEB-INF/classes/-" {
+  permission java.security.AllPermission;
+};
+grant codeBase "file:${catalina.base}/webapps/MyLittleApp/WEB-INF/lib/-" {
+  permission java.security.AllPermission;
+};

@@ -1,0 +1,22 @@
+*** Cache-Control: must-revalidate
+This tells the cache it must verify the status of the stale resource before using it and expired ones should not be used.
+
+*** Cache-Control: max-age=60
+This specifies the length of time in seconds the resource should be cached.So a max-age=60 means that it should be cached for 1 minute. RFC 2616 recommends that the maximum value for should no longer than 1 year (max-age=31536000).
+
+**** Cache-Control: no-cache
+It doesn’t mean “do not cache”. This tells the browser to cache the file but not to use it until it checks with the server to validate we have the latest version. This validation is done with the ETag header. This is commonly used with HTML files since it makes sense for the browser to always check for the latest markup.
+
+**** Cache-Control: must-revalidate
+Indicates that once a resource has become stale (e.g. max-age has expired), a cache must not use the response to satisfy subsequent requests for this resource without successful validation on the origin server.
+
+
+
+Cache-Control: public
+public means that the resource can be cached by any cache (browser, CDN, etc)
+
+Cache-Control: private
+private means that the resource can only be cached by the browser
+
+Cache-Control: no-store
+This tells the browser to always request the resource from the server

@@ -70,6 +70,10 @@ for x in ${array[@]}
     echo $x
     done
 
+# Associative array/map
+declare -A myMap
+myMap["foo"]="bar"
+
 # If tests:
   [ -a FILE ]	True if FILE exists.
   [ -b FILE ]	True if FILE exists and is a block-special file.

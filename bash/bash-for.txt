@@ -17,6 +17,11 @@ for x in ${@}; do
     echo $x
 done
 
+# A better way to loop thru arrays:
+for x in ${ray[*]}; do
+  echo "ray $x"
+done
+
 # Okay while is good too:
 while read line; do
   echo $line
