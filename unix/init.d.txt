@@ -9,3 +9,9 @@ But I think that requires comments in the script detailing which run levels are 
 systemctl stop service
 systemctl start service
 systemctl restart service
+
+# If you're using journalctl for logs
+# Follow
+journalctl -fu service
+# Static lising
+journalctl -u service

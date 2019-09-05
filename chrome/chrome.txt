@@ -6,3 +6,7 @@ How to customize your user agent
   Developer Tools -> Select triple-dotted thing at upper right -> More tools -> Network Conditions 
     Should show a thing at bottom where you can pick a browser user agent for your desired OS etc.
   Oh but there's also the concentric rectangles in the upper left. That gives you an actual phone screen.
+  
+
+Allow location API to be used against insecure domain when you're not running https:  
+    chrome://flags/#unsafely-treat-insecure-origin-as-secure

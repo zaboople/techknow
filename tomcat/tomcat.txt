@@ -7,3 +7,8 @@ grant codeBase "file:${catalina.base}/webapps/MyLittleApp/WEB-INF/classes/-" {
 grant codeBase "file:${catalina.base}/webapps/MyLittleApp/WEB-INF/lib/-" {
   permission java.security.AllPermission;
 };
+
+
+# If you are getting errors about cookie domains that start with a ".", 
+# then add this to conf/context.xml
+   <CookieProcessor className="org.apache.tomcat.util.http.LegacyCookieProcessor" />

@@ -4,3 +4,6 @@ Interfaces will be listed in the first half of output
 
 2. This adds a gatweway of 192.168.13.2 subnet 136.157 to interface 10
   route -p add 136.157.0.0 mask 255.255.0.0 192.168.13.2 if 10
+
+3. I did this to fix my problems with a VPN server breaking the route to the host 207.207.36.151; my ISP modem assigned me a gateway of 192.168.1.1 before any VPN was going, so once VPN was working
+    route ADD 207.207.36.151 MASK 255.255.255.255 192.168.1.1
