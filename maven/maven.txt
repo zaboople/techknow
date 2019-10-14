@@ -1,4 +1,7 @@
-# Alternate settings file:
+-- De-colorize and remove escape codes from output
+    mvn --batch-mode 
+
+--# Alternate settings file:
   -gs foo.xml
 
 #Skip tests:
