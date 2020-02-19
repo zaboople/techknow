@@ -46,3 +46,13 @@ Content-Type: application/json
 }
 --zzzzz--
 '
+
+**********************************
+# OK That didn't work but this did:
+#  I used the same zzzzz system, but 
+
+  curl  "http://local.internal.sitecontrols.com/$mybase/clients/87/sites/process_create_site_csv_file" \
+    -F  'file=@test-symphony-client-site-remove-siteupload.csv'
+
+#File looked like this:
+90190190,Norborgorgon,1222 Yappity Hwy,Fleenerville,TX,78739,US

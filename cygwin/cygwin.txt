@@ -1,3 +1,6 @@
+# What the fudge???  A command-line package manager / installer sort of:
+setup-x86_64 -qP libxml2
+
 After installing, create a shortcut to mintty.exe and edit it like so:
   C:\Programs\cygwin\bin\mintty.exe /bin/bash -l
 If you want to start in a particular directory, set the directory on the shortcut dialog and add this:
@@ -6,11 +9,11 @@ If you want to start in a particular directory, set the directory on the shortcu
 If you are unhappy about the location it uses for your home directory you need to do this:
   Edit /etc/nsswitch.conf
   Add a db_home setting like:
-    db_home=/my/home/directory
+    db_home: /my/home/directory
   However, note that this will apply to all users. The following will use your windows home directory via %H
-    db_home:  /%H/cygwin
+    db_home: /%H/cygwin
   Or use this to just specify your windows username
-    db_home:  /%U/cygwin
+    db_home: /%U/cygwin
   More info at: https://cygwin.com/cygwin-ug-net/ntsec.html#ntsec-mapping-nsswitch
 
 Equivalent to the OSX/MacOS "open" command: cygstart

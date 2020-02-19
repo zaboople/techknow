@@ -1,3 +1,9 @@
+		// This gets the current file. This is helpful if you want to do relative-path traversal
+		// to get to another file:
+		File thisFile = new File(getClass().getProtectionDomain().getCodeSource().getLocation().toURI())
+
+
+		// This is actually loading a groovy script into the runtime:
 		File file=new File(args[0]);
 		File dir=file.getParentFile()
 		def gse = new groovy.util.GroovyScriptEngine([dir.toURI().toURL()] as URL[])
