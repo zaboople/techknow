@@ -22,6 +22,14 @@ public class Goober {
         println(sdf.parse("12-01-2012 00:00:00"))
         sdf.setTimeZone(TimeZone.getTimeZone("US/Pacific"))
         println(sdf.parse("12-01-2012 00:00:00"))
+
+        println("Parse default format (don't believe the hype in DateFormat.MEDIUM): ")
+        println(
+          new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy")
+            .parse(
+              new Date().toString()
+            )
+        )
     }
 
 }
