@@ -2,3 +2,6 @@
 
 # Test a host/port listener:
 nc -vz host port
+
+# Proxy through socks proxy:
+nc -X connect -x proxy:3128 <rest of stuff>

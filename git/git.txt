@@ -1,6 +1,12 @@
 https://github.com/blog/2019-how-to-undo-almost-anything-with-git
 http://ohshitgit.com/
 
+# Getting logs on something that was deleted
+git log --all --full-history -- <deletedthing>
+
+# When looking at changes between hashcodes, it's
+git diff -r <earlierhash> -r <laterhash>
+
 # Ignore line delimiter changes in git diff
 git diff --ignore-cr-at-eol
 

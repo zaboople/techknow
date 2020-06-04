@@ -1,3 +1,6 @@
+#A better backgrounder: cygstart
+    cygstart --hide nginx.exe &> blah.log
+
 # What the fudge???  A command-line package manager / installer sort of:
 setup-x86_64 -qP libxml2
 

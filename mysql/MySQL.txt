@@ -1,5 +1,10 @@
-# Skip column names
+# Formatting
+
+## Skip column names
 --skip-column-names
+
+## Do tab-delimited instead of happy format
+--batch
 
 # Get output into text file:
 mysql ... -e 'select * from'

@@ -1,3 +1,4 @@
 less -R handles escape codes
 :n Next file
 :p Previous file
+:-i Case insensitive search

@@ -11,14 +11,14 @@ class DateMaster {
 
     // This allows for retarded time zone name, time zone offset with/without ':', the "T" in the middle (or not)
     private final static DateTimeFormatter dtfAnything =
-        DateTimeFormatter.ofPattern("yyyy-MM-dd['T'][' ']HH:mm:ss[XXX][XX][X][' 'zzzz]")
+        DateTimeFormatter.ofPattern("yyyy-MM-dd['T'][' ']HH:mm:ss[.SSS][' '][XXX][XX][X][zzzz]")
     private final static DateTimeFormatter dfFormatWithOffset=
-        DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss[XXXX]")
+        DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS[XXXX]")
 
     private static void testDate(String sdate) {
         System.out.println("\nTesting "+sdate)
         try {
-            ZonedDateTime date=ZonedDateTime.parse(sdate, dtfAnythingy)
+            ZonedDateTime date=ZonedDateTime.parse(sdate, dtfAnything)
             Date oldDate=Date.from(date.toInstant());
             System.out.println("ZonedDateTime:    "+date)
             System.out.println("With nice offset: "+dfFormatWithOffset.format(date))
@@ -30,12 +30,14 @@ class DateMaster {
     }
     public static void main(String[] args) {
         testDate("2018-05-01T15:55:20Z")
-        testDate("2018-05-01T15:55:20+0500")
+        testDate("2018-05-01T15:55:20.723+0500")
         testDate("2018-05-01T15:55:20-0500")
         testDate("2018-11-01T13:30:00-0700")
         testDate("2018-05-01 15:55:20-05:15")
         testDate("2018-05-01T15:55:20 America/New_York")
         testDate("2019-01-09T00:00:00-0600")
+        testDate("2019-01-09T00:00:00 -06:00")
+        testDate("2019-01-01 00:00:01.001 -04:00")
         ZoneId zone=ZoneId.of("GMT");
         println(zone)
     }
