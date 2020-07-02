@@ -76,6 +76,8 @@ git diff HEAD
 git diff origin/master
 # Diff when you already added
 git diff --staged
+# Diff output relative paths
+git diff --relative
 
 
 # PUSH a branch
