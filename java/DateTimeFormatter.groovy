@@ -4,6 +4,9 @@ import java.util.regex.Pattern
 import java.util.Date
 import java.time.format.DateTimeFormatter
 import java.time.ZonedDateTime
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.LocalDate
 import java.time.Instant
 import java.time.ZoneId
 
@@ -14,19 +17,40 @@ class DateMaster {
         DateTimeFormatter.ofPattern("yyyy-MM-dd['T'][' ']HH:mm:ss[.SSS][' '][XXX][XX][X][zzzz]")
     private final static DateTimeFormatter dfFormatWithOffset=
         DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS[XXXX]")
+    private final static DateTimeFormatter dtfFormatYMD=
+        DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneId.of("GMT"));
 
     private static void testDate(String sdate) {
         System.out.println("\nTesting "+sdate)
         try {
             ZonedDateTime date=ZonedDateTime.parse(sdate, dtfAnything)
-            Date oldDate=Date.from(date.toInstant());
-            System.out.println("ZonedDateTime:    "+date)
-            System.out.println("With nice offset: "+dfFormatWithOffset.format(date))
-            System.out.println("java.util.Date:   "+oldDate)
-
+            debug(date)
         } catch (Exception e) {
             e.printStackTrace(System.out)
         }
+    }
+    
+    private static void debug(ZonedDateTime date) {
+        Date oldDate=Date.from(date.toInstant());
+        System.out.println("ZonedDateTime:    "+date)
+        System.out.println("With nice offset: "+dfFormatWithOffset.format(date))
+        System.out.println("java.util.Date:   "+oldDate)  
+    }
+    private static void testLocalDate(String dateStr) {
+        println("\nTesting local date..");
+        LocalDate localDate=LocalDate.parse(dateStr, dtfFormatYMD);
+        ZonedDateTime zdt=ZonedDateTime.of(
+          localDate, LocalTime.of(0, 0, 0, 0), ZoneId.of("GMT")
+        );
+        debug(zdt)
+        //System.out.println("Local date: "+dfFormatWithOffset.format(localDate));
+    }
+    private static void testZones(String[] zones) {
+      println("\nTesting zones...")
+      for (z in zones) {
+        ZoneId zone=ZoneId.of(z);
+        println("Zone: From $z got $zone");
+      }
     }
     public static void main(String[] args) {
         testDate("2018-05-01T15:55:20Z")
@@ -38,7 +62,8 @@ class DateMaster {
         testDate("2019-01-09T00:00:00-0600")
         testDate("2019-01-09T00:00:00 -06:00")
         testDate("2019-01-01 00:00:01.001 -04:00")
-        ZoneId zone=ZoneId.of("GMT");
-        println(zone)
+        testZones("GMT", "America/Chicago");
+        testLocalDate("2019-01-13");
+        testLocalDate("2019-07-13");
     }
 }
