@@ -4,11 +4,23 @@ http://ohshitgit.com/
 # Getting logs on something that was deleted
 git log --all --full-history -- <deletedthing>
 
+DIFF
 # When looking at changes between hashcodes, it's
 git diff -r <earlierhash> -r <laterhash>
-
 # Ignore line delimiter changes in git diff
 git diff --ignore-cr-at-eol
+# DIFF branches:
+git diff branch1 branch2
+# Also use "w" to page up because page up doesn't work because git sucks
+# Diff after you do git add:
+git diff HEAD
+# Diff against remote (you NEED the slash here)
+git diff origin/master
+# Diff when you already added
+git diff --staged
+# Diff output relative paths
+git diff --relative
+
 
 # CHECKOUT:
 # Checkout a repo:
@@ -67,17 +79,6 @@ git checkout -b branchname
 # SWITCH to a branch:
 git checkout branchname
 
-# COMPARE/DIFF branches:
-git diff branch1 branch2
-# Also use "w" to page up because page up doesn't work because git sucks
-# Diff after you do git add:
-git diff HEAD
-# Diff against remote (you NEED the slash here)
-git diff origin/master
-# Diff when you already added
-git diff --staged
-# Diff output relative paths
-git diff --relative
 
 
 # PUSH a branch
