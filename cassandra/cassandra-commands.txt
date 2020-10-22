@@ -84,3 +84,13 @@ CREATE TABLE test1.table1 (
 - Get partition size
     ./nodetool.bat tablestats zzzz.time_series
     Look for "Compacted partition maximum bytes"
+
+
+# What version am I running?
+#   This works on datastax, at least, although dse_version is datastax enterprise
+
+key_admin@cqlsh> select peer, dse_version, release_version from system.peers;
+ peer           | dse_version | release_version
+----------------+-------------+-----------------
+ 192.168.13.124 |       6.8.2 |       4.0.0.682
+ 192.168.13.125 |       6.8.2 |       4.0.0.682

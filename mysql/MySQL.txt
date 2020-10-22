@@ -1,10 +1,16 @@
-# Formatting
+# Formatting Insanity And Confusion
 
 ## Skip column names
 --skip-column-names
 
 ## Do tab-delimited instead of happy format
 --batch
+
+## Strangely, when you pipe a query in, it suddenly defaults to tab-delimited;
+## Here's how to put the happy format back:
+
+-t
+
 
 # Get output into text file:
 mysql ... -e 'select * from'
@@ -42,3 +48,7 @@ SELECT @@global.tx_isolation;
 # When you use older mysql and you get error on type=INNODB use Engine=InnoDB instead
  CREATE TABLE `meta_grouping` (...
 ) ENGINE=InnoDB
+
+
+# How to alter a column datatype
+alter table mytable modify myvalue varchar(256);
