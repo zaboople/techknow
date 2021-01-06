@@ -111,14 +111,19 @@ git fetch --prune
 # When that doesn't work (this probably won't work either):
 git branch --merged master | grep g 'master$' | xargs git branch -d
 
-# !! UNDO whatever uncommitted crap I left around
+# HELP!!!! UNDO!!!!
+
+## !! UNDO whatever uncommitted crap I left around
 git reset --hard HEAD
 
-# Undo not-committed-yet delete
-# 1. Git it out of the temp/working/purgatory thing
+## Undo not-committed-yet delete
+## 1. Git it out of the temp/working/purgatory thing
 git reset HEAD <filename>
-# 2. Get it from the repo
+## 2. Get it from the repo
 git checkout -- <filename>
+
+## Undo - rollback to a previous hash and dissapear everything after:
+git reset c100f9d07fa43b91c7a35edc2d122231dfec9ea1 --soft
 
 
 # COLORS edit your ~/.gitconfig

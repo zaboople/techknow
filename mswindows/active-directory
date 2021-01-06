@@ -1,0 +1,5 @@
+Use "dsquery" to get LDAP info
+
+    dsquery '*'
+    dsquery.exe '*' 'OU=Users,OU=People,DC=dsc,DC=local'
+    dsquery.exe '*' 'OU=Users,OU=People,DC=dsc,DC=local' -attr '*'
