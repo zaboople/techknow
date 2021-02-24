@@ -35,7 +35,7 @@ show grants for bob @ '%';
 
   select * from (
       SELECT table_schema, table_name, table_rows,
-              round((data_length + index_length) / 1024 / 1024, 1) "SizeMB"
+                round((data_length + index_length) / 1024 / 1024, 1) "SizeMB"
       FROM information_schema.tables
     ) xx
     where sizeMB > 100
