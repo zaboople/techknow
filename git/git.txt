@@ -113,6 +113,10 @@ git branch --merged master | grep g 'master$' | xargs git branch -d
 
 # HELP!!!! UNDO!!!!
 
+## Undo commits, merges, when you haven't pushed yet:
+## Here we're resetting master back to our remote "origin"
+git reset --hard origin/master
+
 ## !! UNDO whatever uncommitted crap I left around
 git reset --hard HEAD
 

@@ -1,3 +1,10 @@
+Addition and other math
+  i=$(($i + 1))
+
+#Wait for subprocesses to finish
+#You could also pass individual PID to it
+  wait
+
 Read without echo
   read -s
 
