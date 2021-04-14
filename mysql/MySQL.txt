@@ -59,11 +59,15 @@ select * from information_schema.processlist where command<>'Sleep';
 # Get transaction isolation
 SELECT @@global.tx_isolation;
 
-# When you use older mysql and you get error on type=INNODB use Engine=InnoDB instead
+
+# TABLE DDL CHANGES
+
+## When you use older mysql and you get error on type=INNODB use Engine=InnoDB instead
  CREATE TABLE `meta_grouping` (...
 ) ENGINE=InnoDB
 
 
-# How to alter a column datatype
+## How to alter a column datatype
 alter table mytable modify myvalue varchar(256);
 
+## Add index
