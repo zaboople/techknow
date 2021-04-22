@@ -1,2 +1,6 @@
 Pass a variable with -v
 gawk -v x="hello" '{print $x $0}'
+
+Doing delimiters:
+# This example does pipe-delimited output:
+gawk -v 'delim=' '{printf delim; printf $0; delim="|"}'
