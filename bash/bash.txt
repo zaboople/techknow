@@ -1,16 +1,14 @@
+Avoiding ctrl-C in cygwin
+  setsid COMMAND &
+
 Addition and other math
   i=$(($i + 1))
-
-#Wait for subprocesses to finish
-#You could also pass individual PID to it
-  wait
 
 Read without echo
   read -s
 
 Read an entire file:
   mystring=$(cat)
-
 
 Setting your prompt: Put this in your .bash_profile so you can choose between setting window title to
   the current directory, vs. setting it to an arbitrary string:
@@ -34,8 +32,12 @@ Export a variable name with a default
   #Then it takes your value otherwise.
   export MINE=${MINE:-something}
 
-Get background process PID:
+#Get background process PID:
   pid=$!
+#Join background process
+  wait $mypid
+#Join all background processes you created with &
+  wait
 
 Get name of current file
   #This works when you are sourcing a file, i.e. "."'ing it

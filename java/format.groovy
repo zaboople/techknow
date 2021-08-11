@@ -10,3 +10,6 @@ println(String.format("%.4f", 1D/34D))
 
 println("\n*** Left justify:")
 println(String.format("%-15d", 111)+"hey");
+
+println(String.format("%2d", 1))
+println(String.format("%02d", 13))

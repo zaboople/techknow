@@ -62,12 +62,20 @@ SELECT @@global.tx_isolation;
 
 # TABLE DDL CHANGES
 
-## When you use older mysql and you get error on type=INNODB use Engine=InnoDB instead
+## When you use older mysql and you get error on type=INNODB use Engine=InnoDB instead:
  CREATE TABLE `meta_grouping` (...
 ) ENGINE=InnoDB
 
 
-## How to alter a column datatype
+## How to alter a column datatype:
 alter table mytable modify myvalue varchar(256);
 
-## Add index
+## Add index:
+create index idxDataData on upmc.dailydata(datadate);
+
+## Add column:
+alter table upmc.dailydata add avgCoolingSetbackSP float(12,2) DEFAULT NULL;
+
+# User access
+show grants for BOB_USER;
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE TEMPORARY TABLES, LOCK TABLES ON `ymca`.* TO 'glblrw'@'%'

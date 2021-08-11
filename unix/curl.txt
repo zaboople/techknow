@@ -3,9 +3,18 @@
 
 *********************
 
-# Proxy: --proxy
+# Proxy:
+curl --proxy
 
-*********************
+
+
+# Uploading a file but not multipart:
+curl --data @file -X POST
+    # Except you probably wanna do this instead because curl will rip out your linebreaks and other shenanigans
+    curl --data-binary @file
+    # Or even better is this:
+    cat slop.txt | curl --data-binary @file -X POST http://....
+
 
 # POST
 #   When posting json data, always do
@@ -49,7 +58,7 @@ Content-Type: application/json
 
 **********************************
 # OK That didn't work but this did:
-#  I used the same zzzzz system, but 
+#  I used the same zzzzz system, but
 
   curl  "http://local.internal.sitecontrols.com/$mybase/clients/87/sites/process_create_site_csv_file" \
     -F  'file=@test-symphony-client-site-remove-siteupload.csv'
