@@ -1,0 +1,6 @@
+# This workaround forces "not on our vpn" sites to route through the normal channels.
+# This is only necessary when admins set things up to do otherwise; it's kind of cheating to do this.
+    route 0.0.0.0 192.0.0.0 net_gateway
+    route 64.0.0.0 192.0.0.0 net_gateway
+    route 128.0.0.0 192.0.0.0 net_gateway
+    route 192.0.0.0 192.0.0.0 net_gateway

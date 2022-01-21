@@ -27,8 +27,8 @@ select user,host from mysql.user;
 show grants for user @ host;
 show grants for bob @ '%';
 
-
-# Get stats on your tables
+# STATS
+## Schema sizes:
   select * from (
       SELECT table_schema "DBName",
               ROUND(SUM(data_length + index_length) / 1024 / 1024, 1) "SizeMB"
@@ -36,15 +36,14 @@ show grants for bob @ '%';
       GROUP BY table_schema
     ) xx where SizeMB > 1000
     order by SizeMB;
-
-
+## Table sizes:
   select * from (
       SELECT table_schema, table_name, table_rows,
                 round((data_length + index_length) / 1024 / 1024, 1) "SizeMB"
       FROM information_schema.tables
     ) xx
     where sizeMB > 100
-   order by table_schema, SizeMB;
+   order by SizeMB desc;
 
 # Schemas
 select * from information_schema.SCHEMATA order by schema_name;

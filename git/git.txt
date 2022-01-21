@@ -111,6 +111,7 @@ git fetch --prune
 # When that doesn't work (this probably won't work either):
 git branch --merged master | grep g 'master$' | xargs git branch -d
 
+
 # HELP!!!! UNDO!!!!
 
 ## Undo commits, merges, when you haven't pushed yet:
@@ -128,6 +129,9 @@ git checkout -- <filename>
 
 ## Undo - rollback to a previous hash and dissapear everything after:
 git reset c100f9d07fa43b91c7a35edc2d122231dfec9ea1 --soft
+
+# Abort merge
+git merge --abort
 
 
 # COLORS edit your ~/.gitconfig
