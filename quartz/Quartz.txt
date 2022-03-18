@@ -13,3 +13,11 @@ select trig.next_fire_time, job.*, simple.*, trig.*
     on job.JOB_NAME=trig.JOB_NAME
   join qrtz_cron_triggers simple
     on simple.TRIGGER_NAME=trig.TRIGGER_NAME;
+
+
+# Format is:
+1-Seconds 2-Minutes 3-Hours 4-Day-of-month 5-Month 6-Day-of-Week 7-Year
+
+
+Note that "*" means "every", and "?" means "don't care". So a "*" in column 6 means every day of the week.
+Apparently it is conflict-ish to say "x day of the month" and "every day of the week", or something.

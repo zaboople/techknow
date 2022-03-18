@@ -1,49 +1,38 @@
-Avoiding ctrl-C in cygwin
-  setsid COMMAND &
+# Avoiding ctrl-C in cygwin:
+setsid COMMAND &
 
-Addition and other math
-  i=$(($i + 1))
+# Prompt:
+## Put this in your .bash_profile so you can choose between setting window title to
+## the current directory, vs. setting it to an arbitrary string:
+function setTitle() {
+    export PS1="\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]\n$ "
+    echo -ne "\e]0;$1\a"
+}
+function setTitlePath() {
+    export PS1="\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]\n$ "
+}
+setTitlePath
 
-Read without echo
-  read -s
+# Send stdin & stdout to the same file
+command &> file
 
-Read an entire file:
-  mystring=$(cat)
+# Export a variable name with a default
+export MINE=${MINE:-something}
 
-Setting your prompt: Put this in your .bash_profile so you can choose between setting window title to
-  the current directory, vs. setting it to an arbitrary string:
-  function setTitle() {
-      export PS1="\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]\n$ "
-      echo -ne "\e]0;$1\a"
-  }
-  function setTitlePath() {
-      export PS1="\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]\n$ "
-  }
-  setTitlePath
-
-
-Send stdin & stdout to the same file
-  command &> file
-
-Export a variable name with a default
-  #If you run this over & over, you get
-  #the same value repeatedly, because it
-  #starts by agreeing to accept the existing value.
-  #Then it takes your value otherwise.
-  export MINE=${MINE:-something}
-
-#Get background process PID:
+# Background processing
+## Get background process PID for thing you just kicked off:
   pid=$!
-#Join background process
+## Join background process
   wait $mypid
-#Join all background processes you created with &
+## Join all background processes you created with &
   wait
 
-Get name of current file
-  #This works when you are sourcing a file, i.e. "."'ing it
-  echo "${BASH_SOURCE[0]}"
-  #This works for regular scripts
-  echo $0
+# Get name of current file
+## This works when you are sourcing a file, i.e. "."'ing it
+echo "${BASH_SOURCE[0]}"
+## This works for regular scripts
+echo $0
+
 
 # Variable substitution
 ${parameter:-defaultValue}	Get default shell variables value
@@ -61,14 +50,30 @@ ${var/pattern/string}	Find and replace (only replace first occurrence)
 ${var//pattern/string}	Find and replace all occurrences
 
 
-# Arrays:
-  # Split a line of text into an array:
-  ps -ef | while read line; do
-    arr=(${line})
-    echo ${arr[1]} " and " ${arr[2]}
-  done;
+# Addition and other math
+i=$(($i + 1))
 
-# Even better arrays:
+#Read without echo
+read -s
+
+#Read an entire file:
+mystring=$(cat)
+
+
+# ****** Arrays: *******
+
+## Push to an array:
+numbers=
+numbers+=("$1")
+numbers+=("$2")
+
+## Split a line of text into an array:
+ps -ef | while read line; do
+arr=(${line})
+echo ${arr[1]} " and " ${arr[2]}
+done;
+
+## Declared array:
 array=(
     'one'
     'two'
@@ -79,11 +84,20 @@ for x in ${array[@]}
     echo $x
     done
 
-# Associative array/map
+## Associative array/map
 declare -A myMap
 myMap["foo"]="bar"
 
-# If tests:
+
+
+# **** If tests: ****
+
+## Regex:
+if [[ $1 =~ (5|4|3|2|1|0) ]]; then
+    numbers+=("$1")
+fi
+
+## Standard file tests and some other things
   [ -a FILE ]	True if FILE exists.
   [ -b FILE ]	True if FILE exists and is a block-special file.
   [ -c FILE ]	True if FILE exists and is a character-special file.

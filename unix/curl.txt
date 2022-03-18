@@ -1,7 +1,6 @@
 *********************
-# Compress: -- compress
-
-*********************
+# Compress:
+curl --compressed
 
 # Proxy:
 curl --proxy

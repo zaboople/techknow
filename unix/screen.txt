@@ -4,5 +4,12 @@ screen -S <name>
 # Detach so it can keep running
 ctrl-a ctrl-d
 
+# List running screens:
+screen -list
+
 # Connect back to it
 screen -r resume
+screen -r <pid>.<name>
+
+# Connect back to it when it is "multi" i.e. not detached:
+screen -xr <pid.name>
