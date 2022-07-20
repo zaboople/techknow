@@ -1,0 +1,15 @@
+
+# Run an SMTP session through TLS using openssl:
+openssl s_client -debug -starttls smtp -crlf -connect smtp.siemens.com:25
+# But you might want to specify the EHLO host:
+openssl s_client -debug -starttls smtp -name siemens.com -crlf -connect smtp.siemens.com:587
+
+
+# Then say
+
+EHLO me.myself@host.com
+
+# Logging in: The easiest option is AUTH LOGIN, which wants
+# a base64 username followed by a base64 pass
+
+AUTH LOGIN

@@ -20,6 +20,10 @@ git diff origin/master
 git diff --staged
 # Diff output relative paths
 git diff --relative
+# Diff against X as if you'd merged X first. Useful
+# when looking over somebody's crap and they don't keep
+# up with master
+git diff --merge-base X
 
 
 # CHECKOUT:
@@ -132,6 +136,12 @@ git reset c100f9d07fa43b91c7a35edc2d122231dfec9ea1 --soft
 
 # Abort merge
 git merge --abort
+
+# Revert a commit by undoing it with a new commit:
+git revert <hash>
+
+# Revert a merge post push:
+git revert -m 1 <merge-commit-hash>
 
 
 # COLORS edit your ~/.gitconfig
