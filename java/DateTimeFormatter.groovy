@@ -19,6 +19,20 @@ class DateMaster {
         DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS[XXXX]")
     private final static DateTimeFormatter dtfFormatYMD=
         DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneId.of("GMT"));
+    private final static DateTimeFormatter dtfFormatAMPM=
+        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss a");
+
+
+    private static void testCreateDate() {
+        println("\nTest create ZonedDateTime...");
+        ZoneId zi = ZoneId.of("America/Chicago");
+        ZonedDateTime zdt = ZonedDateTime.ofInstant(
+            Instant.ofEpochMilli(System.currentTimeMillis()),
+            zi
+        );
+        println("Created date: $zdt");
+        println("Formatted: "+dtfFormatAMPM.format(zdt));
+    }
 
     private static void testDate(String sdate) {
         System.out.println("\nTesting "+sdate)
@@ -29,12 +43,12 @@ class DateMaster {
             e.printStackTrace(System.out)
         }
     }
-    
+
     private static void debug(ZonedDateTime date) {
         Date oldDate=Date.from(date.toInstant());
         System.out.println("ZonedDateTime:    "+date)
         System.out.println("With nice offset: "+dfFormatWithOffset.format(date))
-        System.out.println("java.util.Date:   "+oldDate)  
+        System.out.println("java.util.Date:   "+oldDate)
     }
     private static void testLocalDate(String dateStr) {
         println("\nTesting local date..");
@@ -65,5 +79,6 @@ class DateMaster {
         testZones("GMT", "America/Chicago");
         testLocalDate("2019-01-13");
         testLocalDate("2019-07-13");
+        testCreateDate();
     }
 }
