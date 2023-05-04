@@ -1,5 +1,11 @@
--- De-colorize and remove escape codes from output
-    mvn --batch-mode 
+# Colors and thigns
+
+De-colorize and remove escape codes from output
+    mvn --batch-mode
+
+Maven dumps trash into cygwin et al:
+    export TERM=cygwin
+
 
 --# Alternate settings file:
   -gs foo.xml

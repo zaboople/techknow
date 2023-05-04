@@ -16,3 +16,8 @@ Overriding environment variables:
     java -Dspring.config.location='C:\troy\dev\bin-local\generic_application.yml' -jar blahblah.jar
   And maybe refer to:
     https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-external-config-profile-specific-properties
+
+# URL-Encoded versus application/json:
+Answer 1: Do it like this: @PostMapping(path = "/test", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE,
+        MediaType.MULTIPART_FORM_DATA_VALUE}, produces = MediaType.APPLICATION_JSON_VALUE)
+Answer 2: Remove the @RequestBody annotation

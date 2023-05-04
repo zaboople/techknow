@@ -1,28 +1,35 @@
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.regex.Pattern
-import java.util.Date
-import java.time.format.DateTimeFormatter
-import java.time.ZonedDateTime
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.LocalDate
-import java.time.Instant
-import java.time.ZoneId
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.regex.Pattern;
+import java.util.Date;
+import java.time.format.DateTimeFormatter;
+import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.LocalDate;
+import java.time.Instant;
+import java.time.ZoneId;
 
 class DateMaster {
 
     // This allows for retarded time zone name, time zone offset with/without ':', the "T" in the middle (or not)
     private final static DateTimeFormatter dtfAnything =
-        DateTimeFormatter.ofPattern("yyyy-MM-dd['T'][' ']HH:mm:ss[.SSS][' '][XXX][XX][X][zzzz]")
+        DateTimeFormatter.ofPattern("yyyy-MM-dd['T'][' ']HH:mm:ss[.SSS][' '][XXX][XX][X][zzzz]");
     private final static DateTimeFormatter dfFormatWithOffset=
-        DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS[XXXX]")
+        DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS[XXXX]");
     private final static DateTimeFormatter dtfFormatYMD=
         DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneId.of("GMT"));
     private final static DateTimeFormatter dtfFormatAMPM=
         DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss a");
 
 
+    private static void testDateOnly(){
+        def df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        Date date = Date.from(LocalDate.parse("2021-04-13", df).atStartOfDay(
+                ZoneId.of("America/Chicago")
+            ).toInstant());
+        println("Got date $date")
+    }
     private static void testCreateDate() {
         println("\nTest create ZonedDateTime...");
         ZoneId zi = ZoneId.of("America/Chicago");
@@ -80,5 +87,6 @@ class DateMaster {
         testLocalDate("2019-01-13");
         testLocalDate("2019-07-13");
         testCreateDate();
+        testDateOnly()
     }
 }

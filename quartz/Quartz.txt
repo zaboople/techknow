@@ -1,9 +1,9 @@
 # This gets simple triggers that are scheduled as one-time things.
 # This is from the old quartz db format, dunno about new
-select trig.next_fire_time, job.* from scheduler.qrtz_triggers trig
-  join scheduler.qrtz_job_details job
+select trig.next_fire_time, job.* from qrtz_triggers trig
+  join qrtz_job_details job
     on job.JOB_NAME=trig.JOB_NAME
-  join scheduler.qrtz_simple_triggers simple
+  join qrtz_simple_triggers simple
     on simple.TRIGGER_NAME=trig.TRIGGER_NAME;
 
 

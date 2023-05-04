@@ -1,10 +1,11 @@
 https://github.com/blog/2019-how-to-undo-almost-anything-with-git
 http://ohshitgit.com/
 
-# Getting logs on something that was deleted
-git log --all --full-history -- <deletedthing>
+# CREATE A NEW REPO:
+git init
 
-DIFF
+
+# DIFF
 # When looking at changes between hashcodes, it's
 git diff -r <earlierhash> -r <laterhash>
 # Ignore line delimiter changes in git diff
@@ -26,17 +27,9 @@ git diff --relative
 git diff --merge-base X
 
 
-# CHECKOUT:
-# Checkout a repo:
-#Be careful, your umask should at least allow u+rwx, esp. x
-git clone git@github.com:civitaslearning/dataplatform.git
-
 # PULL:
 # Get up to date with master branch:
 git pull origin master
-
-# CREATE A NEW REPO:
-git init
 
 # PUSH:
 # Push over ssh:
@@ -53,36 +46,33 @@ git push --set-upstream origin master
 # You have to create the repo on github first, and then push your
 # local repo on top of it.
 
-# Github ssh broken as usual:
-# When they drop port 22, which tends to not work (because your OS? i dunno) you can try ssh over 443:
-ssh://git@ssh.github.com:443/user/repo.git
-
-# Add changes
+# ADD CHANGES
 git add .
 git add --all
 #The latter version seems to pick up deletes better.
 
 
-# Commit
+# COMMIT
 git commit -m 'first commit'
 # Force a commit so you can bump things like PR builders
 git commit -m 'bumping' --allow-empty
-
 # Read commit message from stdin (can also use a file instead of -)
 cat myfile | git commit -F -
 
+
 # WHAT branch am I on?
 git branch
-
 # WHAT other branches are there remotely?
 git branch -r
 
-# MAKE a branch and switch to it
+# CHECKOUT:
+# Make a branch and switch to it
 git checkout -b branchname
-
-# SWITCH to a branch:
+# Switch to a branch:
 git checkout branchname
-
+# Checkout a repo:
+#Be careful, your umask should at least allow u+rwx, esp. x
+git clone git@github.com:civitaslearning/dataplatform.git
 
 
 # PUSH a branch
@@ -201,12 +191,6 @@ git rebase --interactive jumblything
 git checkout master
 git log ..my-branch-name
 
-# Temporarily ignore (sucks, doesn't really work):
-# First command to ignore, second stops ignoring.
-# File/Directory names are optional in second command; without them, everything
-# previously ignored will stop ignoring:
-git update-index --assume-unchanged <files>
-git update-index --no-assume-unchanged [files]
 
 # STASH
 # This is an excellent way to park changes so you can move them onto a different branch:
@@ -224,7 +208,28 @@ git ls-remote --tags origin
 # Delete remote tag
 git push --delete origin 'pre-microservice-device-time-series'
 
-
+################
+# ETC ETC ETC: #
+################
 # Proxying to git:
 #   Add this to your ~/.ssh/config, where 194.etc is the host/port i'm proxying through:
 ProxyCommand /usr/bin/nc -X connect -x 194.145.60.1:9400 %h %p
+
+# Getting logs on something that was deleted
+git log --all --full-history -- <deletedthing>
+
+# Temporarily ignore (sucks, doesn't really work):
+# First command to ignore, second stops ignoring.
+# File/Directory names are optional in second command; without them, everything
+# previously ignored will stop ignoring:
+git update-index --assume-unchanged <files>
+git update-index --no-assume-unchanged [files]
+
+# Github ssh broken as usual:
+# When they drop port 22, which tends to not work (because your OS? i dunno) you can try ssh over 443:
+ssh://git@ssh.github.com:443/user/repo.git
+
+# Git just trashed itself and said:
+#    error: cannot lock ref 'refs/remotes/origin/blah': is at 7ab80044... but expected f461c89c...
+# Magical housekeeping fun call fixes it:
+git gc --prune=now
