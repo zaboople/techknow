@@ -1,0 +1,2 @@
+    https://docs.python.org/release/3.12.2/reference/
+    https://docs.python.org/release/3.12.2/tutorial/

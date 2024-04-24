@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
-fibs = []
-a, b = 0, 1
-while a < 1099:
-    print(a, end=' ')
-    a, b = b, a+b
-print()
+pseudo = range(1, 10)
+print(pseudo)
+lst = list(pseudo)
+lst[3] = 99
+print(lst)
