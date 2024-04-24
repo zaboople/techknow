@@ -41,4 +41,12 @@ def flexfun(*args, **dicti):
 
 flexfun(1, 2, "hello", boo=22, bash=23)
 
-comment()
+comment("Function documentation auto-populates the __doc__ variable:")
+def docfunc(x, y):
+    """
+    What is my function about? About things.
+    Yes it always been.
+    """
+    return x + y
+
+print(f"Docs... {docfunc.__doc__=!s}")
