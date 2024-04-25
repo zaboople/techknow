@@ -22,11 +22,3 @@ while (len(lst) > 0):
     del lst[:4]
     print(lst)
 
-comment("""
-    Crazy not-in syntax
-    I'm using a set as target of not-in, i.e. {} instead of []
-    even though latter would work
-""")
-for x in [1,2,3,4,5]:
-    if x not in {1,2,3}:
-        print(x)
