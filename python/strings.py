@@ -41,7 +41,4 @@ lblr("Use str() and len() functions:")
 print("Length of word: "+str(len("Done")))
 
 
-lblr("Use chr() function")
-print(chr(67), chr(68), chr(69))
 print("----");
-
