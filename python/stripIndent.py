@@ -8,20 +8,20 @@ def stripIndent(ii, trimEnds=True):
     list2 = []
     any = 0
     for x in list:
-      if (x == ""):
+      if x == "":
         list2.append(x)
-      elif (x[0] == " "):
+      elif x[0] == " ":
         any += 1
         list2.append(x[1:])
     if not any:
       break;
-    if (len(list2)!=lineCount):
+    if len(list2)!=lineCount:
       break;
     list = list2;
   while trimEnds and len(list)>0 and list[0] == "":
-    list = list[1:]
+    del list[0]
   while trimEnds and len(list)>0 and list[-1] == "":
-    list = list[:-1]
+    del list[-1]
   return "\n".join(list);
 
 ##############
@@ -61,5 +61,7 @@ debug("Many blank lines:", """
 """)
 debug("Many blank lines, no trim:", """
 
+        dub
+    chub
 
 """, False)

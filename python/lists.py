@@ -22,3 +22,13 @@ while (len(lst) > 0):
     del lst[:4]
     print(lst)
 
+comment("""
+    Sorting a list with lambdas, also see
+    https://docs.python.org/3/howto/sorting.html#sortinghowto
+""")
+print(
+    sorted(
+        [("aa", 33), ("bb", 11), ("cc", 22), ("winner", 0)],
+        key = lambda x: x[1]
+    )
+)

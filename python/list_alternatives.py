@@ -3,7 +3,7 @@
 def comment(ss=""):
     print("-----------------")
     for s in ss.split("\n"):
-        print(s.strip())
+        if s!= "": print(s.strip())
 
 import collections
 
@@ -25,3 +25,18 @@ comment("""
 for x in [1,2,3,4,5]:
     if x not in {1,2,3}:
         print(x)
+
+
+
+a = set('abracadabra')
+b = set('alacazam')
+comment(f"""
+    Set logic:
+    {sorted(a)      = }
+    {sorted(b)      = }
+    diff:      {a-b = }
+    union:     {a|b = }
+    intersect: {a&b = }
+    xor:       {a^b = }
+""")
+
