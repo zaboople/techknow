@@ -21,40 +21,53 @@ class Bleek(object):
     def rando(cls):
         import random
         return cls(
-            int(random.random()*1000), "hello world"
+            int(cls.randoStatic()), "hello world"
         )
 
     @staticmethod
-    def randoo():
+    def randoStatic():
         import random
         return int(random.random()*100)
 
+    def __str__(self):
+        # Does the classic toString()
+        return f"mynum={self.mynum} mystr={self.mystr}"
+
+    def __repr__(self):
+        # Implements the classic repr()
+        return f"mynum={self.mynum} mystr={repr(self.mystr)}"
+
     def talk(self):
-        return f"Num is {self.mynum} Str is {self.mystr}"
+        return f"Talk: Num is {self.mynum} Str is {self.mystr}"
 
 qq = Bleek(1, "Hi")
 print(f"{qq.mynum=} {qq.mystr=}")
 qq = Bleek.rando()
+print(f"Plain string: {qq}")
+print(f"Repr  string: {qq=}")
 print(f"{qq.mynum=} {qq.mystr=}")
-print(f"{Bleek.randoo()=}")
+print(f"{Bleek.randoStatic()=}")
 
 comment("""
-    Now let's see about shadowing statics
+    Now let's see about shadowing statics and class extension
 """)
 
 class Bleeko(Bleek):
 
-    def __init__(self, num, str):
-        super().__init__(num, str)
-
     @staticmethod
-    def randoo():
+    def randoStatic():
+        # Effectively overrides the static method
+        # even when that is called from parent class's rando()
         import random
-        return int(random.random()*100000)
+        return int(random.random() * -10000000)
 
+print(f"Does new randoStatic() work: {Bleeko.randoStatic()=}")
 rr = Bleeko(1, "Hi")
-print(f"{rr.mynum=} {rr.mystr=}")
-print(rr.talk())
+print(f"Does init work without override: {rr.mynum=} {rr.mystr=}")
+print(f"Does talk() inherit: {rr.talk()=}")
 rr = Bleeko.rando()
-print(f"{rr.mynum=} {rr.mystr=}")
-print(f"{Bleeko.randoo()=}")
+print(f"""Does rando() call override of randoStatic? toStringing():
+    {rr}
+    {str(rr)}
+    {rr=}
+""")

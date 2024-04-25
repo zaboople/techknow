@@ -2,7 +2,8 @@
 
 def comment(ss=""):
     print("-----------------")
-    for s in ss.split("\n"): print(s.strip())
+    for s in ss.split("\n"):
+        if s!="": print(s.strip())
 
 comment("""
     Quick lists using range():
@@ -32,3 +33,9 @@ print(
         key = lambda x: x[1]
     )
 )
+
+comment("""
+    Reverse:
+""")
+for x in reversed(sorted([1,2,3,5,-1,-5])):
+    print(x, end=" ")

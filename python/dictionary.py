@@ -6,22 +6,37 @@ def comment(ss=""):
         if s!= "": print(s.strip())
 
 
-def makeHash(name):
-    return functools.reduce(
-        lambda total, c: total + ord(c) ^ 11111,
-        name, 0
-    )
-
+comment("""
+    You can make a dictionary out of a sequence of two-member
+    tuples, which is what I'm doing here, convoluted as it looks:
+""")
 import functools
 myDict = dict(map(
     lambda name: (
         name,
         functools.reduce(
-            lambda total, c: total + ord(c) ^ 11111,
-            name, 0
+            # My best effort at hashing a string:
+            lambda total, c:
+                total + ord(c) ^ 11111111,
+            name,
+            0
         )
     ),
     ["onesy", "two", "three", "four", "rouf"]
 ))
 
 print(f"{myDict=}")
+myDict[123]="Huh well"
+print(f"{myDict=}")
+
+comment("""
+    Dictionary loop k-v pairs:
+""")
+for key, value in myDict.items():
+    print(f"  {key=} {value=}")
+
+comment("""
+    Dictionary loop keys:
+""")
+for key in myDict:
+    print(f"  {key=} {myDict[key]=}")
