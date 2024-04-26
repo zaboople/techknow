@@ -34,3 +34,9 @@ for x in [
         myRightJustify(x, mywidth=25, myprec=6)
     )
 
+comment("""
+    Justifying text:
+""")
+print("Left:   ->{0:<16}<-".format("hello"))
+print("Right:  ->{0:>16}<-".format("hello"))
+print("Center: ->{0:^16}<-".format("hello"))

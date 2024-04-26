@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
 
-def lblr(stri):
-  print("----")
-  print(f"*** {stri}: ***")
+def comment(ss=""):
+    print("\n-----------------")
+    for s in ss.split("\n"):
+        if s!="": print(s.strip())
 
 
-lblr("Line breaks in strings")
+comment("""
+    String methods:
+    https://docs.python.org/3/library/stdtypes.html#string-methods
+""")
+
+comment("Line breaks in strings:")
 print("""
   Fall off!
     Todo
@@ -13,31 +19,31 @@ print("""
 print("Doop,\r\nDoop!");
 print("Done.");
 
-lblr("String interpolation with f")
+comment("String interpolation with f:")
 zzz = 1234
 print(f"Number interpolated: {zzz}")
 print(f"Number interpolated: {zzz=}")
 
 
-lblr("Slicing a string")
+comment("Slicing a string:")
 bigstr = "0123456789";
 print(f"Start with: {bigstr=}");
 print(f"{bigstr[-4:] =}");
 print(f"{bigstr[4:6] =}");
 print(f"{bigstr[4:-1] =}");
 
-lblr("Doing multiple prints to one line");
+comment("Doing multiple prints to one line:");
 print("Hello", end=" ")
 print("there", end=" ")
 print("done.")
 
-lblr("Slicing string with line breaks")
+comment("Slicing string with line breaks:")
 print("Slice 2: ");
 print("""
   ends with line break
 """[-20:], "");
 
-lblr("Use str() and len() functions:")
+comment("Use str() and len() functions:")
 print("Length of word: "+str(len("Done")))
 
 
