@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# This implements PI calculation using the chudnovsky algorithm
 
 import decimal
 SUPER_FUDGE_CONSTANT = decimal.Decimal(10005).sqrt()
@@ -23,8 +24,10 @@ def chudnovsky(n):
     ____, Q1n, R1n = binary_split(1, n)
     return (426880 * SUPER_FUDGE_CONSTANT * Q1n) / (13591409 * Q1n + R1n)
 
-def compare(prev, next):
-    zipped = zip(prev, next)
+def compareStrs(prev, next):
+    """Finds the common ground between prev & next
+        starting from position 0 and going forwards, returning
+        the common part."""
     result = []
     for i in range(
             0, min(len(prev), len(next))
@@ -36,27 +39,42 @@ def compare(prev, next):
             result.append(c1)
     return "".join(result)
 
-def withFormatting():
-    # Initial precision would be about 26
-    myprecision = 200
-    mymax = 100
-    decimal.getcontext().prec = myprecision # number of digits of decimal precision
+def withFormatting(myprecision, maxdepth):
+    # This runs chudnovsky at increasing "depth" until we achieve our desired
+    # digits of precision consistently. It compares results of previous and current
+    # run to see how consistent we are, and reports back the consistent digits.
+    # This is obviously kinda silly since we're computing the same crud over and over,
+    # but it's fun:
 
-    fmtIncrWidth = len(f"{mymax}")
+    maxdepth = 10000
+    decimal.getcontext().prec = myprecision + 3 # number of digits of decimal precision
+
+    fmtIncrWidth = len(f"{maxdepth}")
     fmtPrecWidth = myprecision
     fmtMainWidth = 2 + fmtPrecWidth
     fmtLenWidth = len(f"{myprecision}")
 
     fmtResultPrev = ""
-    for n in range(2, mymax + 1):
+    convergeCount = 0;
+    for n in range(2, maxdepth + 1):
         nextResult = chudnovsky(n)
         fmtIncr = "{0:>{width}d}".format(n, width=fmtIncrWidth)
         fmtResult = "{0:>{width}.{prec}f}".format(
             nextResult, width=fmtMainWidth, prec=fmtPrecWidth
         )
-        fmtLen = "{0:>{width}d}".format(len(fmtResult - 2), width=fmtLenWidth)
-        toPrint = compare(fmtResultPrev, fmtResult)
+        toPrint = compareStrs(fmtResultPrev, fmtResult)
+        digitCount = len(toPrint)
+        digitCount = 0 if (digitCount <= 2) else (digitCount - 2)
+        fmtLen = "{0:>{width}d}".format(digitCount, width=fmtLenWidth)
         print(f"{fmtIncr} length: {fmtLen} -> {toPrint}")
+        if (digitCount == myprecision):
+            if (convergeCount := convergeCount + 1) > 2:
+                print(f"CONVERGENCE at depth: {n}")
+                break
+        else:
+            convergeCount = 0
+
         fmtResultPrev = fmtResult
 
-withFormatting()
+withFormatting(myprecision=400, maxdepth=1000)
+
