@@ -1,3 +1,6 @@
+# Time a command and get seconds to run it
+time <cmd>
+
 # Avoiding ctrl-C in cygwin:
 setsid COMMAND &
 
