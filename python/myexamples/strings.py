@@ -46,5 +46,9 @@ print("""
 comment("Use str() and len() functions:")
 print("Length of word: "+str(len("Done")))
 
+comment("startsWith:")
+print("Geeble".startswith("Gee"))
+print("Geeble".startswith("gee"))
 
 print("----");
+

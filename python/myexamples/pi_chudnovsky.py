@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 # This implements PI calculation using the chudnovsky algorithm
+# For a better performing example that I wrote in java (egads, java!):
+#   https://github.com/zaboople/pi-chudnov
 
 import decimal
-SUPER_FUDGE_CONSTANT = decimal.Decimal(10005).sqrt()
+import sys
+import datetime
 
 def computeLeaf(a, b):
     Pab = -(6*a - 5) * (2*a - 1) * (6*a - 1)
@@ -31,74 +34,51 @@ def binary_split(a, b):
 def chud(n):
     """Chudnovsky algorithm."""
     ____, Q1n, R1n = binary_split(1, n)
-    return (426880 * SUPER_FUDGE_CONSTANT * Q1n) / (13591409 * Q1n + R1n)
+    return (426880 * SQRT_10005 * Q1n) / (13591409 * Q1n + R1n)
+
+def setup(precision):
+    decimal.getcontext().prec = precision + 3
+    global SQRT_10005
+    SQRT_10005 = decimal.Decimal(10005).sqrt()
 
 ##################
 # TESTING LOGIC: #
 ##################
 
-def compareStrs(prev, next):
-    """Finds the common ground between prev & next
-        starting from position 0 and going forwards, returning
-        the common part."""
-    result = []
-    for i in range(
-            0, min(len(prev), len(next))
-        ):
-        c1, c2 = prev[i], next[i]
-        if (c1 != c2):
-            break;
-        if (c1 != ""):
-            result.append(c1)
-    return "".join(result)
 
-
-def withFormatting(precision, maxdepth, mindepth=0, printit=True):
-    """
-    precision: Number of digits of PI desired
-    mindepth: Optional, should be less than maxdepth. By default is maxdepth - 4
-        so we can test for convergence, but you can push further back to see if
-        you get there quicker than maxdepth allows.
-    maxdepth: How deep we're willing to go to get it
-
-    This runs chudnovsky at increasing "depth" until we achieve our desired
-    digits of precision consistently. It compares results of previous and current
-    run to see how consistent we are, and reports back the consistent digits.
-    This is obviously kinda silly since we're computing the same crud over and over,
-    but it's fun:
-    """
-    decimal.getcontext().prec = precision + 3
-
-    fmtIncrWidth = len(f"{maxdepth}")
-    fmtPrecWidth = precision
-    fmtMainWidth = 2 + fmtPrecWidth
-    fmtLenWidth = len(f"{precision}")
-
-    fmtResultPrev = ""
-    convergeCount = 0;
-    if mindepth == 0:
-        mindepth = maxdepth - 4
-    for n in range(mindepth, maxdepth + 1):
-        nextResult = chud(n)
-        fmtIncr = "{0:>{width}d}".format(n, width=fmtIncrWidth)
-        fmtResult = "{0:>{width}.{prec}f}".format(
-            nextResult, width=fmtMainWidth, prec=fmtPrecWidth
-        )
-        toPrint = compareStrs(fmtResultPrev, fmtResult)
-        digitCount = len(toPrint)
-        digitCount = 0 if (digitCount <= 2) else (digitCount - 2)
-        fmtLen = "{0:>{width}d}".format(digitCount, width=fmtLenWidth)
-        if not printit:
-            toPrint="..."
-        print(f"{fmtIncr} length: {fmtLen} -> {toPrint}")
-        if (digitCount == precision):
-            if (convergeCount := convergeCount + 1) > 2:
-                print(f"CONVERGENCE at depth: {n}")
-                break
+def runOnce():
+    def help():
+        print("""
+            Usage:
+                -p precision
+                -d depth
+        """)
+    precision, depth = 100, 1000;
+    argv = list(reversed(sys.argv))
+    argv.pop()
+    while len(argv) > 0:
+        arg = argv.pop()
+        if arg.startswith("-h"):
+            return help()
+        elif arg.startswith("-p"):
+            precision = int(argv.pop())
+        elif arg.startswith("-d"):
+            depth = int(argv.pop())
         else:
-            convergeCount = 0
+            print()
+            print("Invalid argument: "+arg)
+            return help()
 
-        fmtResultPrev = fmtResult
+    started = datetime.datetime.now()
+    setup(precision)
+    nextResult = chud(depth);
+    print("{0:>{width}.{prec}f}".format(
+        nextResult, width=2+precision, prec=precision
+    ))
+    print(
+        "In: {0:>.4f} seconds".format(
+            (datetime.datetime.now()- started).total_seconds()
+        )
+    )
 
-withFormatting(precision=1000, mindepth=2, maxdepth=10000)
-#withFormatting(precision=70000, mindepth=5000, maxdepth=10000, printit=False)
+runOnce()
