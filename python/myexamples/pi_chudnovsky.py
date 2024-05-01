@@ -96,16 +96,29 @@ def setup(precision):
 def help():
     print("""
         Usage:
-            -p <precision>
-                Number of digits of PI you want
-            -d <depth>
-                You need about 8,000 depth for 100,000 precision
-            -c <cores>
-                Defaults to 4 - use 1 to avoid concurrency
-            -f <file>
-                Optional: Supply a text file with known pi digits to
-                test your results.
+        -p <precision>
+            Number of digits of PI you want
+        -d <depth>
+            You need about 8,000 depth for 100,000 precision
+        -c <cores>
+            Defaults to 4 - use 1 to avoid concurrency
+        -f <file>
+            Optional: Supply a text file with known pi digits to
+            test your results.
     """)
+
+class MyInputError(BaseException): pass
+
+def parseint(s):
+    try:
+        return int(s)
+    except ValueError as ve:
+        raise MyInputError(f"Invalid number: \"{s}\"")
+
+def getarg(name, argv):
+    if len(argv)==0:
+        raise MyInputError(f"\"{name}\" requires additional argument")
+    return argv.pop()
 
 def compare(strResult, pifile):
     print("Comparing...")
@@ -132,20 +145,24 @@ def runOnce():
     argv = list(reversed(sys.argv))
     argv.pop()
     while len(argv) > 0:
-        arg = argv.pop()
-        if arg.startswith("-h"):
-            return help()
-        elif arg.startswith("-p"):
-            precision = int(argv.pop())
-        elif arg.startswith("-d"):
-            depth = int(argv.pop())
-        elif arg.startswith("-c"):
-            cores = int(argv.pop())
-        elif arg.startswith("-f"):
-            pifile = argv.pop()
-        else:
-            print("\n\nInvalid argument: "+arg)
-            return help()
+        try:
+            arg = argv.pop()
+            if arg.startswith("-h"):
+                return help()
+            elif arg.startswith("-p"):
+                precision = parseint(getarg(arg, argv))
+            elif arg.startswith("-d"):
+                depth = parseint(getarg(arg, argv))
+            elif arg.startswith("-c"):
+                cores = parseint(getarg(arg, argv))
+            elif arg.startswith("-f"):
+                pifile = getarg(arg, argv)
+            else:
+                raise MyInputError(f"Invalid argument: \"{arg}\"")
+        except MyInputError as mine:
+            print(f"\n*** User error: {mine} ***")
+            help()
+            return
 
     # Exec:
     started = datetime.datetime.now()
