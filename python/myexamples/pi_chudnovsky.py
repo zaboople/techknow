@@ -42,29 +42,33 @@ def binary_split(a, b, cores=1):
             r1, r2 = binary_split(a, m), binary_split(m, b)
         return computeNode(r1, r2)
 
+def dcml(x):
+    return decimal.Decimal(x)
+
 def upper(precision, Q1n):
     setup(precision)
-    sqrot = decimal.Decimal(10005).sqrt()
-    return (426880 * sqrot * Q1n)
+    sqrot = dcml(10005).sqrt()
+    return dcml(426880 * Q1n) * sqrot
 
-def lower(Q1n, R1n):
-    return (13591409 * Q1n + R1n)
+def lower(precision, Q1n, R1n):
+    setup(precision)
+    return dcml((13591409 * Q1n) + R1n)
 
-def chud(n, precision, cores):
+def chudnov(n, precision, cores):
     """Chudnovsky algorithm. """
     ____, Q1n, R1n = binary_split(1, n, cores)
     print("Final monster...")
     if cores > 1:
         print("Forking two more...")
         with futures.ProcessPoolExecutor(max_workers=cores) as executor:
-            futlo = executor.submit(lower, Q1n, R1n)
             futup = executor.submit(upper, precision, Q1n)
+            futlo = executor.submit(lower, precision, Q1n, R1n)
             print("Waiting...")
             sys.stdout.flush()
             up = futup.result()
             lo = futlo.result()
     else:
-        lo = lower(Q1n, R1n)
+        lo = lower(precision, Q1n, R1n)
         up = upper(precision, Q1n)
     print("And finally...")
     sys.stdout.flush()
@@ -72,6 +76,10 @@ def chud(n, precision, cores):
 
 def setup(precision):
     decimal.getcontext().prec = precision + 3
+    decimal.getcontext().Emin = -precision * 100
+    decimal.getcontext().Emax = precision * 100
+    #print(f"{decimal.getcontext()}")
+
 
 ##################
 # TESTING LOGIC: #
@@ -110,7 +118,7 @@ def runOnce():
     started = datetime.datetime.now()
     setup(precision)
     print("Calculating...")
-    nextResult = chud(depth, precision, cores);
+    nextResult = chudnov(depth, precision, cores);
     print("Formatting...")
     print("{0:>{width}.{prec}f}".format(
         nextResult, width=2+precision, prec=precision
