@@ -2,10 +2,14 @@
 # This implements PI calculation using the chudnovsky algorithm
 # For a better performing example that I wrote in java (egads, java!):
 #   https://github.com/zaboople/pi-chudnov
+# I tried using both ProcessPoolExecutor and ThreadPoolExecutor here
+# and nope, waste of time.
 
 import decimal
+import os
 import sys
 import datetime
+import concurrent.futures as futures
 
 def computeLeaf(a, b):
     Pab = -(6*a - 5) * (2*a - 1) * (6*a - 1)
@@ -21,25 +25,51 @@ def computeNode(tripleA, tripleB):
     Rab = Qb * Ra + Pa * Rb
     return Pab, Qab, Rab
 
-def binary_split(a, b):
+def binary_split(a, b, cores=1):
     if b == a + 1:
         return computeLeaf(a, b)
     else:
         m = (a + b) // 2  # Floor division
-        return computeNode(
-            binary_split(a, m),
-            binary_split(m, b)
-        )
+        if cores > 1:
+            print(f"Forking {a} {b}...{os.getpid()}")
+            with futures.ProcessPoolExecutor(max_workers=2) as executor:
+                f1 = executor.submit(binary_split, a, m, cores / 2)
+                f2 = executor.submit(binary_split, m, b, cores / 2)
+            r1, r2 = f1.result(), f2.result()
+            print(f"{a} {b}...{os.getpid()} done")
+            cores = 1
+        else:
+            r1, r2 = binary_split(a, m), binary_split(m, b)
+        return computeNode(r1, r2)
 
-def chud(n):
-    """Chudnovsky algorithm."""
-    ____, Q1n, R1n = binary_split(1, n)
-    return (426880 * SQRT_10005 * Q1n) / (13591409 * Q1n + R1n)
+def upper(precision, Q1n):
+    setup(precision)
+    sqrot = decimal.Decimal(10005).sqrt()
+    return (426880 * sqrot * Q1n)
+
+def lower(Q1n, R1n):
+    return (13591409 * Q1n + R1n)
+
+def chud(n, precision, cores):
+    """Chudnovsky algorithm. """
+    ____, Q1n, R1n = binary_split(1, n, cores)
+    print("Final step...")
+    if cores > 1:
+        print("Forking two more...")
+        with futures.ProcessPoolExecutor(max_workers=cores) as executor:
+            futlo = executor.submit(lower, Q1n, R1n)
+            futup = executor.submit(upper, precision, Q1n)
+            up = futup.result()
+            lo = futlo.result()
+    else:
+        lo = lower(Q1n, R1n)
+        up = upper(precision, Q1n)
+    print("And finally...")
+    sys.stdout.flush()
+    return up / lo
 
 def setup(precision):
     decimal.getcontext().prec = precision + 3
-    global SQRT_10005
-    SQRT_10005 = decimal.Decimal(10005).sqrt()
 
 ##################
 # TESTING LOGIC: #
@@ -52,8 +82,9 @@ def runOnce():
             Usage:
                 -p precision
                 -d depth
+                -c cores
         """)
-    precision, depth = 100, 1000;
+    precision, depth, cores = 100, 1000, 4;
     argv = list(reversed(sys.argv))
     argv.pop()
     while len(argv) > 0:
@@ -64,14 +95,19 @@ def runOnce():
             precision = int(argv.pop())
         elif arg.startswith("-d"):
             depth = int(argv.pop())
+        elif arg.startswith("-c"):
+            cores = int(argv.pop())
         else:
             print()
             print("Invalid argument: "+arg)
             return help()
 
     started = datetime.datetime.now()
+    print("Setting up and finding square root...")
     setup(precision)
-    nextResult = chud(depth);
+    print("Calculating...")
+    nextResult = chud(depth, precision, cores);
+    print("Formatting...")
     print("{0:>{width}.{prec}f}".format(
         nextResult, width=2+precision, prec=precision
     ))
@@ -81,4 +117,5 @@ def runOnce():
         )
     )
 
-runOnce()
+if __name__ == '__main__':
+    runOnce()
