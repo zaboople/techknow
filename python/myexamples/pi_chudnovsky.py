@@ -32,12 +32,12 @@ def binary_split(a, b, cores=1):
     else:
         m = (a + b) // 2  # Floor division
         if cores > 1:
-            print(f"Forking {a} {b}...{os.getpid()}")
+            print(f"Forking {a} {b}")
             with futures.ProcessPoolExecutor(max_workers=2) as executor:
                 f1 = executor.submit(binary_split, a, m, cores / 2)
                 f2 = executor.submit(binary_split, m, b, cores / 2)
             r1, r2 = f1.result(), f2.result()
-            print(f"{a} {b}...{os.getpid()} done")
+            print(f"{a} {b} done")
             cores = 1
         else:
             r1, r2 = binary_split(a, m), binary_split(m, b)
