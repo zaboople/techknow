@@ -93,19 +93,42 @@ def setup(precision):
 # TESTING LOGIC: #
 ##################
 
+def help():
+    print("""
+        Usage:
+            -p <precision>
+                Number of digits of PI you want
+            -d <depth>
+                You need about 8,000 depth for 100,000 precision
+            -c <cores>
+                Defaults to 4 - use 1 to avoid concurrency
+            -f <file>
+                Optional: Supply a text file with known pi digits to
+                test your results.
+    """)
+
+def compare(strResult, pifile):
+    print("Comparing...")
+    instream = open(pifile, "rb")
+    ptr = 0
+    strlng = len(strResult)
+    while bites := instream.read(1024 * 256):
+        endIndex = min(strlng, ptr + len(bites))
+        compareFrom = bites.decode("utf-8")
+        compareTo = strResult[ptr: endIndex]
+        count = len(compareTo)
+        for i in range(0, count):
+            if compareFrom[i] != compareTo[i]:
+                matched = ptr + i
+                print(f"Matched: {matched} digits")
+                return
+        ptr += count
+    print(f"Matched all: {ptr} digits")
 
 def runOnce():
-    def help():
-        print("""
-            Usage:
-                -p precision
-                    Number of digits of PI you want
-                -d depth
-                    You need about 8,000 depth for 100,000 precision
-                -c cores
-                    Defaults to 4 - use 1 to avoid stupid concurrency
-        """)
-    precision, depth, cores = 100, 1000, 4;
+
+    # Setup:
+    precision, depth, cores, pifile = 100, 1000, 4, None;
     argv = list(reversed(sys.argv))
     argv.pop()
     while len(argv) > 0:
@@ -118,24 +141,27 @@ def runOnce():
             depth = int(argv.pop())
         elif arg.startswith("-c"):
             cores = int(argv.pop())
+        elif arg.startswith("-f"):
+            pifile = argv.pop()
         else:
-            print()
-            print("\nInvalid argument: "+arg)
+            print("\n\nInvalid argument: "+arg)
             return help()
 
+    # Exec:
     started = datetime.datetime.now()
     setup(precision)
     print("Calculating...")
     nextResult = chudnov(depth, precision, cores);
+    timeTaken = (datetime.datetime.now()- started).total_seconds()
+
+    # Wrap up:
     print("Formatting...")
-    print("{0:>{width}.{prec}f}".format(
-        nextResult, width=2+precision, prec=precision
-    ))
-    print(
-        "In: {0:>.4f} seconds".format(
-            (datetime.datetime.now()- started).total_seconds()
-        )
-    )
+    strResult = "{0:.{prec}f}".format(nextResult, prec=precision)
+    print("PI=", end="")
+    print(strResult)
+    if pifile:
+        compare(strResult, pifile)
+    print("In: {0:>.4f} seconds".format(timeTaken))
 
 # if-statement is necessary when forking on MS Windows
 # and perhaps other os's:
