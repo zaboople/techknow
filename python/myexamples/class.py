@@ -1,11 +1,8 @@
 #!/usr/bin/env python3
 
-def comment(ss=""):
-    print("-----------------")
-    for s in ss.split("\n"):
-        print(s.strip())
+import myutils;
 
-comment("""
+myutils.comment("""
     Let's show off annotations on classes, especially
     the subtly different static/class method annotations:
 """)
@@ -42,14 +39,17 @@ class Bleek(object):
 
 qq = Bleek(1, "Hi")
 print(f"{qq.mynum=} {qq.mystr=}")
-qq = Bleek.rando()
-print(f"Plain string: {qq}")
-print(f"Repr  string: {qq=}")
-print(f"{qq.mynum=} {qq.mystr=}")
-print(f"{Bleek.randoStatic()=}")
 
-comment("""
-    Now let's see about shadowing statics and class extension
+qq = Bleek.rando()
+print(f"""
+    Plain string: {qq}
+    Repr  string: {qq=}
+    {qq.mynum=} {qq.mystr=}
+    {Bleek.randoStatic()=}
+""")
+
+myutils.comment("""
+    Now let's see about shadowing statics and class extension:
 """)
 
 class Bleeko(Bleek):

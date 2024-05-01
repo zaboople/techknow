@@ -1,21 +1,22 @@
 #!/usr/bin/env python3
-def comment(ss=""):
-    print("\n-----------------")
-    for s in ss.split("\n"):
-        if s!="": print(s.strip())
+import myutils
 
 ############################
 
-comment("""
+myutils.comment("""
+    Fomo info:
     https://docs.python.org/3/library/string.html#formatstrings
 """)
 
-comment("Ignores extra args:")
+myutils.comment("Ignores extra args:")
 print("{0} -- {1} -- {2}".format("hello", "you", "nerd", "what"))
 
 ############################
 
-comment("""
+myutils.comment("Simple decimal format:")
+print("{0:.5f}".format(345.123456789))
+
+myutils.comment("""
     Right-justifying decimals so "." lines up, with commas:
 """)
 
@@ -34,9 +35,10 @@ for x in [
         myRightJustify(x, mywidth=25, myprec=6)
     )
 
-comment("""
+myutils.comment("""
     Justifying text:
 """)
 print("Left:   ->{0:<16}<-".format("hello"))
 print("Right:  ->{0:>16}<-".format("hello"))
 print("Center: ->{0:^16}<-".format("hello"))
+print("None:   ->{0:}<-".format("hello"))
