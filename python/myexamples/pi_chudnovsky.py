@@ -3,7 +3,7 @@
 # For a better performing example that I wrote in java (egads, java!):
 #   https://github.com/zaboople/pi-chudnov
 # I tried using both ProcessPoolExecutor and ThreadPoolExecutor here
-# and nope, waste of time.
+# and got mild improvement.
 
 import decimal
 import os
@@ -47,16 +47,22 @@ def dcml(x):
 
 def upper(precision, Q1n):
     setup(precision)
-    sqrot = dcml(10005).sqrt()
-    return dcml(426880 * Q1n) * sqrot
+    res = dcml(426880 * Q1n) * dcml(10005).sqrt()
+    print("Upper done")
+    return res
 
 def lower(precision, Q1n, R1n):
     setup(precision)
-    return dcml((13591409 * Q1n) + R1n)
+    res = dcml((13591409 * Q1n) + R1n)
+    print("Lower done")
+    return res
 
 def chudnov(n, precision, cores):
     """Chudnovsky algorithm. """
+
+    print("Do splits...")
     ____, Q1n, R1n = binary_split(1, n, cores)
+
     print("Final monster...")
     if cores > 1:
         print("Forking two more...")
@@ -75,10 +81,12 @@ def chudnov(n, precision, cores):
     return up / lo
 
 def setup(precision):
-    decimal.getcontext().prec = precision + 3
-    decimal.getcontext().Emin = -precision * 100
-    decimal.getcontext().Emax = precision * 100
-    #print(f"{decimal.getcontext()}")
+    """Be careful that precision/emin/emax is set up correctly even
+    when forking process. We want insanely huge negative exponents"""
+    con = decimal.getcontext()
+    con.prec = precision + 3
+    con.Emax = precision * precision * 100
+    con.Emin = -decimal.getcontext().Emax
 
 
 ##################
