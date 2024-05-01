@@ -72,11 +72,10 @@ def chudnov(n, precision, cores):
             futlo = executor.submit(lower, precision, Q1n, R1n)
             print("Waiting...")
             sys.stdout.flush()
-            up = futup.result()
-            lo = futlo.result()
+            up, lo = futup.result(), futlo.result()
     else:
-        lo = lower(precision, Q1n, R1n)
         up = upper(precision, Q1n)
+        lo = lower(precision, Q1n, R1n)
     print("And finally, painfully...")
     sys.stdout.flush()
     return up / lo
@@ -138,5 +137,7 @@ def runOnce():
         )
     )
 
+# if-statement is necessary when forking on MS Windows
+# and perhaps other os's:
 if __name__ == '__main__':
     runOnce()
