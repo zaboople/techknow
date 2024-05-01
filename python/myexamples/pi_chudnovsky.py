@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# This implements PI calculation using the chudnovsky algorithm
+# This implements PI calculation using the chudnovsky algorithm. I seem
+# to have overcome all the usual overflow/out-of-memory/etc crud.
 # For a better performing example that I wrote in java (egads, java!):
 #   https://github.com/zaboople/pi-chudnov
 # I tried using both ProcessPoolExecutor and ThreadPoolExecutor here
@@ -63,7 +64,7 @@ def chudnov(n, precision, cores):
     print("Do splits...")
     ____, Q1n, R1n = binary_split(1, n, cores)
 
-    print("Final monster...")
+    print("Final monster... now we bog down completely...")
     if cores > 1:
         print("Forking two more...")
         with futures.ProcessPoolExecutor(max_workers=cores) as executor:
@@ -76,7 +77,7 @@ def chudnov(n, precision, cores):
     else:
         lo = lower(precision, Q1n, R1n)
         up = upper(precision, Q1n)
-    print("And finally...")
+    print("And finally, painfully...")
     sys.stdout.flush()
     return up / lo
 
