@@ -53,12 +53,14 @@ def lower(Q1n, R1n):
 def chud(n, precision, cores):
     """Chudnovsky algorithm. """
     ____, Q1n, R1n = binary_split(1, n, cores)
-    print("Final step...")
+    print("Final monster...")
     if cores > 1:
         print("Forking two more...")
         with futures.ProcessPoolExecutor(max_workers=cores) as executor:
             futlo = executor.submit(lower, Q1n, R1n)
             futup = executor.submit(upper, precision, Q1n)
+            print("Waiting...")
+            sys.stdout.flush()
             up = futup.result()
             lo = futlo.result()
     else:
@@ -81,8 +83,11 @@ def runOnce():
         print("""
             Usage:
                 -p precision
+                    Number of digits of PI you want
                 -d depth
+                    You need about 8,000 depth for 100,000 precision
                 -c cores
+                    Defaults to 4 - use 1 to avoid stupid concurrency
         """)
     precision, depth, cores = 100, 1000, 4;
     argv = list(reversed(sys.argv))
@@ -99,11 +104,10 @@ def runOnce():
             cores = int(argv.pop())
         else:
             print()
-            print("Invalid argument: "+arg)
+            print("\nInvalid argument: "+arg)
             return help()
 
     started = datetime.datetime.now()
-    print("Setting up and finding square root...")
     setup(precision)
     print("Calculating...")
     nextResult = chud(depth, precision, cores);
