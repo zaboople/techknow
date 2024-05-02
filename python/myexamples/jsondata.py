@@ -1,25 +1,30 @@
 #!/usr/bin/env python3
 
 from io import StringIO
-import myutils
+from myutils import comment
 import json
 import os
 
-myutils.comment("""
+####################################
+
+comment("""
     Putting an arbitrary object into json
 """)
 
+# String IO acts like an output/input stream to a file:
 strm = StringIO()
 json.dump(
     {"hi":4, 1:['a', 'b'], "m":[1,2,3,4]},
     strm
 )
-
+# The seek is necessary to reset the stream to beginning
 strm.seek(0, os.SEEK_SET)
 dicto2 = json.load(strm)
 print(f"{dicto2=}")
 
-myutils.comment("""
+####################################
+
+comment("""
     Custom JSON to/from using a JSONEncoder class. Note
     that our custom encoding doesn't create a class; it just needs
     to make a dictionary, list or whatever and the json module
@@ -32,7 +37,21 @@ class CC:
         self.y=y
         self.z=z
     def toJson(self):
-        return {"mytype": "CC", "x": self.x, "y": self.y, "z": self.z}
+        r = dict(self.__dict__)
+        r["mytype"] = self.__class__.__name__
+        return r
+    def __str__(self):
+        # Does the classic toString()
+        vv = ",".join(
+            [repr(value) for key, value in self.__dict__.items()]
+        )
+        return f"C({vv})"
+    def __repr__(self):
+        # Implements the classic repr()
+        vv = ",".join(
+            [f"{key}={value}" for key, value in self.__dict__.items()]
+        )
+        return f"C({vv})"
 
 class CC_encoder(json.JSONEncoder):
     def default(self, obj):
@@ -51,14 +70,34 @@ json.dump(
 )
 print(f"Stream has: {strm.getvalue()=}")
 
+#################################
 
-myutils.comment("""
+comment("""
     Custom JSON to/from using just a function:
 """)
+
+def genericToJson(xx):
+    r = dict(xx.__dict__)
+    r["mytype"] = xx.__class__.__name__
+    return r
 
 strm = StringIO()
 json.dump(
     [1,2,CC(2,3,["Just lambda"])], strm,
-    default = lambda x: x.toJson()
+    default = genericToJson
 )
 print(f"Using lambda, stream has: {strm.getvalue()=}")
+
+strm.seek(0, os.SEEK_SET)
+dicto = json.load(strm)
+print(f"Back into a dict: {dicto=}")
+
+comment("""
+    Print CC stringified:
+""")
+cc = CC(13, 14, 15)
+print(cc)
+print(f"{cc=}")
+dicto = {"a":123}
+if "a" in dicto:
+    print(dicto)
