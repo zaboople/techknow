@@ -40,3 +40,11 @@ comment("""
 """)
 for key in myDict:
     print(f"  {key=} {myDict[key]=}")
+
+comment("""
+    Check for keys:
+""")
+if 121231231244 not in myDict:
+    print("And that's how you check for keys")
+if not myDict.get("hi"):
+    print("Another way");

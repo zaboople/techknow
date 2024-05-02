@@ -45,13 +45,13 @@ class CC:
         vv = ",".join(
             [repr(value) for key, value in self.__dict__.items()]
         )
-        return f"C({vv})"
+        return f"CC({vv})"
     def __repr__(self):
         # Implements the classic repr()
         vv = ",".join(
             [f"{key}={value}" for key, value in self.__dict__.items()]
         )
-        return f"C({vv})"
+        return f"CC({vv})"
 
 class CC_encoder(json.JSONEncoder):
     def default(self, obj):
@@ -81,23 +81,25 @@ def genericToJson(xx):
     r["mytype"] = xx.__class__.__name__
     return r
 
+def genericFromJson(dicty):
+    print(f"Inside genericFromJson(): {dicty}")
+    if "mytype" in dicty:
+        # Normally I could use import_module() and
+        # getattr() to try to do a class.forName()
+        if dicty["mytype"] == "CC":
+            del dicty["mytype"]
+            return CC(**dicty)
+        raise Exception(f"Could not initialize from: {dicty}")
+    return dicty
+
 strm = StringIO()
 json.dump(
-    [1,2,CC(2,3,["Just lambda"])], strm,
+    [1,2,CC(2,3,["Just lambda"]), {"rando":"a"}], strm,
     default = genericToJson
 )
 print(f"Using lambda, stream has: {strm.getvalue()=}")
 
 strm.seek(0, os.SEEK_SET)
-dicto = json.load(strm)
-print(f"Back into a dict: {dicto=}")
+fromJson = json.load(strm, object_hook=genericFromJson)
+print(f"Back into a dict, CC should be in here: {fromJson=}")
 
-comment("""
-    Print CC stringified:
-""")
-cc = CC(13, 14, 15)
-print(cc)
-print(f"{cc=}")
-dicto = {"a":123}
-if "a" in dicto:
-    print(dicto)
