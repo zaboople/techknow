@@ -73,3 +73,5 @@ def testStrips():
     """,
     False)
 
+if __name__ == "__main__":
+    testStrips()
