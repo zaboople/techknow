@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
 
-def comment(ss=""):
-    print("-----------------")
-    for s in ss.split("\n"):
-        if s!= "": print(s.strip())
-
 import collections
+import myutils
 
-comment("""
+myutils.comment("""
     Queue:
 """)
 myqueue = collections.deque([1,2,3,4])
@@ -17,7 +13,7 @@ while len(myqueue) > 0:
 print()
 
 
-comment("""
+myutils.comment("""
     Crazy not-in syntax
     I'm using a set as target of not-in, i.e. {} instead of []
     even though latter would work
@@ -30,7 +26,7 @@ for x in [1,2,3,4,5]:
 
 a = set('abracadabra')
 b = set('alacazam')
-comment(f"""
+myutils.comment(f"""
     Set logic:
     {sorted(a)      = }
     {sorted(b)      = }

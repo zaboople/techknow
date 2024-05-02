@@ -2,6 +2,7 @@
 
 import sys
 import myutils
+import os
 
 def easyRead(ffile):
     with open(ffile, mode="r") as instream:
@@ -23,7 +24,7 @@ def doData():
             readFile = argv.pop()
         elif arg=="-w":
             writeFile = argv.pop()
-        else
+        else:
             readFile = arg
 
     if readFile:
@@ -54,8 +55,11 @@ def doData():
     if writeFile:
         myutils.comment(f"""
             Writing to: {writeFile}
+            (note use of "a" for append; "w" would just
+            write to beginning)
         """)
-        with open(writeFile, mode="w", encoding="utf-8") as outy:
+        with open(writeFile, mode="a", encoding="utf-8") as outy:
+            #outy.seek(0, whence=os.SEEK_END)
             outy.write("First line\n")
             outy.write("Second line\n")
             print(f"Byte position {outy.tell()}")
