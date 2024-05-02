@@ -22,14 +22,9 @@ strm.seek(0, os.SEEK_SET)
 dicto2 = json.load(strm)
 print(f"{dicto2=}")
 
-####################################
 
-comment("""
-    Custom JSON to/from using a JSONEncoder class. Note
-    that our custom encoding doesn't create a class; it just needs
-    to make a dictionary, list or whatever and the json module
-    will do the stringification from there.
-""")
+#######################################
+# This will be used in sections below:
 
 class CC:
     def __init__(self, x, y, z):
@@ -53,6 +48,16 @@ class CC:
         )
         return f"CC({vv})"
 
+####################################
+
+comment("""
+    Custom JSON to/from using a JSONEncoder class. Note
+    that our custom encoding doesn't create a class; it just needs
+    to make a dictionary, list or whatever and the json module
+    will do the stringification from there.
+""")
+
+
 class CC_encoder(json.JSONEncoder):
     def default(self, obj):
         # This gets called only if the main JSONEncoder can't figure
@@ -60,6 +65,7 @@ class CC_encoder(json.JSONEncoder):
         if isinstance(obj, CC):
             print("Encoding my stuff...")
             return obj.toJson()
+        # So this kinda suspect and doesn't make sense:
         return json.JSONEncoder.default(self, obj)
 
 print("My encoder: "+json.dumps(["hi", "there", CC(4,5,6)], cls=CC_encoder))
@@ -74,13 +80,14 @@ print(f"Stream has: {strm.getvalue()=}")
 
 comment("""
     Custom JSON to/from using just a function:
+    Use "default" on object-to-json
+    Use "object_hook" on json-to-object
 """)
 
 def genericToJson(xx):
     r = dict(xx.__dict__)
     r["mytype"] = xx.__class__.__name__
     return r
-
 def genericFromJson(dicty):
     print(f"Inside genericFromJson(): {dicty}")
     if "mytype" in dicty:
@@ -92,13 +99,13 @@ def genericFromJson(dicty):
         raise Exception(f"Could not initialize from: {dicty}")
     return dicty
 
+
 strm = StringIO()
 json.dump(
     [1,2,CC(2,3,["Just lambda"]), {"rando":"a"}], strm,
     default = genericToJson
 )
 print(f"Using lambda, stream has: {strm.getvalue()=}")
-
 strm.seek(0, os.SEEK_SET)
 fromJson = json.load(strm, object_hook=genericFromJson)
 print(f"Back into a dict, CC should be in here: {fromJson=}")
