@@ -23,6 +23,8 @@ def doData():
             readFile = argv.pop()
         elif arg=="-w":
             writeFile = argv.pop()
+        else
+            readFile = arg
 
     if readFile:
         myutils.comment(f"""
