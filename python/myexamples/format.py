@@ -42,3 +42,10 @@ print("Left:   ->{0:<16}<-".format("hello"))
 print("Right:  ->{0:>16}<-".format("hello"))
 print("Center: ->{0:^16}<-".format("hello"))
 print("None:   ->{0:}<-".format("hello"))
+
+
+myutils.comment("""
+    Old-timey formatting:
+    https://docs.python.org/release/3.12.2/library/stdtypes.html#old-string-formatting
+""")
+print('Here is a number %5.3f.' % 2939393.4456787)

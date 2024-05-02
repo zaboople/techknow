@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 
 import sys
+import myutils
+
+def easyRead(ffile):
+    with open(ffile, mode="r") as instream:
+        for line in instream:
+            print(line, end="")
 
 def doData():
     """Reads file data into byte array, makes that into a string"""
@@ -10,12 +16,49 @@ def doData():
         print("I need a file name")
         return
 
-    file = argv.pop()
-    print(f"Opening: \"{file}\"")
+    readFile, writeFile = None, None
+    while len(argv) > 0:
+        arg = argv.pop()
+        if arg=="-r":
+            readFile = argv.pop()
+        elif arg=="-w":
+            writeFile = argv.pop()
 
-    instream = open(file, mode="rb") # rb==read binary
-    while data:= instream.read(128):
-        print(data.decode("utf-8"), end="")
+    if readFile:
+        myutils.comment(f"""
+            Reading file bytes from file:
+                \"{readFile}\"
+            (note "rb" for read-binary)
+        """)
+        with open(readFile, mode="rb") as instream:
+            while data:= instream.read(128):
+                print(data.decode("utf-8"), end="")
+        print()
+
+        myutils.comment("""
+            Reading file lines:
+        """)
+        with open(readFile, mode="r") as instream:
+            while line:= instream.readline():
+                print(line, end="")
+        print()
+
+        myutils.comment("""
+            Reading file lines, simplest way:
+        """)
+        easyRead(readFile)
+        print()
+
+    if writeFile:
+        myutils.comment(f"""
+            Writing to: {writeFile}
+        """)
+        with open(writeFile, mode="w", encoding="utf-8") as outy:
+            outy.write("First line\n")
+            outy.write("Second line\n")
+            print(f"Byte position {outy.tell()}")
+        print("Reading back out...")
+        easyRead(writeFile)
+        print()
 
 doData()
-print("{0:100.10}".format(13.444))
