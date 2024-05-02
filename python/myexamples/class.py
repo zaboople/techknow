@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-import myutils;
+from myutils import comment;
 
-myutils.comment("""
+comment("""
     Let's show off annotations on classes, especially
     the subtly different static/class method annotations:
 """)
@@ -10,7 +10,12 @@ myutils.comment("""
 
 class Bleek(object):
 
+    # A class variable that can be overridden, sort... of...
+    # If you refer to it using "self" it's overridden.
+    staticky = "Variable In Bleek"
+
     def __init__(self, num, stri):
+        print(f"Bleek.init(): {self.staticky=}")
         self.mynum = num
         self.mystr = stri
 
@@ -28,11 +33,11 @@ class Bleek(object):
 
     def __str__(self):
         # Does the classic toString()
-        return f"mynum={self.mynum} mystr={self.mystr}"
+        return f"mynum={self.mynum} mystr={self.mystr} staticky={self.staticky}"
 
     def __repr__(self):
         # Implements the classic repr()
-        return f"mynum={self.mynum} mystr={repr(self.mystr)}"
+        return f"mynum={self.mynum} mystr={repr(self.mystr)} staticky={repr(self.staticky)}"
 
     def talk(self):
         return f"Talk: Num is {self.mynum} Str is {self.mystr}"
@@ -48,11 +53,14 @@ print(f"""
     {Bleek.randoStatic()=}
 """)
 
-myutils.comment("""
+comment("""
     Now let's see about shadowing statics and class extension:
 """)
 
 class Bleeko(Bleek):
+
+    # A class variable
+    staticky = "overriding variable in bleeko"
 
     @staticmethod
     def randoStatic():
@@ -66,8 +74,17 @@ rr = Bleeko(1, "Hi")
 print(f"Does init work without override: {rr.mynum=} {rr.mystr=}")
 print(f"Does talk() inherit: {rr.talk()=}")
 rr = Bleeko.rando()
-print(f"""Does rando() call override of randoStatic? toStringing():
-    {rr}
-    {str(rr)}
-    {rr=}
+comment(f"""
+    Does rando() call override of randoStatic? toStringing():
+        str: {rr}
+        str: {str(rr)}
+        repr: {rr=}
+""")
+rr.staticky="What I changed it"
+comment(f"""
+    Messing with staticky....
+        str: {rr}
+        rr.repr {rr=}
+        {Bleek.staticky=}
+        {Bleeko.staticky=}
 """)
