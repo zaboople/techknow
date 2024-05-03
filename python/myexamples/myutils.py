@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
 
+import traceback
+
 def comment(ss=""):
     print("-----------------")
     if ss:
         print(stripIndent(ss, False))
+
+def printOnPurposeExc():
+    for line in traceback.format_exc().split("\n"):
+        print(f"  [intentional] {line}")
 
 def stripIndent(ii, trimEnds=True):
   list = ii.split("\n")
