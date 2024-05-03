@@ -3,6 +3,13 @@
 import traceback
 from myutils import comment
 
+def debugEx(ex):
+    """Custom-prints a stack trace"""
+    print(f"\nDebugging exception: {ex}")
+    for line in traceback.format_exc().split("\n"):
+        print(f"     >>> {line}")
+    print()
+
 def badfunc():
     for x in x:
         pass
@@ -15,12 +22,6 @@ def nestedBlowup(toSay):
         blowup(f"Calling blowup with: \"{toSay}\"")
     except Exception as ex:
         raise Exception(f"Blew up in nestedBlowup(); nested: {ex}") from ex
-
-def debugEx(ex):
-    print(f"\nDebugging exception: {ex}")
-    for line in traceback.format_exc().split("\n"):
-        print(f"     >>> {line}")
-    print()
 
 class MyEx(BaseException): pass
 
@@ -76,15 +77,18 @@ else:
 finally:
     print("Yes, finally exists")
 
-comment("Re-raise:")
+comment("Re-raise, also adding notes to an exception:")
 try:
     try:
         ii = int("efwef")
     except (RuntimeError, TypeError, NameError, ValueError) as ex:
         print(f"Got an exception but re-raising: {ex=}")
+        ex.add_note("Here is a note")
+        ex.add_note("Here is another note")
         raise ex
 except BaseException as ex:
     print("Got the sucker")
+    debugEx(ex)
 
 comment("""
     You're kidding! Returning a value from finally disables exception handling.

@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 
-def comment(ss=""):
-    print("-----------------")
-    for s in ss.split("\n"):
-        print(s.strip())
+from myutils import comment
 
 comment("""
   This behaves superweird. When a list has a default, it gets created once,
@@ -35,11 +32,12 @@ comment("""
 """)
 def flexfun(*args, **dicti):
     for arg in args:
-        print(f"Arg {arg}")
-    for key in dicti:
-        print(f"Key {key} {dicti[key]}")
-
+        print(f"Arg {arg}", end=" -- ")
+    for key, value in dicti.items():
+        print(f"Key {key} {dicti[key]}", end=" -- ")
+    print()
 flexfun(1, 2, "hello", boo=22, bash=23)
+flexfun(*[1, 2, "hello"], **{"boo": 22, "bash": 23})
 
 comment("Function documentation auto-populates the __doc__ variable:")
 def docfunc(x, y):
@@ -50,3 +48,56 @@ def docfunc(x, y):
     return x + y
 
 print(f"Docs... {docfunc.__doc__=!s}")
+
+comment("*** INSANE SCOPE SHADOWING: ***");
+def f1():
+    comment("""
+        First let's see how variables shadow the parent
+        because python sees the x= and decides it's local-only
+    """)
+    x=1
+    def f2():
+        x=2
+        print(f"f2 {x=}")
+        def f3():
+            x=3
+            print(f"f3 {x=}")
+        f3()
+        print(f"f2 {x=}")
+    print(f"f1 {x=}")
+    f2()
+    print(f"f1 {x=}")
+
+    comment("""
+        Now we see that because they aren't assigning values,
+        the inner functions suddenly see the outer assignment of x
+    """)
+    def f2a():
+        print(f"f2a {x=}")
+        def f3a():
+            print(f"f3a {x=}")
+        f3a()
+    print(f"f1 {x=}")
+    f2a()
+    print(f"f1 {x=}")
+
+    comment("""
+        Now it just gets stupid. If you comment out the
+        x += 1, f2b works, but otherwise it doesn't actually
+        blow up on that line! The print() before it blows up!
+    """)
+    x += 1
+    x -= 1
+    def f2b():
+        print(f"f2b {x=}")
+        x += 1
+    print(f"f1 {x=}")
+    import traceback
+    try:
+        f2b()
+    except BaseException as be:
+        for line in traceback.format_exc().split("\n"):
+            print(f"     >>> {line}")
+    print(f"f1 {x=}")
+
+f1()
