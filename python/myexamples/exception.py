@@ -1,24 +1,20 @@
 #!/usr/bin/env python3
 
 import traceback
-
-def comment(ss=""):
-    print("-----------------")
-    for s in ss.split("\n"):
-        if s!="": print(s.strip())
+from myutils import comment
 
 def badfunc():
     for x in x:
         pass
 
 def blowup(toSay):
-    raise Exception(toSay)
+    raise Exception(f"You wanted me to say: '{toSay}'")
 
-def goup(toSay):
+def nestedBlowup(toSay):
     try:
         blowup(f"Calling blowup with: \"{toSay}\"")
     except Exception as ex:
-        raise Exception(f"Blew up in goup(); nested: {ex}") from ex
+        raise Exception(f"Blew up in nestedBlowup(); nested: {ex}") from ex
 
 def debugEx(ex):
     print(f"\nDebugging exception: {ex}")
@@ -39,7 +35,7 @@ def doMyException(param):
 
 comment("Nested exceptions...")
 try:
-    goup("Hi there")
+    nestedBlowup("Hi there")
 except Exception as ex:
     debugEx(ex)
 
@@ -64,4 +60,45 @@ for xxx in [4,3,2,1]:
     except BaseException as ex:
         print(f"  Got regular exception: \"{ex}\"")
 
-comment("")
+comment("Multiple exceptions caught at once:")
+try:
+    doMyException(1)
+except (RuntimeError, TypeError, NameError, MyEx) as ex:
+    print(f"  Got one of several exceptions: \"{ex.__class__.__name__}\"")
+
+comment("try - except - else - finally:")
+try:
+    doMyException(88)
+except (RuntimeError, TypeError, NameError, MyEx) as ex:
+    print(f"  Got one of several exceptions: \"{ex.__class__.__name__}\"")
+else:
+    print("Successfully made it thru to else")
+finally:
+    print("Yes, finally exists")
+
+comment("Re-raise:")
+try:
+    try:
+        ii = int("efwef")
+    except (RuntimeError, TypeError, NameError, ValueError) as ex:
+        print(f"Got an exception but re-raising: {ex=}")
+        raise ex
+except BaseException as ex:
+    print("Got the sucker")
+
+comment("""
+    You're kidding! Returning a value from finally disables exception handling.
+    So does break and continue
+""")
+def whatTheHeck():
+    try:
+        int("nope not a number")
+        print("This should not execute!")
+        return 2
+    except BaseException as ex:
+        print("Well I caught it, re-raising")
+        raise ex;
+    finally:
+        return 1
+
+print(f"Did it not blow up? {whatTheHeck()=}")
