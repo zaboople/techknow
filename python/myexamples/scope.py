@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from myutils import comment
 from myutils import printOnPurposeExc
 
@@ -65,3 +67,4 @@ def f1():
     print(f"f1 {x=}")
 
 f1()
+

@@ -7,6 +7,8 @@ comment("""
     #
     #    I am putting the latter in a separate inner class (yes
     #    inner classes work in python!)
+    #
+    #    NOTE: Look at yield.py before using this
 """)
 
 class MyThing:

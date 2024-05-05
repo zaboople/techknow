@@ -1,17 +1,26 @@
 #!/usr/bin/env python3
 
-import datetime
+import datetime as dt
 import time
 import sys
+from myutils import comment
 
-today = datetime.datetime(year=2017, month=1, day=27)
+comment("""
+    https://docs.python.org/3/library/datetime.html
+    Date/Time is ugly as usual
+""")
+
+today = dt.datetime(year=2017, month=1, day=27)
 print(f"Date: {today}")
 
-today = datetime.datetime.now()
+comment("""
+    Note: datetime.utcnow() is deprecated
+""")
+today = dt.datetime.now(dt.UTC)
 print("sleeping...")
 sys.stdout.flush()
 time.sleep(0.1);
-today2 = datetime.datetime.now()
+today2 = dt.datetime.now(dt.UTC)
 print("{0} seconds".format(
     (today2 - today).total_seconds()
 ))

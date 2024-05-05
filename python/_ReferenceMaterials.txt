@@ -1,3 +1,11 @@
-    https://docs.python.org/3/library/index.html
+# Main reference manual:
     https://docs.python.org/release/3.12.2/reference/
+
+# Tutorial:
     https://docs.python.org/release/3.12.2/tutorial/
+
+# Standard library:
+    https://docs.python.org/3/library/
+
+    Standard library - built-in functions:
+        https://docs.python.org/3/library/functions.html

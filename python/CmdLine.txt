@@ -1,0 +1,5 @@
+# Run python commands directly
+    Syntax;
+        python -c <commands...>
+    Example:
+        python -c 'import os; help(os)'
