@@ -1,0 +1,24 @@
+# Create a virtual python environment in directory "myenv",
+# which will appear in the current working directory
+python -m venv myenv
+
+# Activate it:
+source myenv/Scripts/activate
+
+# Your prompt will now include "(myenv)" in parentheses
+# Using `which` should now indicate you are using the python, pip etc from myenv/Scripts
+# instead of the main version:
+which python
+which pip
+
+# Pip Install
+pip install numpy
+pip list
+# You can now add "import numpy as np" in a script and start using numpy!
+
+# Make a requirements file post-installation:
+pip freeze > requirements.txt
+pip install -r requirements.txt
+
+# Bail out of virtual env
+deactivate
