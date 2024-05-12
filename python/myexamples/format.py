@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 import myutils
+import datetime as dt
+import time as tm
 
 ############################
 
@@ -49,3 +51,8 @@ myutils.comment("""
     https://docs.python.org/release/3.12.2/library/stdtypes.html#old-string-formatting
 """)
 print('Here is a number %5.3f.' % 2939393.4456787)
+
+# offset is in seconds
+today = dt.datetime.now(dt.timezone(dt.timedelta(hours=-5)))
+print("{0:%Y-%m-%d %H:%M:%S.%f %p %z}".format(today))
+today.strftime("{0:%Y-%m-%d %H:%M:%S.%f %p %z}")
