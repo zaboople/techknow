@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Hello World</title>
+        <style>
+            p {padding:0px;margin:0px;font-size:7px;}
+        </style>
+
+        <!--
+            Must be sourced as type="module" or it will blow up. Also note that we
+            cannot use any javascript functions in this file, exported or not, because
+            it counts as a module, which is... strange. We can actually do a module in
+            a <javascript type="module"> element and import other modules there, but
+            we still can't call that javascript from onclick() and what-have-you, because
+            onclick() and friends are locked out. We have to find the element and
+            assign events to its elem.onclick= from inside our module.
+        -->
+        <script language="javascript" type="module" src="mymodule2.js"></script>
+    </head>
+  <body>
+    <b>ok so...</b>
+    <div></div>
+    <b>and then...</b>
+    <div></div>
+
+    <form>
+        <button id="mybutton" onclick="return false;">Hey button</button>
+    </form>
+  </body>
+</html>
