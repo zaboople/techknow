@@ -1,0 +1,1 @@
+To install programs on an alternate drive, the usual problem is access. Rather than trying to run the installer as administrator - which never works - try giving access to everyone on the parent folder of the install directory.
