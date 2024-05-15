@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+  <body>
+    This uses babel the wrong way, dynamically instead of server-side compile or something:
+    <div id="root"></div>
+
+    <script type="text/jsx">
+        function ToDo() {
+            return <>
+                <h1>Well, well, well</h1>
+                And so forth...
+                <Bio blurb="I got your blurb" nameo="Howard"/>
+            </>
+        }
+
+        // We can reference attributes passed in using this {x, y, ... z} syntax.
+        // We can put expressions inside curly braces:
+        //    Function calls seem to work.
+        //    No semi-colons though.
+        function Bio({blurb, nameo}) {
+            return <>
+                <h3>Welcome to my page</h3>
+                <p className="summary">
+                    You can find my thoughts here. My brain was erased already.
+                </p><p>
+                    Here is a simple text call: {simpleText()}
+                </p><p>
+                    I see your name is "{nameo}" and your blurb is: <i>{blurb}</i>
+                </p>
+                <div>What, an arbitrary list? Yes:
+                    <ArbitraryList start="3" end="12">
+                        <p>Here is a child, Jub jub</p>
+                    </ArbitraryList>
+                </div>
+            </>
+        }
+
+        // This takes two attributes and woo-hoo nested markup (AKA "children" attribute).
+        // React wants a "key=" attribute on every list item. HTML doesn't care
+        // and it isn't rendered.
+        function ArbitraryList(attrs) {
+            console.log("ArbitraryList inputs:")
+            console.log(attrs);
+            var startNum = attrs.start ?parseInt(attrs.start) :1;
+            var endNum   = attrs.end   ?parseInt(attrs.end)   :5;
+            var children = attrs.children ?attrs.children :<></>;
+
+            const list=[];
+            for (var i=startNum; i<=endNum; i++)
+                list.push(i);
+
+            return <div><ul>
+                {list.map(x=>
+                    <li key={x}># {x}</li>
+                )}
+                </ul>
+                {children}
+            </div>
+        }
+
+        function simpleText() {
+            return "Simple Text"
+        }
+
+
+        ReactDOM.createRoot(document.getElementById('root'))
+            .render(<ToDo />);
+    </script>
+  </body>
+</html>

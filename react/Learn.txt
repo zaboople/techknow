@@ -2,3 +2,5 @@ Learn import/export
     from default
     needs http server
     https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export
+Dev tools add debugger options to browser
+    https://react.dev/learn/react-developer-tools
