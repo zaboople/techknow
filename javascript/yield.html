@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Hello World</title>
+        <style>
+            p {padding:0px;margin:0px;font-size:17px;}
+        </style>
+
+    </head>
+  <body>
+    <p id="1">
+    <p id="2">
+    <p id="3">
+
+    <script language="javascript">
+        var qq = function*(){
+            var i=10;
+            while (i-- > 0)
+                yield i;
+        }();
+        xx = qq.map(x=>x+1);
+        console.log(xx)
+    </script>
+  </body>
+</html>
