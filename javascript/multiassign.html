@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Hello World</title>
+        <style>
+            p {padding:0px;margin:0px;font-size:17px;}
+        </style>
+
+    </head>
+  <body>
+    <p id="1">
+    <p id="2">
+    <p id="3">
+
+    <script language="javascript">
+
+        // Bonus round: This shows how to use a secret variable named "arguments"
+        // to create a varargs function:
+        function buildArray() {
+            i=0;
+            return Array.from(arguments).map(
+                arg => ({"name": arg, "index": ++i})
+            );
+        }
+
+        function setThing(id, value) {
+            document.getElementById(id).innerHTML += value;
+        }
+
+        // We are assigning variables a, b, c using an array:
+        const [a, b, c] = buildArray("hi", "hello", "how are you")
+        setThing(a.index, a.name)
+        setThing(b.index, b.name)
+        setThing(c.index, c.name)
+    </script>
+  </body>
+</html>
