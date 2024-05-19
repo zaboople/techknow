@@ -2,16 +2,20 @@
 <html>
     <head>
     <meta charset="UTF-8" />
-    <title>Hello World</title>
+    <title>Clickety click click</title>
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <style>
-        div#clops{padding:0px;margin:0px;font-size:7px;}
+        div#clops{padding:4px;margin:0px;font-size:7px;}
     </style>
 
     </head>
     <body>
+        <p>
+            Feel free to park focus on a button and then instruct your cat
+            to take a nap on the keyboard's Enter key:
+        </p>
         <div id="root"></div>
 
         <!--
@@ -19,21 +23,15 @@
         -->
         <script type="text/jsx">
 
-            function MyPage() {
-                console.log("Re-do page")
+            function UpperPart() {
+                console.log("UpperPart()")
 
                 // I'm doing state variables. This is the magical magic that
                 // makes React re-render my HTML to account for state updates:
                 // Top buttons click counts:
                 const [nameCounts, setNameCounts]=React.useState({});
                 const [clicks, setTotalClicks]   =React.useState(0);
-                // Bottom "clop" button:
-                const [clipclops, setClopsArray]        =React.useState([]);
-                const [clopKey, setClopKey]      =React.useState(0);
 
-
-                // This is for the upper part, where we just count
-                // individual & total button clicks:
                 function updateCounts(name) {
                     // You might think it's enough to update nameCounts directly
                     // and just pass it to setNameCounts() - wrong! React will
@@ -54,28 +52,53 @@
                     // parameterless function, you would just put "{funcname}"
                     // without parentheses, so that you're giving React a function
                     // *reference*, not a text attribute with a function call in the
-                    // text; that's effectively what I'm doing here as well:
+                    // text like normal HTML; that's effectively what I'm doing here
+                    // as well:
                     return ()=>funco(name)
                 }
 
+                // Render the whole thing into HTML:
+                const names = [
+                    'Fourteen', 'Doritos', 'Onion', 'Cat food', 'Moustachio'
+                ];
+                return (<div>
+                    <ul>
+                        {names.map(name => (
+                            <li key={name}>
+                                <button onClick={getArrowUpdate(updateCounts, name)}>
+                                    {name}
+                                </button> {nameCounts[name]}
+                            </li>
+                        ))}
+                    </ul>
+                    Total clicks: {clicks}
+                </div>);
+            }
 
-                // This is for the lower part, where we scroll clop-clops
+            function LowerPart() {
+                console.log("LowerPart()")
+
+                const [clipclops, setClopsArray] =React.useState([]);
+                const [clopKey, setClopKey]      =React.useState(0);
+                const [flipper, setFlipper]      =React.useState(true);
+
                 function clickClop() {
-                    // Holy crap! What is this horror? We're generating HTML on the fly!
-                    // We are actually storing an array of divs using React's usestate
-                    // and that same state is returned by GetClops(), and wackadoobeydoo.
+                    // Holy crap! What is this horror? We're generating HTML elements
+                    // on the fly! We are actually storing an array of divs using React's
+                    // usestate and that same state is returned by GetClipClops(), and
+                    // wackadoobeyhonkadoo.
 
-                    // Makes an array of clop-clops, every other one in all-caps bold:
-                    var htmlRay = Array.from(function*(){
-                        var flipper = Math.floor(Math.random() * 2);
+                    // Makes one line of clip-clops, every other one in all-caps bold. Oooh
+                    // clever we used a function* generator thingie here:
+                    var flip = flipper;
+                    var oneLine = Array.from(function*(){
                         for (var i = Math.floor(Math.random() * 12) + 1;
                             i > 0; i--)
-                            yield (
-                                i % 2 == flipper
-                                    ?(<b key={i}> CLOP CLOP </b>)
-                                    :" clip clop "
-                            );
+                            yield  (flip=!flip)
+                                ?(<b key={i}> CLOP CLOP </b>)
+                                :" clip clop ";
                     }());
+                    setFlipper(flip);
 
                     // Make a new array containing old state, and append
                     // another div. That div contains our latest bunch of
@@ -84,46 +107,22 @@
                     if (myray.length > 45)
                         myray.shift();
                     const kk = clopKey+1;
-                    myray.push(<div key={kk}>{htmlRay}</div>);
+                    myray.push(<div key={kk}>{oneLine}</div>);
                     setClopKey(kk);
                     setClopsArray(myray);
                 }
-                function GetClops() {
-                    console.log("GetClops()")
+                function GetClipClops() {
                     return clipclops;
                 }
 
-
-                // Render the whole thing into HTML:
-                const names = [
-                    'Fourteen', 'Doritos', 'Onion', 'Cat food', 'Moustachio'
-                ];
                 return (<>
-                    <p>
-                        Feel free to park focus on a button and then instruct your cat
-                        to take a nap on the keyboard's Enter key:
-                    </p>
-
-                    <div>
-                        <ul>
-                            {names.map(name => (
-                                <li key={name}>
-                                    <button onClick={getArrowUpdate(updateCounts, name)}>
-                                        {name}
-                                    </button> {nameCounts[name]}
-                                </li>
-                            ))}
-                        </ul>
-                        Total clicks: {clicks}
-                    </div>
-
                     <button onClick={clickClop}>Clop</button>
-                    <div id="clops"><GetClops/></div>
+                    <div id="clops"><GetClipClops/></div>
                 </>);
             }
 
             ReactDOM.createRoot(document.getElementById('root'))
-                .render(<MyPage/>);
+                .render(<><UpperPart/><LowerPart/></>);
         </script>
     </body>
 </html>
