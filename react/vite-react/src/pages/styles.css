@@ -64,7 +64,7 @@ span.MyNavBullet {
 }
 @media (prefers-reduced-motion: no-preference) {
   .logo {
-    animation: logo-spin infinite 90s linear;
+        animation: logo-spin infinite 90s linear;
   }
 }
 
