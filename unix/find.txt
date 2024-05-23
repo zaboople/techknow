@@ -1,0 +1,8 @@
+# Pruning:
+1. Use -prune and -o for "or". Your "I don't want(s)" come first; your "I wants" come last.
+2. Always use -print on the last one because that means you only print what satisfies the last condition.
+
+    find . -name node_modules -type d -prune -o \
+            -name build -type d -prune -o \
+            -name .git -type d -prune -o \
+            -type f "$@" -print
