@@ -16,7 +16,6 @@ function resolveAfter(msg, index) {
     );
 }
 function makePromises(itemCount) {
-    console.log("MAKE PROMISES");
     var aray = new Array(itemCount);
     for (var i=0; i<aray.length; i++)
         aray[i]=resolveAfter("Instance: "+(i+1), i);
@@ -56,6 +55,10 @@ const Wait = () => {
     const itemCount = 25;
     const [done, setDone] = useState(0);
     const [waiting, setWaiting] = useState([]);
+
+    // Our cleanup function shuts us down in dev via "ok" because dev
+    // double-executes useEffect(). Otherwise our "waiting" list
+    // jumps back and forth as competing threads each try to update it:
     useEffect(() => {
         try {
             console.log("Start async...");
@@ -64,14 +67,10 @@ const Wait = () => {
             var ok=true;
             aray.forEach(x =>
                 x.then(value => {
-                    if (ok) {
-                        finished.push(value);
-                        setWaiting([...finished]);
-                    }
+                    if (ok)
+                        setWaiting(finished=[...finished, value]);
                 })
             );
-            // Our cleanup shuts us down in dev
-            // because dev double-executes useEffect():
             return () => {
                 ok=false;
                 console.log("Unloaded.");
