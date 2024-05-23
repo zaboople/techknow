@@ -3,7 +3,7 @@ import React from "react";
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
 const Navbar = () => {
-    //console.log("Rendering menu... "+window.location.href);
+    console.log("Rendering menu... "+window.location.href);
     const [currMenu, setCurrMenu] = React.useState("Home");
     const [searchParams, setSearchParams] = useSearchParams();
     const pathSplit = window.location.href.split("#");

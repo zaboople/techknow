@@ -2,7 +2,7 @@ import {React, useState, useEffect} from "react";
 import Navbar from "../components/Navbar";
 import "./styles.css";
 
-const SignUp = () => {
+function DoSignUp() {
     console.log("SignUp()...");
     const whereAmI = window.location.href;
     const [result, setResult] = useState({data: null, error: null, done: false});
@@ -30,19 +30,22 @@ const SignUp = () => {
     if (result.error!=null)
         dataDisplay = <p>Error: {result.error.message}</p>;
     else if (result.data!=null)
-        dataDisplay = (<ul> {
+        dataDisplay = <ul> {
             result.data.map(item =>
                 <li key={item.id}>{item.name}</li>
             )
-        } </ul>);
+        } </ul>;
 
-    return (<>
+    return dataDisplay;
+}
+const SignUp = () => {
+    return <>
         <Navbar/>
         <div className="subbody">
             <h2> Signed up </h2>
-            {dataDisplay}
+            <DoSignUp/>
         </div>
-    </>);
+    </>;
 };
 
 export default SignUp;
