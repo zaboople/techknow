@@ -21,5 +21,4 @@ Start up a development server on port 3000:
 
 Build static site and test it out with a quickie python server:
 
-    npm run build
-    ./runpythonwebserver.sh
+    npm run build && ./runpythonwebserver.sh

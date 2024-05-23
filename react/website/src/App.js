@@ -11,6 +11,7 @@ import About from "./pages/about";
 import Blogs from "./pages/blogs";
 import SignUp from "./pages/signup";
 import Contact from "./pages/contact";
+import Wait from "./pages/wait";
 
 function App() {
     console.log("App()...")
@@ -26,6 +27,7 @@ function App() {
             <Route path="/contact" element={<Contact />}/>
             <Route path="/blogs"   element={<Blogs />} />
             <Route path="/sign-up" element={<SignUp />}/>
+            <Route path="/await"   element={<Wait />}/>
         </>)
     );
 
