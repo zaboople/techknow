@@ -3,17 +3,17 @@ import Navbar from "../components/Navbar";
 import "./styles.css";
 
 function DotDot() {
-    const [dotCount, setDots] = useState(0);
+    const maxDots = 4
+    const [dotCount, setDots] = useState(maxDots);
     useEffect(()=>{
-        var ok = true;
+        let ok = true;
         async function doDots() {
              while (ok) {
-                var i=1;
                 await new Promise(
                     resolver => setTimeout(()=>resolver(), 200)
                 );
                 if (ok)
-                    setDots(x => (x==3) ?0 :(i=x+1));
+                    setDots(x => (x==maxDots * 2) ?0 :(x+1));
              }
         }
         doDots();
@@ -22,9 +22,9 @@ function DotDot() {
             console.log("Stopped dots.");
         }
     }, []);
-    var s="";
-    for (var i=0; i<dotCount; i++)
-        s+="."
+    let s="";
+    for (let i=0; i<Math.abs(dotCount - maxDots); i++)
+        s+=". "
     return s;
 }
 function DoSignUp() {
@@ -51,7 +51,7 @@ function DoSignUp() {
     }
     useEffect(()=>{initFunc()}, []);
 
-    var dataDisplay = <p><em>Loading</em><DotDot/></p>;
+    let dataDisplay = <p><em>Loading</em><DotDot/></p>;
     if (result.error!=null)
         dataDisplay = <p>Error: {result.error.message}</p>;
     else if (result.data!=null)

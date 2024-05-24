@@ -2,13 +2,25 @@
 body {padding:0px; margin: 0px;}
 .subbody {padding:0px 10px 0px 10px;}
 h2 {margin-top: 0px;}
+:root {
+  font-family: sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  background-color: #F0F0F0;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 
 /* MENU: */
 div.MyNavBar {
     padding:10px 4px 10px 14px;
     font-size:17px;
-    background-color:#20D0A0;
+    background-color:#206050;
     border-style: solid none solid none;
     border-width: 2px;
     border-color: #B08090;

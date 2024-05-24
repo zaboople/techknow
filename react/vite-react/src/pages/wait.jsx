@@ -15,8 +15,8 @@ function makePromise(msg, index) {
     );
 }
 function makePromises(itemCount) {
-    var aray = new Array(itemCount);
-    for (var i=0; i<aray.length; i++)
+    const aray = new Array(itemCount);
+    for (let i=0; i<aray.length; i++)
         aray[i]=makePromise("Instance: "+(i+1), i);
     return aray;
 }
@@ -58,9 +58,9 @@ function DoWork() {
     useEffect(() => {
         try {
             console.log("Start async...");
-            var aray = makePromises(itemCount)
-            var finished = [];
-            var ok=true;
+            const aray = makePromises(itemCount)
+            let finished = [];
+            let ok=true;
             aray.forEach(x => x.then(
                 value =>
                     ok && setWaiting(finished=[...finished, value])
@@ -74,9 +74,9 @@ function DoWork() {
         }
     }, []);
 
-    var toRender = [...waiting];
-    var missing = itemCount - toRender.length;
-    for (var i=0; i<missing; i++)
+    const toRender = [...waiting];
+    const missing = itemCount - toRender.length;
+    for (let i=0; i<missing; i++)
         toRender.push({msg: "...", slept: null, woke:null, key:i});
     return <DrawIt toRender={toRender}/>;
 }
