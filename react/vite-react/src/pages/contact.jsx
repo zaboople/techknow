@@ -1,7 +1,5 @@
 import React, {useState} from "react";
-import Navbar from "../components/Navbar";
 import "./styles.css";
-
 
 const MSG_LIST = Object.freeze([
     {limit: 5, msg: "That's definitely helping."},
@@ -41,15 +39,14 @@ function Buttoon() {
 }
 
 const Contact = () => {
-	return (<>
-        <Navbar/>
-        <div className="subbody">
-			<p>
-				Click the button to contact us. Click it extra for more contacting. Click it a bunch, why don't you. We will be sure to get back to you soon.
-			</p>
-            <Buttoon/>
-        </div>
-    </>);
+	return <div className="subbody">
+		<p>
+			Click the button to contact us. We will be sure to get back to you soon.
+		</p><p>
+			Click it extra for more contacting. Click it a bunch, why don't you.
+		</p>
+        <Buttoon/>
+    </div>;
 };
 
 export default Contact;

@@ -15,7 +15,7 @@ function OneBullet() {
 }
 
 export default function Navbar() {
-    console.log("Rendering menu... "+window.location.href);
+    console.log("Navbar(): Rendering menu... "+window.location.href);
     const pathSplit = window.location.href.split("#");
     const pathToMatch = pathSplit.length==2 ?pathSplit[1] :"/";
 
@@ -28,12 +28,11 @@ export default function Navbar() {
             to={item.href}>{item.text}</Link>;
     }
     function Anchors() {
-        const anchors = MENU_ITEMS.map(a => [
-            <OneAnchor key={a.href} item={a}/>,
-            <OneBullet key={a.href + "*b"} />
-        ]).flat();
-        anchors.pop(); // Remove last bullet bah
-        return anchors;
+        const justShort = (2 * MENU_ITEMS.length)-1;
+        return MENU_ITEMS.map(a => [
+                <OneAnchor key={a.href} item={a}/>,
+                <OneBullet key={a.href + "*b"} />
+            ]).flat().slice(0, justShort);
     }
     return <div className="MyNavBar"><Anchors/></div>;
 };

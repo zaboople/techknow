@@ -1,5 +1,4 @@
 import {React, useState, useMemo, useEffect} from "react";
-import Navbar from "../components/Navbar";
 import "./styles.css";
 
 function makePromise(msg, index) {
@@ -46,7 +45,7 @@ function DrawIt({toRender}) {
     </div>;
 }
 
-function DoWork() {
+export default function Wait() {
     //console.log("Wait()...");
     const itemCount = 25;
     const [done, setDone] = useState(0);
@@ -80,11 +79,3 @@ function DoWork() {
         toRender.push({msg: "...", slept: null, woke:null, key:i});
     return <DrawIt toRender={toRender}/>;
 }
-
-// We need to separate NavBar and DoWork here
-// so that Navbar doesn't get re-rendered everytime
-// state changes:
-export default function Wait() {
-    return <><Navbar/><DoWork/></>
-};
-

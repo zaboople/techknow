@@ -2,13 +2,11 @@ import React from "react";
 import reactLogo from '../assets/react.svg'
 import viteLogo from '/vite.svg'
 
-import Navbar from "../components/Navbar";
 import "./styles.css";
 
 
 export default function Home(){
     return <>
-        <Navbar/>
         <div className="subbody">
             <div>
                 <img className="VerticalCenter" src="/adhesive-strip.svg" height="50px"/>

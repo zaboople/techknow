@@ -16,7 +16,12 @@ import Navbar from "./components/Navbar";
 function MyYear() {
     return new Date(Date.now()).getFullYear();
 }
-
+function MyRoute(path, elem) {
+    const myel = <><Navbar/>{elem}</>
+    return path=="/"
+        ?<Route exact path={path}  element={myel} />
+        :<Route path={path}  element={myel} />;
+}
 function App() {
     console.log("App()...")
 
@@ -24,12 +29,14 @@ function App() {
     // seems to mean that everything starts with "/#/" but it's
     // hidden from the programming logic, so we write stuff as if
     // it begins with "/".
+    // I can't use MyRoute as a component because stupid thing gets
+    // mad if it's not an actual Route instance.
     const router = createHashRouter(
         createRoutesFromElements(<>
-            <Route exact path="/"  element={<Home />} />
-            <Route path="/contact" element={<Contact />}/>
-            <Route path="/sign-up" element={<SignUp />}/>
-            <Route path="/await"   element={<Wait />}/>
+            {MyRoute("/"  , <Home />)}
+            {MyRoute("/contact" , <Contact />)}
+            {MyRoute("/sign-up" , <SignUp />)}
+            {MyRoute("/await"   , <Wait />)}
         </>)
     );
 
