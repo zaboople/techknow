@@ -6,7 +6,7 @@ import Navbar from "../components/Navbar";
 import "./styles.css";
 
 
-const Home = () => {
+export default function Home(){
     return <>
         <Navbar/>
         <div className="subbody">
@@ -28,10 +28,8 @@ const Home = () => {
             </p>
             <p>
                 Also visit <a target="_blank" href="https://github.com/zaboople">my github site</a>
-
             </p>
         </div>
     </>;
 };
 
-export default Home;

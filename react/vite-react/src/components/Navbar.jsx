@@ -19,7 +19,7 @@ export default function Navbar() {
     const pathSplit = window.location.href.split("#");
     const pathToMatch = pathSplit.length==2 ?pathSplit[1] :"/";
 
-    function oneAnchor(item){
+    function OneAnchor({item}){
         const isWindow = item.href == pathToMatch;
         var cclass = isWindow ?"NavFocus" :"NavUnfocus";
         if (isWindow)
@@ -29,8 +29,8 @@ export default function Navbar() {
     }
     function Anchors() {
         const anchors = MENU_ITEMS.map(a => [
-            oneAnchor(a),
-            <OneBullet key={a.href + "*b"}/>
+            <OneAnchor key={a.href} item={a}/>,
+            <OneBullet key={a.href + "*b"} />
         ]).flat();
         anchors.pop(); // Remove last bullet bah
         return anchors;

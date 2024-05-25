@@ -10,10 +10,13 @@ import Home from "./pages";
 import SignUp from "./pages/signup";
 import Contact from "./pages/contact";
 import Wait from "./pages/wait";
+import Navbar from "./components/Navbar";
+
 
 function MyYear() {
     return new Date(Date.now()).getFullYear();
 }
+
 function App() {
     console.log("App()...")
 

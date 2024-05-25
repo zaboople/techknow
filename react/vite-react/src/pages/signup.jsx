@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import "./styles.css";
 
 function DotDot() {
-    const maxDots = 4
+    const maxDots = 3
     const [dotCount, setDots] = useState(maxDots);
     useEffect(()=>{
         let ok = true;
@@ -22,8 +22,10 @@ function DotDot() {
             console.log("Stopped dots.");
         }
     }, []);
+
+    const limit = Math.abs(dotCount - maxDots);
     let s="";
-    for (let i=0; i<Math.abs(dotCount - maxDots); i++)
+    for (let i=0; i<limit; i++)
         s+=". "
     return s;
 }
@@ -51,19 +53,19 @@ function DoSignUp() {
     }
     useEffect(()=>{initFunc()}, []);
 
-    let dataDisplay = <p><em>Loading</em><DotDot/></p>;
     if (result.error!=null)
-        dataDisplay = <p>Error: {result.error.message}</p>;
+        return <p>Error: {result.error.message}</p>;
     else if (result.data!=null)
-        dataDisplay = <ul> {
+        return <ul> {
             result.data.map(item =>
                 <li key={item.id}>{item.name}</li>
             )
         } </ul>;
-
-    return dataDisplay;
+    else
+        return <p><em>Loading</em><DotDot/></p>;
 }
-const SignUp = () => {
+
+export default function SignUp() {
     return <>
         <Navbar/>
         <div className="subbody">
@@ -73,5 +75,3 @@ const SignUp = () => {
         </div>
     </>;
 };
-
-export default SignUp;
