@@ -25,7 +25,7 @@ function MyRoute(path, elem) {
 function App() {
     console.log("App()...")
 
-    // Using a hash router because we don't have next.js. That
+    // Using a hash router because we don't have SSR. That
     // seems to mean that everything starts with "/#/" but it's
     // hidden from the programming logic, so we write stuff as if
     // it begins with "/".

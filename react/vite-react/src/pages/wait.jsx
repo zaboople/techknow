@@ -27,6 +27,10 @@ function DrawIt({toRender}) {
         This also tests useEffect() and even defies
         useEffect()'s habit of running twice in dev.
         </p>
+        <p>
+        Oh, actually, I ended up using <code>Promise.then()</code>
+        &nbsp; instead of <code>await</code> anyhow.
+        </p>
         <table className="AwaitTable">
             <thead><tr>
                 <th>Message</th>

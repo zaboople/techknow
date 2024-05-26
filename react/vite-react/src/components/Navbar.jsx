@@ -21,7 +21,7 @@ export default function Navbar() {
 
     function OneAnchor({item}){
         const isWindow = item.href == pathToMatch;
-        var cclass = isWindow ?"NavFocus" :"NavUnfocus";
+        const cclass = isWindow ?"NavFocus" :"NavUnfocus";
         if (isWindow)
             document.title="My "+item.text;
         return <Link className={cclass} key={item.href}

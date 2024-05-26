@@ -1,19 +1,15 @@
 /** GENERAL: **/
-body {padding:0px; margin: 0px;}
-.subbody {padding:0px 10px 0px 10px;}
-h2 {margin-top: 0px;}
-:root {
-  font-family: sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  background-color: #F0F0F0;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+body {
+    padding:0px; margin: 0px;
+    font-family: sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+    background-color: #F0F0F0;
 }
+.subbody {padding:0px 10px 0px 10px;}
+h2 {margin: 0px 0px 8px;}
+p {padding-top: 2px; padding-bottom: 4px; margin: 0px;}
+
 
 
 /* MENU: */
@@ -21,9 +17,9 @@ div.MyNavBar {
     padding:10px 4px 10px 14px;
     font-size:17px;
     background-color:#206050;
-    border-style: solid none solid none;
+    border-style: solid none;
     border-width: 2px;
-    border-color: #B08090;
+    border-color: #003000;
     margin-bottom: 10px;
 }
 div.MyNavBar a.NavUnfocus{
@@ -45,7 +41,7 @@ span.MyNavBullet {
     background-color:#206050;
     border-style: solid none none none;
     border-width:1px;
-    border-color: #A0A0A0;
+    border-color: #003000;
     color: #D4FFFF;
 }
 
@@ -81,10 +77,11 @@ span.MyNavBullet {
 }
 
 /** PAGE: /wait **/
+table.AwaitTable {margin-top:4px;}
 table.AwaitTable td, table.AwaitTable th {
     padding:0px 13px 0px 0px;
     text-align: left;
-    font-size:8px;
+    font-size:9px;
     width:55px;
 }
 table.AwaitTable td.slept, table.AwaitTable th.slept {

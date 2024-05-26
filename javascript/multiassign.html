@@ -4,35 +4,65 @@
         <meta charset="UTF-8" />
         <title>Hello World</title>
         <style>
-            p {padding:0px;margin:0px;font-size:17px;}
+            p {padding:3px;margin:0px;font-size:17px;}
         </style>
 
     </head>
   <body>
+    <p id="0">
     <p id="1">
     <p id="2">
     <p id="3">
+    <p id="4">
+    <p id="5">
+    <p id="6">
 
     <script language="javascript">
 
-        // Bonus round: This shows how to use a secret variable named "arguments"
-        // to create a varargs function:
-        function buildArray() {
-            i=0;
-            return Array.from(arguments).map(
-                arg => ({"name": arg, "index": ++i})
-            );
+        /**
+        Bonus round: This shows how to do a `zip()` function, converting
+        a list of objects to a list of `[index, object]` pairs. But it
+        shows you all the javascript things you didn't know, or at least some
+        of them:
+            1. Use a secret variable named "arguments" to create a varargs function.
+            2. Arrow functions `x => y` (shortcut for lambdas)
+            3. Array.reduce(function, starting value)
+            4. Assignment of variables from array `const [x,y] = [1, 1]`
+                (but don't forget object too `const {x,y} = {x:1, y:1}`)
+            5. Build array from another array using `[...oldArray, newthing]` syntax
+        Of course, this is otherwise a polluted shitbox, but it's clever, which is a
+        perfectly good excuse:
+        **/
+        function zip() {
+            return Array.from(arguments).reduce(
+                ([i, vals], next) => [
+                    i+1,
+                    [...vals, [i, next]]
+                ],
+                [0, []]
+            )[1];
         }
+
+        const zipray = zip("hi", "hello", "how are you").map(
+                x => ({index: x[0]+1, name: x[1]})
+            );
 
         function setThing(id, value) {
             document.getElementById(id).innerHTML += value;
         }
 
         // We are assigning variables a, b, c using an array:
-        const [a, b, c] = buildArray("hi", "hello", "how are you")
+        const [a, b, c] = zipray
         setThing(a.index, a.name)
         setThing(b.index, b.name)
-        setThing(c.index, c.name)
+        setThing(c.index, c.name);
+
+        // More fun: Assign variables off an object:
+        zipray.forEach((n) => {
+            const {index, name} = n;
+            setThing(index+3, name + " ...from Object");
+        });
+
     </script>
   </body>
 </html>

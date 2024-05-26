@@ -9,9 +9,9 @@ export default function Home(){
     return <>
         <div className="subbody">
             <div>
-                <img className="VerticalCenter" src="/adhesive-strip.svg" height="50px"/>
+                <img className="VerticalCenter" src="/adhesive-strip.svg" height="60px"/>
                 <span className="VerticalCenter"><b>Made with Vite + React</b></span>
-                <img className="VerticalCenter" src="/adhesive-strip.svg" height="50px"/>
+                <img className="VerticalCenter" src="/adhesive-strip.svg" height="160px"/>
             </div>
             <p>
                 <a href="https://vitejs.dev" target="_blank">
