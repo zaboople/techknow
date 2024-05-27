@@ -29,10 +29,10 @@ function DotDot() {
     return s;
 }
 function DoSignUp() {
-    const whereAmI = window.location.href;
     const [result, setResult] = useState({data: null, error: null, done: false});
     async function initFunc() {
         try {
+            const whereAmI = window.location.href;
             const url = whereAmI.replace(
                     new RegExp("(^http.+?//.+?/).*"), "$1"
                 ) + "samplejson.json";
@@ -66,7 +66,7 @@ function DoSignUp() {
 export default function SignUp() {
     return  <div className="subbody">
         <h2> Who... signed up? </h2>
-        These people signed up. <em>You</em> can't:
+        These people signed up, for something, but we don't know what. Either way: <em>You</em> can't:
         <DoSignUp/>
     </div>;
 };

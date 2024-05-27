@@ -1,26 +1,52 @@
 /** GENERAL: **/
 body {
-    padding:0px; margin: 0px;
     font-family: sans-serif;
     line-height: 1.5;
     font-weight: 400;
     background-color: #F0F0F0;
 }
-.subbody {padding:0px 10px 0px 10px;}
-h2 {margin: 0px 0px 8px;}
-p {padding-top: 2px; padding-bottom: 4px; margin: 0px;}
 
 
-
-/* MENU: */
+/** LAYOUT ALIGNMENT **/
+html{
+    height:100%;
+}
+body {
+    height:100%;
+    padding:0px; margin: 0px;
+}
+div#root {
+    height:100%;
+    display: flex;
+    flex-direction: column;
+}
 div.MyNavBar {
     padding:10px 4px 10px 14px;
+    margin: 0px 0px 10px 0px;
+}
+div.subbody {
+    padding:0px 10px 10px 10px;
+    height:100%;
+    margin:0px;
+}
+div.atBottom {
+    padding: 3px 0px 3px 5px;
+    margin: 0px;
+}
+div.flexVert {
+    display: flex;
+    flex-direction: column;
+}
+h2 {margin: 0px 0px 8px;}
+p {padding: 2px 0px 4px 0px; margin: 0px;}
+
+/* ELEMENTS ON EVERY PAGE: */
+div.MyNavBar {
     font-size:17px;
     background-color:#206050;
     border-style: solid none;
     border-width: 2px;
     border-color: #003000;
-    margin-bottom: 10px;
 }
 div.MyNavBar a.NavUnfocus{
     text-decoration: none;
@@ -32,17 +58,9 @@ span.MyNavBullet {
     color: #E0B0F0;
     font-size: 11px;
 }
-.atBottom {
-    padding: 3px 0px 3px 5px;
-    position:fixed;
-    left:0px;
-    bottom:0px;
-    width:100%;
-    background-color:#206050;
-    border-style: solid none none none;
-    border-width:1px;
-    border-color: #003000;
+div.atBottom {
     color: #D4FFFF;
+    background-color:#206050;
 }
 
 
@@ -87,4 +105,43 @@ table.AwaitTable td, table.AwaitTable th {
 table.AwaitTable td.slept, table.AwaitTable th.slept {
     width:60px;
     text-align: right;
+}
+
+/** PAGE: /chat **/
+/* Layout */
+div.chat {
+    height: 100%;
+    width: 70%;
+    display:flex;
+    flex-direction: column;
+}
+div.chatsignup {
+    display: flex;
+    flex-direction: row;
+}
+div.chatmessages {
+    overflow-y:auto;
+    margin-bottom: 6px;
+    padding: 6px;
+    height: 300px;
+}
+div.chat textarea {
+    margin-bottom: 6px;
+}
+
+div.chatsignup input{
+    margin-right:10px;
+}
+div.chatmessages {
+    border-style: solid;
+    border-width: 2px;
+    border-color: #a7a7D7;
+    font-size: 11px;
+    background-color: white;
+}
+div.chatmessages div#bottomMost {
+    margin-top: 4px;
+}
+span.chatname {
+    font-weight: 800;
 }

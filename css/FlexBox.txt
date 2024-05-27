@@ -1,0 +1,68 @@
+You can make a container a flexbox container by doing this:
+
+    display: flex;
+
+You can add further container-level designations to control the flow of items after that.
+
+# Container-level CSS designations
+
+## JUSTIFY-CONTENT
+
+Aligns items **horizontally** and accepts the following values:
+
+    flex-start: Items align to the left side of the container.
+    flex-end: Items align to the right side of the container.
+    center: Items align at the center of the container.
+    space-between: Items display with equal spacing between them.
+    space-around: Items display with equal spacing around them.
+
+
+## ALIGN-ITEMS vs. ALIGN-CONTENT
+
+Both set how multiple things are spaced apart from each other.
+
+    - align-items determines how the items as a whole are aligned within the container.
+    - align-content determines the spacing between lines. When there is only one line, align-content has no effect.
+
+    flex-start: Packed at the top of the container.
+    flex-end: Packed at the bottom of the container.
+    center: Packed at the vertical center of the container.
+    space-between: Equal spacing between them.
+    space-around: Equal spacing around them.
+    stretch: Stretched to fit the container.
+
+
+## FLEX-DIRECTION
+
+Defines the direction items are placed in the container:
+
+    row: The same as the text direction.
+    row-reverse: Opposite to the text direction.
+    column: Top to bottom.
+    column-reverse: Bottom to top.
+
+## FLEX-WRAP
+
+Only useful when items overflow or at least threaten to.
+
+    nowrap: Every item is fit to a single line.
+    wrap: Items wrap around to additional lines.
+    wrap-reverse: Items wrap around to additional lines in reverse.
+
+## FLEX-FLOW
+
+Allows you to specify a flex-direction & flex-wrap both at the same time. Example:
+
+    flex-flow: column wrap;
+
+
+# CSS designations applied to items *within* a container
+
+
+## ORDER
+
+Changes the ordering of an element; everything defaults to zero, but you can move an element backwards and forwards by applying a negative or positive number to it.
+
+## ALIGN-SELF
+
+Accepts the same properties as align-items / align-content.

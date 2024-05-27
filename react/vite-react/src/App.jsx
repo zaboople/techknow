@@ -9,6 +9,7 @@ import {
 import Home from "./pages";
 import SignUp from "./pages/signup";
 import Contact from "./pages/contact";
+import Chat from "./pages/chat";
 import Wait from "./pages/wait";
 import Navbar from "./components/Navbar";
 
@@ -36,6 +37,7 @@ function App() {
             {MyRoute("/"  , <Home />)}
             {MyRoute("/contact" , <Contact />)}
             {MyRoute("/sign-up" , <SignUp />)}
+            {MyRoute("/chat" , <Chat />)}
             {MyRoute("/await"   , <Wait />)}
         </>)
     );

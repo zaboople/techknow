@@ -41,8 +41,8 @@ function Buttoon({enabled}) {
 	]
     if (count > upperLimit && incr!=-1)
 	    setIncr(-1);
-    else if (count < lowerLimit && incr!=1)
-	    setIncr(1);
+    /*else if (count < lowerLimit && incr!=1)
+	    setIncr(1);*/
 
     return <>
 	    <p>
@@ -61,6 +61,7 @@ const Contact = () => {
 		setEnabled(!e.target.checked);
 	}
 	return <div className="subbody">
+		<h2>Contact Us</h2>
 		<p>
 			Click the button to contact us. We will be sure to get back to you soon.
 		</p><p>
