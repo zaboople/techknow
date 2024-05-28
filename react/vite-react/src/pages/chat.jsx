@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import "./styles.css";
 import "./button.css";
 
@@ -15,7 +15,14 @@ async function getRawData() {
     return await response.json();
 }
 function randomRange(min, max) {
-	return min + Math.round(Math.random() * (max - min));
+	const minRange = min - 0.49,
+		maxRange = max + 0.49;
+	const result = Math.round(
+		minRange + (
+			Math.random() * (maxRange - minRange)
+		)
+	);
+	return result;
 }
 async function sleepMax(minSecs, maxSecs) {
 	const sleep = minSecs + (
@@ -25,9 +32,9 @@ async function sleepMax(minSecs, maxSecs) {
         r => setTimeout(()=>r(sleep), sleep * 1000)
     );
 }
-
 function makeMsg(key, name, msg) {
-	return {key: key, name: name, msg: msg, isQuestion:false, to:null};
+	return {key: key, name: name, msg: msg,
+		isQuestion:false, to:null, hasDirectReplies: 0};
 }
 function pickOne(user, list, key, replyTo, forceReply) {
     const ix = randomRange(0, list.length -1);
@@ -62,10 +69,14 @@ function pickOne(user, list, key, replyTo, forceReply) {
 
 function createProcessor(rawData) {
     const users = rawData;
+    const goneUsers = [];
     const userMap = new Map(), hasAnswers = new Map(),
 	    hasReplies = new Map(), hasComments = new Map();
     users.forEach(user=> {
 	    userMap.set(user.name, user);
+	    if (!user.comments) user.comments=[];
+	    if (!user.answers) user.answers=[];
+	    if (!user.replies) user.replies=[];
 	    hasComments.set(user.name, user.comments && user.comments.length > 0)
 	    hasAnswers.set(user.name, user.answers && user.answers.length > 0)
 	    hasReplies.set(user.name, user.replies && user.replies.length > 0)
@@ -90,7 +101,7 @@ function createProcessor(rawData) {
 	    return list[randomRange(0, list.length-1)];
     }
     function checkHas(user, list, map) {
-	    if (list && list.length > 0)
+	    if (list.length > 0)
 		    return true;
 	    map.delete(user.name);
 	    return false;
@@ -98,32 +109,47 @@ function createProcessor(rawData) {
 
 	return (msgs)=> {
 	    let msgKey = msgs.length + 1;
-	    if (users.length < 3 || msgs.length % 3 ==0)
-			for (let i=users.length-1; i>=0; i--) {
-				const u = users[i];
-				const c = checkHas(u, u.comments, hasComments);
-				const a = checkHas(u, u.answers, hasAnswers);
-				const r = checkHas(u, u.replies, hasReplies);
-				//console.log(u.name+" "+c+" "+a+" "+r);
-				if (!(c || a || r)) {
-				    console.log("Delete user "+u.name);
-				    users.splice(i, 1);
-					userMap.delete(u.name);
-				    const msg = makeMsg(
-					    msgKey++, u.name, <i>... has left the chat</i>
-				    );
-					msgs = [...msgs, msg];
-				}
+		for (let i=users.length-1; i>=0; i--) {
+			const u = users[i];
+			const c = checkHas(u, u.comments, hasComments);
+			const a = checkHas(u, u.answers, hasAnswers);
+			const r = checkHas(u, u.replies, hasReplies);
+			//console.log(u.name+" "+c+" "+a+" "+r);
+			if (!(c || a || r)) {
+			    console.log("Delete user "+u.name);
+			    users.splice(i, 1);
+				userMap.delete(u.name);
+				goneUsers.push(u);
 			}
+		}
+		if (msgs.length % 8 == 0 || users.length ==0) {
+			while (goneUsers.length > 0) {
+				const u = goneUsers.pop();
+			    const msg = makeMsg(
+				    msgKey++, u.name, <i>... has left the chat</i>
+			    );
+				msgs = [...msgs, msg];
+			}
+		}
 	    if (users.length==0) {
 		    console.log("No users left");
 		    return msgs;
 	    }
 
-		const mustAnswer = hasComments.size == 0 && hasReplies.size == 0;
-	    const question = (mustAnswer || randomRange(0,3) < 3)
+		const mustAnswer =
+			hasComments.size == 0 && hasReplies.size == 0;
+	    const question = (mustAnswer || randomRange(0,2) < 2)
 		    ?findMsg(
-			    msgs, mustAnswer ?msgs.length :4, msg=>msg.isQuestion
+			    msgs, mustAnswer ?msgs.length :3,
+			    msg=> {
+				    if (mustAnswer) {
+					    return hasAnswers.size > 1 ||
+						    ! hasAnswers.get(msg.name);
+		    		}
+		    		else
+			    		return msg.isQuestion &&
+				    		msg.hasDirectReplies < 2;
+	    		}
 		    )
 		    :null;
 	    if (question) {
@@ -133,24 +159,29 @@ function createProcessor(rawData) {
 		    );
 		    if (user!=null) {
 			    const msg = pickOne(
-				    user, user.answers, msgKey, question.name, true
+				    user, user.answers, msgKey, question.name, !mustAnswer
 			    );
+			    question.hasDirectReplies++;
 			    return [...msgs, msg];
+		    } else if (mustAnswer) {
+			    console.log("Could not get answerer! Question: "+question.name+
+				    " Has answers: "+hasAnswers.size);
 		    }
 	    }
 
 		if (randomRange(0, 2) < 2) {
 		    const needsDirectReply = findMsg(msgs, 4, msg=>{
-			    if (!msg.to)
+			    if (msg.hasDirectReplies > 1 || !msg.to)
 				    return false;
 			    const user = userMap.get(msg.to);
-			    return user && user.name!=msg.to && user.replies && user.replies.length > 0;
+			    return user && user.replies && user.replies.length > 0;
 		    });
 		    if (needsDirectReply) {
 			    const user = userMap.get(needsDirectReply.to);
 			    const msg = pickOne(
-				    user, user.replies, msgKey, needsDirectReply.to, true
+				    user, user.replies, msgKey, needsDirectReply.name, false
 			    );
+			    msg.hasDirectReplies++;
 			    return [...msgs, msg];
 		    }
 	    }
@@ -160,15 +191,15 @@ function createProcessor(rawData) {
 		    const replyTo = findMsg(msgs, mustReply ?msgs.length :2, msg=>{
 			    if (msg.isQuestion)
 				    return false;
-			    if (userMap.get(msg.name)==null && !mustReply)
+			    if (!userMap.get(msg.name) && !mustReply)
 				    return false;
-			    if (users.length==1)
-				    return msg.name != users[0].name;
+			    if (hasReplies.size==1)
+				    return ! hasReplies.get(msg.name);
 			    return true;
 		    });
 		    if (replyTo) {
-			    const user = pickUser(u=>u.replies && u.replies.length > 0
-				    && (u.name!=replyTo.name|| (mustReply && users.length==1))
+			    const user = pickUser(u=>
+			    	u.replies.length > 0 && u.name!=replyTo.name
 			    );
 			    if (user!=null) {
 				    const msg = pickOne(
@@ -176,12 +207,10 @@ function createProcessor(rawData) {
 				    );
 				    return [...msgs, msg];
 			    }
-			    console.log("Couldn't find replier");
 		    }
 	    }
-
 		const commUser = pickUser(u => u.comments && u.comments.length > 0);
-		if (commUser) {
+		if (commUser!=null) {
 		    const msg = pickOne(
 			    commUser, commUser.comments, msgKey, null, false
 		    );
@@ -191,14 +220,42 @@ function createProcessor(rawData) {
 		console.log("I... couldn't find anything to do!");
 		console.log("CAR: "+hasComments.size+" "+hasAnswers.size+" "+hasReplies.size+
 			" All: "+users.length+" "+userMap.size);
-		console.log(users.map(i=>i.name).join(" "));
+		users.forEach(u=>
+			console.log(u.name+" CAR: "+u.comments.length+" "+
+				u.answers.length+" "+u.replies.length)
+		);
+		console.log("Has Comments "+hasComments.keys().toArray());
+		console.log("Has Answers "+hasAnswers.keys().toArray());
+		console.log("Has Replies "+hasReplies.keys().toArray());
 		return msgs;
 	};
 }
 
-function Discussion(userName) {
+function Discussion({userName}) {
 	const [rawData, setRawData] = useState([]);
 	const [messages, setMessages] = useState([]);
+	const [doScroll, setScroll] = useState([true]);
+	const userMsgRef = useRef();
+	function handleSend(){
+		const newMsg = userMsgRef.current.value;
+		console.log("User message: "+newMsg);
+		setMessages(msgs => [...msgs,
+			makeMsg(
+				userName+" "+(msgs.length+1), userName, newMsg
+			)
+		]);
+	}
+	function handleScrolled(ev) {
+		const t = ev.target
+		const pos = t.scrollTop,
+			bottom = t.scrollHeight - t.offsetHeight;
+		const diff = bottom - pos;
+		if (diff > 40 && doScroll)
+			setScroll(false);
+		else
+		if (diff < 40 && !doScroll)
+			setScroll(true);
+	}
 	useEffect(()=>{
         let ok = true;
         function fail(err) {
@@ -213,15 +270,16 @@ function Discussion(userName) {
 	        try {
 	            const users = await getRawData();
 		        const checkMsgs = createProcessor(users);
-	            let msgs = [];
 	            console.log("Chat.Discussion(): Got data");
 	            sleepMax(2, 3);
+	            let desiredLen = 1;
 	            while (ok) {
-		            const desiredLen = msgs.length+1;
-		            setMessages(()=>{
+		            setMessages((msgs)=>{
 			            try {
-				            if (desiredLen<=msgs.length)
+				            if (desiredLen<=msgs.length) {
+					            desiredLen = msgs.length + 1;
 					            return msgs;
+				            }
 				            msgs = checkMsgs(msgs)
 				            if (ok && users.length == 0) {
 					            ok = false;
@@ -230,12 +288,13 @@ function Discussion(userName) {
 							            <i><br/>Everyone else is... gone.</i>)
 					            ];
 				            }
+				            desiredLen = msgs.length + 1;
 				            return msgs;
 			            } catch (e) {
 				            fail(e);
 			            }
 		            });
-		            await sleepMax(2, 10);
+		            await sleepMax(2, 7);
 	            }
 	            console.log("Exiting.");
 	        } catch (e) {
@@ -247,18 +306,25 @@ function Discussion(userName) {
             ok = false;
         }
 	}, []);
+
+	useEffect(()=>{
+		const bm = document.getElementById("bottomMost");
+		if (bm && doScroll)
+			bm.scrollIntoView();
+		else
+			console.log("Scroll into view is off");
+	});
+	const userInput = userName == null
+		?[]
+		:(<>
+		<textarea rows={"5"} cols={70} ref={userMsgRef} placeholder="Send a message..."/>
+		<button onClick={handleSend}>Send</button>
+		</>);
 	const realMsgs = messages.length == 0
 		?[makeMsg(1, null, <i>Loading...</i>)]
 		:messages;
-	useEffect(()=>{
-		const bm = document.getElementById("bottomMost");
-		if (bm)
-			bm.scrollIntoView();
-		else
-			console.log("Can't scroll into view, sigh...");
-	});
 	return <>
-	    <div className="chatmessages">
+	    <div className="chatmessages" onScroll={handleScrolled}>
 		    {realMsgs.map(msg =>
 			    <div key={msg.key}>
 					{msg.name!=null
@@ -270,16 +336,20 @@ function Discussion(userName) {
 			)}
 			<div id={"bottomMost"}>---</div>
 	    </div>
-	    <textarea rows={"5"} cols={70}/>
+	    {userInput}
+
 	</>;
 }
 
 export default function Chat() {
 	const [userName, setUserName] = useState(null);
+	const textInputRef = useRef();
 	const showSignup = userName == null
 		?<div className="chatsignup">
-			<input type="text" placeholder="Your user name"/>
-			<button onClick={setUserName}>Sign in</button>
+			<input type="text" ref={textInputRef} placeholder="Your user name"/>
+			<button onClick={
+					()=>setUserName(textInputRef.current.value)
+				}>Sign in</button>
 		</div>
 		:null;
 	return <div className="subbody flexVert">
@@ -287,9 +357,9 @@ export default function Chat() {
 		<p>Chat Yo' Self Up W/ Hot People Who Can Chat Hot!</p>
 	    <div className="chat flexVert">
 		    <div className="chatmain">
-			    <Discussion username={userName}/>
+			    <Discussion userName={userName}/>
+				{showSignup}
 			</div>
-			{showSignup}
 	    </div>
     </div>;
 };

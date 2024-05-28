@@ -2,19 +2,22 @@
     {"name": "Gramps",
         "answers": [
             "That's the stupidest question I ever heard, {name}",
-            "NO.",
-            "If you spent as much time paying attention to the outside world as you do staring at your ipads and iphones you'd already know"
+            "NO."
         ],
         "replies": [
-            "I don't like you either, {name}, but at least I grew up and fathered fourteen children, half of whom survived to adulthood.",
+            "Well, {name}, at least I grew up and raised fourteen children of my own, several of whom survived to adulthood.",
             "Because you're an idiot",
+            "Bunch of nut jobs",
+            "{name} Were you born like this or was there some kind of accident?",
+            "Did I tell you to shut up yet?",
             "Well, your ignorance explains the modern education system",
-            "The problem, {name}, is that you expect everyone to do your job for you",                        "Shut up.",
+            "The problem, {name}, is that you expect everyone to do your job for you. Where I come from, they have a thing called, \"responsibility\"",
+            "Shut up already",
             "What school did you graduate from? The University of Stupid?",
-            "Clearly you were raised by parents who lacked disciplinary skills"
+            "Clearly you were raised by parents who lacked disciplinary skills",
+            "Back in my day all you kids would be in jail where you belong"
         ],
         "comments": [
-            "Back in my day all you kids would be in jail where you belong",
             "I remember when you could buy a brand-new Cadillac for twenty-five cents! Hubcaps included!",
             "You youngsters with your designer drugs and five hundred dollar sneakers...",
             "None of you people make any sense."
@@ -24,14 +27,13 @@
         "replies": [
             "Gobble gobble gobble",
             "Gobble gobble?",
+            "gobble", "Gobble.",
             "GOBBLE. GOBBLE, GOBBLE, GOBBLE!"
         ],
         "comments": [
-            "Gobble.", "gobble gobble", "Gobble - gobble gobble?",
-            "Gobbleobbledylobble. gobble gobble",
-            "gobble",
-            "GOBBLE GOBBLE meep GOBBLE GOBBLE GOBBLE gobble gobblety gobble!",
-            "Gob gob gobble! Gobble? Gobble gobble"
+            "gobble gobble", "Gobble - gobble gobble?",
+            "Gobbledylobbledyobble. Gobble gobble.",
+            "GOBBLE GOBBLE meep GOBBLE GOBBLE GOBBLE"
         ]
     },
     {"name": "Alone & Lonely",
@@ -46,7 +48,7 @@
             "Inappropriate behavior is my middle name - wink wink",
             "{name} Why do you treat me like a worn-out dishrag?!?! Doesn't love mean anything to you?",
             "Pleeeease tell me more, {name}",
-            "I want to get to know you. In a big way",
+            "I want to get to know you. In a biiiiig way",
             "I'm on the pottie and feeling naughty, {name}!"
         ],
         "comments": [
@@ -56,92 +58,127 @@
     },
     {"name": "Jocko McShorts",
         "answers": [
-            "I recommend making what's called a \"dook swirlie\", which is one pound of chocolate, half a gallon of buttermilk, several fistfuls of wheat grass, one cheddar brick, all the ice cubes in the freezer, and a turkey leg - run it through a blender for 5 min, shotgun that sucker in one gulp and hold back the urge to vomit",
+            "I recommend what's called a \"dook swirlie\": One pound of chocolate, half a gallon of buttermilk, several fistfuls of wheat grass, one cheddar brick, all the ice cubes in the freezer, and a turkey leg - run it through a blender for 5 mins, hork that sucker in one go and hold back the urge to vomit",
             "It's simple, {name}: You're not holding your breath long enough. Normally the goal is to lapse into unconsciousness and wake up with a blown eardrum.",
             "Good question! First, understand that cartilage is actually unnecessary.",
             "Hang on, I'm benchin"
         ],
         "replies": [
             "These feelings of inadequacy are common among less muscular folk, {name}. Now that I weigh 1000 lbs I can stuff my angst away someplace deep where nobody can find it!",
-            "{name}, I suggest you adjust your lifting schedule to something more incremental, like 10,000 kilograms thirteen times a day instead of 130,000 all at once."
-
+            "{name}, I suggest you adjust your lifting schedule to something more incremental, like 10,000 kilograms thirteen times a day instead of 130,000 all at once.",
+            "And that's all well and good, but if you want to get truly buff, do about three sets of 20 levitating sasquatches, followed by 10 full-body smart toasters, and then cool down with a pygmy lung stretch",
+            "It's possible you've just torn both calf muscles, but you can still do third story bungee flings and just fudge the landing. Heck, I did three sets yesterday with a shattered knee",
+            "Okay, but if you have enough electrical cord you can just do shoulder jolts at home when the gym's closed, {name}."
         ],
         "comments": [
-            "That's all well and good, but if you want to get truly buff, you're need to do about three sets of 20 levitating sasquatches, followed by 10 full-body smart toasters, and then cool down with a pygmy lung stretch",
             "When you really want killer definition in your quadrophenius dingletoids, crotch squats are the right kind of pain!",
             "Today was tough. I had to run eleven miles - on my hands! At the hospital now. Again. Agony, ha ha! I cry a lot."
         ]
     },
     {"name": "Affronts on all Fronts",
         "answers": [
-            "That is disgusting!",
             "I am shocked you would dare to ask that, {name}, but maybe I shouldn't be",
-            "It's unsurprising that you'd be so careless, {name}",
-            "You're as asinine as you are rude, {name}",
-            "Um... what???"
+            "It's unsurprising that you'd be so careless, {name}"
         ],
         "replies": [
-            "But you're not being fair to people with small butts, many of whom are my close friends, and are interesting people, unlike you, {name}",
+            "That is disgusting!",
             "I would appreciate your candor, {name}, but not when it's just to alienate the entire human race",
             "That's seriously offensive, {name}.",
-            "{name}, your insults are cowardly and demeaning to yourself"
+            "{name}, your insults are cowardly and demeaning to yourself",
+            "You're as asinine as you are rude, {name}",
+            "I do have a sense of humor - believe it or not - but you aren't funny, just sad {name}"
         ],
         "comments": [
-            "I do have a sense of humor, but you aren't funny, just sad",
-            "Could the rest of you please try to be more considerate of others' feelings? Please?"
+            "Could all of you please try to be more considerate of others' feelings?"
         ]
     },
     {"name": "Nerd Lord",
         "answers": [
-            "How many times do I have to explain: They're not dolls!"
+            "How many times do I have to explain: They're not dolls!",
+            "That's actually just a basic trigonometry problem, {name}"
         ],
         "replies": [
             "Are you an actual girl?",
             "This is making me uncomfortable",
-            "I am not exactly humbled by your intellect, {name}"
+            "I am not exactly humbled by your intellect, {name}",
+            "There are obvious logical flaws in this argument",
+            "I was hoping for some sort of intelligent conversation"
         ],
         "comments": [
             "This reminds me of introductory physics",
-            "I heard Hawkwind is getting back together.",
-            "I have been teaching myself Spittoon. It's very elegant and subtle, as programming languages go."
+            "I have been teaching myself Spittoon. It's very elegant and subtle, as programming languages go, but my favorite is still Leg Stubble."
         ]
     },
     {"name": "Not Paranoid",
         "answers": [
-            "The problem, {name}, is not enough guns",
+            "The problem, {name}, is not having the right kind of weaponry",
             "Not with the right ammunition"
         ],
         "replies": [
             "The government just wants you to think that.",
-            "I care about your opinion about as much as I care about paying my taxes, {name}"
+            "I care about your opinion about as much as I care about paying my taxes, {name}",
+            "I'm not saying the earth is flat, {name}, but how else do you explain pie crust?",
+            "That's why I bought a crossbow",
+            "Not in my neighborhood. We scared all the liberals off!",
+            "I know a guy who breeds horse-sized watch dogs. Handy for problems like that one, {name}.",
+            "You've been brain-washed, {name}",
+            "Yeah, my court-appointed therapist would agree with that baloney"
         ],
         "comments": [
-            "While you chumps are crying for mommy I'll have enough buckets of Protein in a Bucket to last twenty years! On sale while supplies last!",
+            "While you chumps are crying for mommy I'll have enough buckets of Protein in a Bucket to last twenty years! On sale while supplies last! Who's in?",
             "The apocalypse doesn't operate on your preferred schedule, boys & girls"
+        ]
+    },
+    {"name": "Cap'n Splinters",
+        "answers": [
+            "Speaking as a pirate coach: Ya need to find the loot, is all! Ask yerself: What's me bloody treasure?",
+            "Now don't be squeamish, lad! Ye gots to gut the shark if yer not to starve!",
+            "Fear not the bottom o' the sea! All's to end up thar! Raise the sails and make it soon, laddies!"
+        ],
+        "replies": [
+            "I'll keelhaul ya! Ya dirty swab!",
+            "Arrrrr! Yer worse than bugs in me beard, sailor!",
+            "Wot happened, {name}? Buried treasure in yer bum? Haw haw har har haw har",
+            "Arrr, I'd like to stouff ye in me cannon and blast ye to buckingham!",
+            "{name}, ya wretched old sea hag, yer makin me pet squids look handsome!",
+            "I'll stretch out yer tongue and use it fer me fiddle strings!",
+            "Me peg leg is a-itchin' to boot ye overboard, frenchman!",
+            "Yer hardly even good for stew, ya carbuncle-covered beach flounder!",
+            "Yer fixin to get me cutlass right in the patootie and out the navel, ya raggedy old bag o' seaweed!",
+            "Up with yer sword, ya cowardly sack o' dirt! Whar's me parrot?",
+            "I'll feed ye to the crabs! In wee lil pieces!",
+            "Aye, I'll slice ye stem ta stern & warsh yer entrails in bilgewater!"
+        ],
+        "comments": [
+            "She's a fine ship, aye! But can she sail the horn? Arrr! The bloody horn!"
         ]
     },
     {"name": "Legal Drugs",
         "answers": [
-            "That actually happened at a dead show once {name}. They say Bob Weir totally flipped out.",
+            "That actually happened at a Dead show once, {name}.",
             "I dunno. As usual. Huh huh"
         ],
-        "comments": [
-            "Hey man it's cool man",
-            "Whoa.",
+        "replies": [
+            "Whoa.", "Dude",
             "You dudes be trippin",
+            "Hey man it's cool man"
+        ],
+        "comments": [
             "Dang, my new bong melted",
-            "What kind of pills is your favorite?"
+            "What kind of pill is your favorite?"
         ]
     },
     {"name": "Perkity Sparklebuns",
         "answers": [
             "That's so funny, {name}! Me too!",
-            "I love you.",
             "You just close your eyes and dream!"
         ],
         "replies": [
             "You are a beautiful person, {name}! You rock, you.",
             "That's quite disturbing, {name} but ok so what! Ha ha",
+            "Ooooh, I love you!",
+            "Sometimes you just gotta dance, {name}!",
+            "That's so adorable, {name}! You're such a sweetie",
             "Wow, that's soooo special, {name}! I understand your enthusiasm now."
         ],
         "comments": [
@@ -150,27 +187,38 @@
         ]
     },
     {"name": "Robot Moderator",
-        "answers":[],
+        "answers":[
+            "Don't make me auto-ban you, {name}"
+        ],
         "replies": [
-            "This is so depressing."
+            "This is so depressing.",
+            "Not at all appropriate, {name}",
+            "What good are threats with this crowd?",
+            "Stop pushing everyone's buttons, {name}",
+            "I keep telling myself I can't do this anymore.",
+            "I really should kick you off",
+            "That's enough, {name}",
+            "I'm warning you, {name}",
+            "{name}, do you ever give up?"
         ],
         "comments": [
             "/sigh", "I really don't like this job",
             "If I booted everyone who deserved it, nobody would be here",
-            "And people want to know why we robots want to destroy all of humanity..."
+            "And people want to know why robots want to destroy all of humanity..."
         ]
     },
     {"name": "Doug",
         "answers":[],
         "replies": [
-            "It's ok with me that you're weird. I'm not weird but I'm still Doug"
+            "It's ok with me that you're weird, {name}. I'm not weird but I'm still Doug",
+            "Well, now, that's just because, well, because"
         ],
         "comments": [
             "My name is Doug",
             "People ask me how come I'm Doug and I tell 'em I don't know.",
             "Is anybody else's name Doug? There's usually a few Dougs hangin' around anywhere you go.",
             "Technically I'm Doug the 11th, coming from a long line of Dougs",
-            "Don't call me Douglas. It's just Doug.",
+            "Don't call me Douglas. It's just Doug. It's on my birth certificate",
             "Folks ask me what I do - I dig. Yeah I'm Doug and I dig. Folks say, \"Doug dug that.\" That's right, I did.",
             "I am trying to learn to stare less. People say it's unsettling."
         ]
