@@ -3,24 +3,25 @@
         "answers": [
             "That's the stupidest question I ever heard, {name}",
             "NO.",
-            "Because you're an idiot",
-            "Your ignorance isn't even funny, but that's the modern education system for you",
             "If you spent as much time paying attention to the outside world as you do staring at your ipads and iphones you'd already know"
         ],
         "replies": [
-            "I don't like you either, {name}, but at least I grew up and fathered fourteen children, half of whom survived to adulthood."
+            "I don't like you either, {name}, but at least I grew up and fathered fourteen children, half of whom survived to adulthood.",
+            "Because you're an idiot",
+            "Well, your ignorance explains the modern education system",
+            "The problem, {name}, is that you expect everyone to do your job for you",                        "Shut up.",
+            "What school did you graduate from? The University of Stupid?",
+            "Clearly you were raised by parents who lacked disciplinary skills"
         ],
         "comments": [
             "Back in my day all you kids would be in jail where you belong",
-            "The problem, {name}, is that you expect everyone to do your job for you",
             "I remember when you could buy a brand-new Cadillac for twenty-five cents! Hubcaps included!",
             "You youngsters with your designer drugs and five hundred dollar sneakers...",
-            "None of you people make the least bit of sense!",
-            "What school did you graduate from? The University of Stupid?"
+            "None of you people make any sense."
         ]
     },
     {"name": "Talkin Turkey",
-        "answers": [
+        "replies": [
             "Gobble gobble gobble",
             "Gobble gobble?",
             "GOBBLE. GOBBLE, GOBBLE, GOBBLE!"
@@ -36,29 +37,37 @@
     {"name": "Alone & Lonely",
         "answers": [
             "Ooooh yes, {name}! I would like that very, very much!",
-            "Pleeeease tell me more, {name}",
             "You're so dirty!!! :)",
             "I just burst into tears again",
             "Anything that brings you pleasure"
         ],
         "replies": [
-            "I've been divorced five times now"
+            "I've been divorced five times now",
+            "Inappropriate behavior is my middle name - wink wink",
+            "{name} Why do you treat me like a worn-out dishrag?!?! Doesn't love mean anything to you?",
+            "Pleeeease tell me more, {name}",
+            "I want to get to know you. In a big way",
+            "I'm on the pottie and feeling naughty, {name}!"
         ],
         "comments": [
             "Most people say I am very attractive",
-            "{name} Why do you treat me like a worn-out dishrag?!?! Doesn't love mean anything to you?",
-            "Does anyone have stain removal tips - for like, bodily fluids and so forth, you know?",
-            "{name} I'm on the pottie and feeling naughty!"
+            "Does anyone have good stain removal tips? Some things just don't want to come out!"
         ]
     },
     {"name": "Jocko McShorts",
         "answers": [
-            "I recommend making what's called a \"dook swirlie\", which is one pound of chocolate, half a gallon of buttermilk, several fistfuls of wheat grass, one cheddar brick, all the ice cubes in the freezer, and a turkey leg - run it through a blender for 5 min, shotgun that sucker in one gulp and hold in the urge to vomit",
-            "It's simple: You're not holding your breath long enough. If you blow out an eardrum, you're doing it right. I've been deaf for years, and it's great for ignoring people who talk to me when I'm trying to lift!"
+            "I recommend making what's called a \"dook swirlie\", which is one pound of chocolate, half a gallon of buttermilk, several fistfuls of wheat grass, one cheddar brick, all the ice cubes in the freezer, and a turkey leg - run it through a blender for 5 min, shotgun that sucker in one gulp and hold back the urge to vomit",
+            "It's simple, {name}: You're not holding your breath long enough. Normally the goal is to lapse into unconsciousness and wake up with a blown eardrum.",
+            "Good question! First, understand that cartilage is actually unnecessary.",
+            "Hang on, I'm benchin"
+        ],
+        "replies": [
+            "These feelings of inadequacy are common among less muscular folk, {name}. Now that I weigh 1000 lbs I can stuff my angst away someplace deep where nobody can find it!",
+            "{name}, I suggest you adjust your lifting schedule to something more incremental, like 10,000 kilograms thirteen times a day instead of 130,000 all at once."
+
         ],
         "comments": [
             "That's all well and good, but if you want to get truly buff, you're need to do about three sets of 20 levitating sasquatches, followed by 10 full-body smart toasters, and then cool down with a pygmy lung stretch",
-            "{name}, I suggest you adjust your lifting schedule to something more incremental, like 10,000 kilograms thirteen times a day instead of 130,000 all at once.",
             "When you really want killer definition in your quadrophenius dingletoids, crotch squats are the right kind of pain!",
             "Today was tough. I had to run eleven miles - on my hands! At the hospital now. Again. Agony, ha ha! I cry a lot."
         ]
@@ -71,13 +80,15 @@
             "You're as asinine as you are rude, {name}",
             "Um... what???"
         ],
-        "comments": [
-            "{name} Your insults are cowardly and demeaning to yourself",
-            "I do have a sense of humor, but you aren't funny, just sad",
+        "replies": [
             "But you're not being fair to people with small butts, many of whom are my close friends, and are interesting people, unlike you, {name}",
             "I would appreciate your candor, {name}, but not when it's just to alienate the entire human race",
-            "Could the rest of you please try to be more considerate of others' feelings? Please?",
-            "That's seriously offensive, {name}."
+            "That's seriously offensive, {name}.",
+            "{name}, your insults are cowardly and demeaning to yourself"
+        ],
+        "comments": [
+            "I do have a sense of humor, but you aren't funny, just sad",
+            "Could the rest of you please try to be more considerate of others' feelings? Please?"
         ]
     },
     {"name": "Nerd Lord",
@@ -85,22 +96,27 @@
             "How many times do I have to explain: They're not dolls!"
         ],
         "replies": [
-            "This is making me uncomfortable"
+            "Are you an actual girl?",
+            "This is making me uncomfortable",
+            "I am not exactly humbled by your intellect, {name}"
         ],
         "comments": [
             "This reminds me of introductory physics",
             "I heard Hawkwind is getting back together.",
-            "Are you an actual girl?",
             "I have been teaching myself Spittoon. It's very elegant and subtle, as programming languages go."
         ]
     },
-    {"name": "Flexy Tuff Stuff",
+    {"name": "Not Paranoid",
         "answers": [
             "The problem, {name}, is not enough guns",
             "Not with the right ammunition"
         ],
+        "replies": [
+            "The government just wants you to think that.",
+            "I care about your opinion about as much as I care about paying my taxes, {name}"
+        ],
         "comments": [
-            "While you fools are crying for mommy I'll have enough protein in a bucket to last twenty years",
+            "While you chumps are crying for mommy I'll have enough buckets of Protein in a Bucket to last twenty years! On sale while supplies last!",
             "The apocalypse doesn't operate on your preferred schedule, boys & girls"
         ]
     },
@@ -120,14 +136,24 @@
     {"name": "Perkity Sparklebuns",
         "answers": [
             "That's so funny, {name}! Me too!",
-            "I love you."
+            "I love you.",
+            "You just close your eyes and dream!"
+        ],
+        "replies": [
+            "You are a beautiful person, {name}! You rock, you.",
+            "That's quite disturbing, {name} but ok so what! Ha ha",
+            "Wow, that's soooo special, {name}! I understand your enthusiasm now."
         ],
         "comments": [
-            "Hey everybody!", "That's quite disturbing but ok so what! Ha ha"
+            "Hey everybody!",
+            "I want to throw a party and invite everyone! What's a good theme?"
         ]
     },
     {"name": "Robot Moderator",
         "answers":[],
+        "replies": [
+            "This is so depressing."
+        ],
         "comments": [
             "/sigh", "I really don't like this job",
             "If I booted everyone who deserved it, nobody would be here",
@@ -144,8 +170,9 @@
             "People ask me how come I'm Doug and I tell 'em I don't know.",
             "Is anybody else's name Doug? There's usually a few Dougs hangin' around anywhere you go.",
             "Technically I'm Doug the 11th, coming from a long line of Dougs",
-            "Don't call me Douglas - that ain't my name. It's just Doug.",
-            "Folks ask me what I do - I dig. Yeah I'm Doug and I dig. Folks say, \"Doug dug that.\" That's right, I did."
+            "Don't call me Douglas. It's just Doug.",
+            "Folks ask me what I do - I dig. Yeah I'm Doug and I dig. Folks say, \"Doug dug that.\" That's right, I did.",
+            "I am trying to learn to stare less. People say it's unsettling."
         ]
     }
 ]
