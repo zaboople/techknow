@@ -131,9 +131,9 @@
     },
     {"name": "Cap'n Splinters",
         "answers": [
-            "Speaking as a pirate coach: Ya need to find the loot, is all! Ask yerself: What's me bloody treasure?",
+            "Speakin as a old-tyme pirate coach: Ya need to find the loot, is all! Ask yerself: Wot's Me Bloody Treasure? Yar, I wrote me a self-helpin book aboot it",
             "Now don't be squeamish, lad! Ye gots to gut the shark if yer not to starve!",
-            "Fear not the bottom o' the sea! All's to end up thar! Raise the sails and make it soon, laddies!"
+            "Fear not the bottom o' the sea! All's to end up thar - in the deep! Raise the sails and make it soon, laddies!"
         ],
         "replies": [
             "I'll keelhaul ya! Ya dirty swab!",

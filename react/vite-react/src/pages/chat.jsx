@@ -36,7 +36,10 @@ function makeMsg(key, name, msg) {
 	return {key: key, name: name, msg: msg,
 		isQuestion:false, to:null, hasDirectReplies: 0};
 }
-function pickOne(user, list, key, replyTo, forceReply) {
+function makeReplyToSpan(key, name) {
+    return <span key={key} className={"mention"}>#{name}</span>;
+}
+function pickMsgToSend(user, list, key, replyTo, forceReply) {
     const ix = randomRange(0, list.length -1);
     const txt = list[ix];
     list.splice(ix, 1);
@@ -44,8 +47,7 @@ function pickOne(user, list, key, replyTo, forceReply) {
     if (replyTo!=null) {
 	    let keyIndex = 0;
 	    function makeReplyTo(extra) {
-		    return <span key={keyIndex++}
-			    className={"mention"}>#{replyTo}{extra}</span>;
+		    return makeReplyToSpan(keyIndex++, replyTo+extra);
 	    }
 	    if (txt.indexOf("{name}") > -1){
 		    const newReply = [];
@@ -54,7 +56,7 @@ function pickOne(user, list, key, replyTo, forceReply) {
 				const chunk = splt[i];
 				newReply.push(chunk);
 				if (i!=splt.length-1)
-					newReply.push(makeReplyTo());
+					newReply.push(makeReplyTo(""));
 			}
 			finalTxt = newReply;
 	    } else if (forceReply) {
@@ -158,7 +160,7 @@ function createProcessor(rawData) {
 				    user.name != question.name
 		    );
 		    if (user!=null) {
-			    const msg = pickOne(
+			    const msg = pickMsgToSend(
 				    user, user.answers, msgKey, question.name, !mustAnswer
 			    );
 			    question.hasDirectReplies++;
@@ -178,7 +180,7 @@ function createProcessor(rawData) {
 		    });
 		    if (needsDirectReply) {
 			    const user = userMap.get(needsDirectReply.to);
-			    const msg = pickOne(
+			    const msg = pickMsgToSend(
 				    user, user.replies, msgKey, needsDirectReply.name, false
 			    );
 			    msg.hasDirectReplies++;
@@ -191,8 +193,6 @@ function createProcessor(rawData) {
 		    const replyTo = findMsg(msgs, mustReply ?msgs.length :2, msg=>{
 			    if (msg.isQuestion)
 				    return false;
-			    if (!userMap.get(msg.name) && !mustReply)
-				    return false;
 			    if (hasReplies.size==1)
 				    return ! hasReplies.get(msg.name);
 			    return true;
@@ -202,7 +202,7 @@ function createProcessor(rawData) {
 			    	u.replies.length > 0 && u.name!=replyTo.name
 			    );
 			    if (user!=null) {
-				    const msg = pickOne(
+				    const msg = pickMsgToSend(
 					    user, user.replies, msgKey, replyTo.name, false
 				    );
 				    return [...msgs, msg];
@@ -211,7 +211,7 @@ function createProcessor(rawData) {
 	    }
 		const commUser = pickUser(u => u.comments && u.comments.length > 0);
 		if (commUser!=null) {
-		    const msg = pickOne(
+		    const msg = pickMsgToSend(
 			    commUser, commUser.comments, msgKey, null, false
 		    );
 		    return [...msgs, msg];
@@ -231,19 +231,61 @@ function createProcessor(rawData) {
 	};
 }
 
+function findOtherUser(nameStr, users) {
+	function makeBigResult(user, searchStr) {
+		nameStr = nameStr.substring(searchStr.length);
+		return {
+			user: user.name,
+			span: makeReplyToSpan(nameStr.length+" "+user.name, user.name),
+			afterSpan: nameStr
+		};
+	}
+	const max = Math.min(nameStr.length, 30);
+	let ix = -1;
+	let searchStr = "";
+	for (let ix=0; ix<max && users.length > 0; ix++) {
+		const tempSearch = searchStr + nameStr.charAt(ix);
+		const temp = users.filter(u => u.name.indexOf(tempSearch) > -1);
+		if (temp.length == 0) {
+			if (users.length != 1)
+				return null;
+			const u = users[0];
+			if (u.name != searchStr && searchStr.length < 4)
+				return null;
+			console.log("NO ID ID");
+			return makeBigResult(u, searchStr);
+		}
+		searchStr = tempSearch;
+		users = temp;
+	}
+	if (users.length==1)
+		return makeBigResult(user[0], searchStr);
+	return null;
+}
+
 function Discussion({userName}) {
 	const [rawData, setRawData] = useState([]);
 	const [messages, setMessages] = useState([]);
 	const [doScroll, setScroll] = useState([true]);
+	const [remoteUsers, setRemoteUsers] = useState([]);
 	const userMsgRef = useRef();
 	function handleSend(){
-		const newMsg = userMsgRef.current.value;
-		console.log("User message: "+newMsg);
-		setMessages(msgs => [...msgs,
-			makeMsg(
-				userName+" "+(msgs.length+1), userName, newMsg
-			)
-		]);
+		const newText = userMsgRef.current.value;
+		userMsgRef.current.value = "";
+		console.log("User message: "+newText);
+		let msgData = [newText];
+		if (newText.indexOf("#") > -1) {
+			const chunks = newText.split("\#");
+			const otherUser = findOtherUser(chunks[1], remoteUsers);
+			console.log(otherUser);
+		}
+		setMessages(msgs => {
+			const msg = makeMsg(
+				userName+" "+(msgs.length+1), userName, msgData
+			);
+			msg.isQuestion = newText.indexOf("?") > -1;
+			return [...msgs, msg];
+		});
 	}
 	function handleScrolled(ev) {
 		const t = ev.target
@@ -269,6 +311,7 @@ function Discussion({userName}) {
         (async ()=>{
 	        try {
 	            const users = await getRawData();
+	            setRemoteUsers(users);
 		        const checkMsgs = createProcessor(users);
 	            console.log("Chat.Discussion(): Got data");
 	            sleepMax(2, 3);
