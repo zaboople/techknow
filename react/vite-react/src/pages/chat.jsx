@@ -33,8 +33,18 @@ async function sleepMax(minSecs, maxSecs) {
     );
 }
 function makeMsg(key, name, msg) {
+	let len = 0;
+	if (msg.length)
+		msg.forEach(x => {
+			if (x.length)
+				len+=x.length;
+		});
 	return {key: key, name: name, msg: msg,
-		isQuestion:false, to:null, hasDirectReplies: 0};
+		length: len,
+		isQuestion:false,
+		to:null,
+		hasDirectReplies: 0
+	};
 }
 function makeReplyToSpan(key, name) {
     return <span key={key} className={"mention"}>#{name}</span>;
@@ -43,7 +53,7 @@ function pickMsgToSend(user, list, key, replyTo, forceReply) {
     const ix = randomRange(0, list.length -1);
     const txt = list[ix];
     list.splice(ix, 1);
-    let finalTxt = txt;
+    let finalList = [txt];
     if (replyTo!=null) {
 	    let keyIndex = 0;
 	    function makeReplyTo(extra) {
@@ -58,12 +68,12 @@ function pickMsgToSend(user, list, key, replyTo, forceReply) {
 				if (i!=splt.length-1)
 					newReply.push(makeReplyTo(""));
 			}
-			finalTxt = newReply;
+			finalList = newReply;
 	    } else if (forceReply) {
-		    finalTxt = [makeReplyTo(" "), txt];
+		    finalList = [makeReplyTo(" "), txt];
 	    }
     }
-    const newMsg = makeMsg(key, user.name, finalTxt);
+    const newMsg = makeMsg(key, user.name, finalList);
     newMsg.to = replyTo;
     newMsg.isQuestion = txt.indexOf("?") > -1;
     return newMsg;
@@ -74,16 +84,19 @@ function createProcessor(rawData) {
     const goneUsers = [];
     const userMap = new Map(), hasAnswers = new Map(),
 	    hasReplies = new Map(), hasComments = new Map();
+    let totalMsgCount = 0;
     users.forEach(user=> {
 	    userMap.set(user.name, user);
 	    if (!user.comments) user.comments=[];
 	    if (!user.answers) user.answers=[];
 	    if (!user.replies) user.replies=[];
+	    totalMsgCount += user.comments.length + user.answers.length +  user.replies.length;
 	    hasComments.set(user.name, user.comments && user.comments.length > 0)
 	    hasAnswers.set(user.name, user.answers && user.answers.length > 0)
 	    hasReplies.set(user.name, user.replies && user.replies.length > 0)
     });
-    console.log("Users: map/list: "+userMap.size+" "+users.length);
+    console.log("Users: map/list: "+userMap.size+" "+users.length
+	    +" total comments: "+totalMsgCount);
     function findMsg(msgs, limit, condition) {
 	    limit = Math.min(limit, msgs.length);
 	    for (let i=1; i<=limit; i++) {
@@ -128,7 +141,7 @@ function createProcessor(rawData) {
 			while (goneUsers.length > 0) {
 				const u = goneUsers.pop();
 			    const msg = makeMsg(
-				    msgKey++, u.name, <i>... has left the chat</i>
+				    msgKey++, u.name, [<i>... has left the chat</i>]
 			    );
 				msgs = [...msgs, msg];
 			}
@@ -305,7 +318,7 @@ function Discussion({userName}) {
 	        console.log(err);
 	        ok = false;
             setMessages(m=> [...m,
-	            makeMsg(m.length+1, null, ""+err)
+	            makeMsg(m.length+1, null, [""+err])
             ]);
         }
         (async ()=>{
@@ -315,24 +328,24 @@ function Discussion({userName}) {
 		        const checkMsgs = createProcessor(users);
 	            console.log("Chat.Discussion(): Got data");
 	            sleepMax(2, 3);
-	            let desiredLen = 1;
+	            let desiredLen = 0;
+	            let realMsgs = [];
 	            while (ok) {
 		            setMessages((msgs)=>{
 			            try {
-				            if (desiredLen<=msgs.length) {
-					            desiredLen = msgs.length + 1;
-					            return msgs;
-				            }
+				            if (msgs.length < realMsgs.length)
+					            return realMsgs;
 				            msgs = checkMsgs(msgs)
 				            if (ok && users.length == 0) {
 					            ok = false;
 					            msgs = [...msgs,
-						            makeMsg(msgs.length+1, null,
-							            <i><br/>Everyone else is... gone.</i>)
+						            makeMsg(
+							            msgs.length+1, null,
+							            [<i><br/>Everyone else is... gone.</i>]
+						            )
 					            ];
 				            }
-				            desiredLen = msgs.length + 1;
-				            return msgs;
+				            return realMsgs = msgs;
 			            } catch (e) {
 				            fail(e);
 			            }
@@ -364,7 +377,7 @@ function Discussion({userName}) {
 		<button onClick={handleSend}>Send</button>
 		</>);
 	const realMsgs = messages.length == 0
-		?[makeMsg(1, null, <i>Loading...</i>)]
+		?[makeMsg(1, null, [<i>Loading...</i>])]
 		:messages;
 	return <>
 	    <div className="chatmessages" onScroll={handleScrolled}>
