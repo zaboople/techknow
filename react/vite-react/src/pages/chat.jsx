@@ -74,6 +74,7 @@ function pickMsgToSend(user, list, key, replyTo, forceReply) {
 	    }
     }
     const newMsg = makeMsg(key, user.name, finalList);
+    newMsg.wasFromRemoteUser = true;
     newMsg.to = replyTo;
     newMsg.isQuestion = txt.indexOf("?") > -1;
     return newMsg;
@@ -87,6 +88,7 @@ function createProcessor(rawData) {
     let totalMsgCount = 0;
     users.forEach(user=> {
 	    userMap.set(user.name, user);
+	    user.lowerName = user.name.toLowerCase();
 	    if (!user.comments) user.comments=[];
 	    if (!user.answers) user.answers=[];
 	    if (!user.replies) user.replies=[];
@@ -121,9 +123,9 @@ function createProcessor(rawData) {
 	    map.delete(user.name);
 	    return false;
     }
-
-	return (msgs)=> {
-	    let msgKey = msgs.length + 1;
+	let msgKey = 10;
+	return (prevMsgs)=> {
+		let newMsgs = [];
 		for (let i=users.length-1; i>=0; i--) {
 			const u = users[i];
 			const c = checkHas(u, u.comments, hasComments);
@@ -137,25 +139,39 @@ function createProcessor(rawData) {
 				goneUsers.push(u);
 			}
 		}
-		if (msgs.length % 8 == 0 || users.length ==0) {
+		if (prevMsgs.length % 8 == 0 || users.length ==0) {
 			while (goneUsers.length > 0) {
 				const u = goneUsers.pop();
 			    const msg = makeMsg(
-				    msgKey++, u.name, [<i>... has left the chat</i>]
+				    ++msgKey, u.name,
+					    [<i key={"iii"+(++msgKey)}>... has left the chat</i>]
 			    );
-				msgs = [...msgs, msg];
+				newMsgs = [...newMsgs, msg];
 			}
 		}
 	    if (users.length==0) {
 		    console.log("No users left");
-		    return msgs;
+		    const remoteCount = prevMsgs.reduce(
+			    (count, msg)=>
+				    count + (msg.wasFromRemoteUser ?1 :0),
+			    0
+		    );
+		    console.log("Remote user messages sent: "+remoteCount+
+			    " should have been: "+totalMsgCount);
+            newMsgs = [...newMsgs, makeMsg(
+	            "Gone: "+(msgKey++),
+	            null,
+	            [<i key={++msgKey}><br/>Everyone else is... gone.</i>]
+            )];
+		    return newMsgs;
 	    }
 
+		// Answer questions as you like:
 		const mustAnswer =
 			hasComments.size == 0 && hasReplies.size == 0;
 	    const question = (mustAnswer || randomRange(0,2) < 2)
 		    ?findMsg(
-			    msgs, mustAnswer ?msgs.length :3,
+			    prevMsgs, mustAnswer ?prevMsgs.length :3,
 			    msg=> {
 				    if (mustAnswer) {
 					    return hasAnswers.size > 1 ||
@@ -174,36 +190,60 @@ function createProcessor(rawData) {
 		    );
 		    if (user!=null) {
 			    const msg = pickMsgToSend(
-				    user, user.answers, msgKey, question.name, !mustAnswer
+				    user, user.answers, ++msgKey, question.name, !mustAnswer
 			    );
 			    question.hasDirectReplies++;
-			    return [...msgs, msg];
+			    return [...newMsgs, msg];
 		    } else if (mustAnswer) {
 			    console.log("Could not get answerer! Question: "+question.name+
 				    " Has answers: "+hasAnswers.size);
 		    }
 	    }
 
+		// Make sure console user gets replies:
+		const liveMsg = findMsg(
+			prevMsgs, 4, msg => msg.isConsoleUser && (
+				msg.hasDirectReplies == 0 ||
+				randomRange(0, 1)==1
+			)
+		);
+		if (liveMsg) {
+		    let user = pickUser(user=>
+			    user.name == liveMsg.to && user.replies.length > 0
+		    );
+		    if (!user)
+			    user = pickUser(u => u.replies.length > 0);
+		    if (user) {
+			    console.log("Reply to console user from: "+user.name);
+			    const msg = pickMsgToSend(
+				    user, user.replies, ++msgKey, liveMsg.name, false
+			    );
+			    liveMsg.hasDirectReplies++;
+			    return [...newMsgs, msg];
+		    }
+		}
+
+		// Direct replies have high preference, for jollies and antagonism:
 		if (randomRange(0, 2) < 2) {
-		    const needsDirectReply = findMsg(msgs, 4, msg=>{
-			    if (msg.hasDirectReplies > 1 || !msg.to)
+		    const needsDirectReply = findMsg(prevMsgs, 4, msg=>{
+			    if (msg.hasDirectReplies > 0 || !msg.to)
 				    return false;
 			    const user = userMap.get(msg.to);
-			    return user && user.replies && user.replies.length > 0;
+			    return user && user.replies.length > 0;
 		    });
 		    if (needsDirectReply) {
 			    const user = userMap.get(needsDirectReply.to);
 			    const msg = pickMsgToSend(
-				    user, user.replies, msgKey, needsDirectReply.name, false
+				    user, user.replies, ++msgKey, needsDirectReply.name, false
 			    );
-			    msg.hasDirectReplies++;
-			    return [...msgs, msg];
+			    needsDirectReply.hasDirectReplies++;
+			    return [...newMsgs, msg];
 		    }
 	    }
 
 	    const mustReply = hasComments.size == 0;
 	    if (mustReply || randomRange(0, 1)==1) {
-		    const replyTo = findMsg(msgs, mustReply ?msgs.length :2, msg=>{
+		    const replyTo = findMsg(prevMsgs, mustReply ?prevMsgs.length :2, msg=>{
 			    if (msg.isQuestion)
 				    return false;
 			    if (hasReplies.size==1)
@@ -216,18 +256,21 @@ function createProcessor(rawData) {
 			    );
 			    if (user!=null) {
 				    const msg = pickMsgToSend(
-					    user, user.replies, msgKey, replyTo.name, false
+					    user, user.replies, ++msgKey, replyTo.name, false
 				    );
-				    return [...msgs, msg];
+				    return [...newMsgs, msg];
 			    }
 		    }
 	    }
-		const commUser = pickUser(u => u.comments && u.comments.length > 0);
+
+		// If nothing else, make a random comment. Note that answers and replies
+		// will get forced if we already knew that comments were used up:
+		const commUser = pickUser(u => u.comments.length > 0);
 		if (commUser!=null) {
 		    const msg = pickMsgToSend(
-			    commUser, commUser.comments, msgKey, null, false
+			    commUser, commUser.comments, ++msgKey, null, false
 		    );
-		    return [...msgs, msg];
+		    return [...newMsgs, msg];
 		}
 
 		console.log("I... couldn't find anything to do!");
@@ -240,7 +283,7 @@ function createProcessor(rawData) {
 		console.log("Has Comments "+hasComments.keys().toArray());
 		console.log("Has Answers "+hasAnswers.keys().toArray());
 		console.log("Has Replies "+hasReplies.keys().toArray());
-		return msgs;
+		return newMsgs;
 	};
 }
 
@@ -253,53 +296,90 @@ function findOtherUser(nameStr, users) {
 			afterSpan: nameStr
 		};
 	}
+
+	const easyCatch = users.find(u =>
+		nameStr.startsWith(u.name) || nameStr.startsWith(u.lowerName)
+	);
+	if (easyCatch)
+		return makeBigResult(easyCatch, easyCatch.name);
+
 	const max = Math.min(nameStr.length, 30);
 	let ix = -1;
 	let searchStr = "";
 	for (let ix=0; ix<max && users.length > 0; ix++) {
-		const tempSearch = searchStr + nameStr.charAt(ix);
-		const temp = users.filter(u => u.name.indexOf(tempSearch) > -1);
-		if (temp.length == 0) {
-			if (users.length != 1)
-				return null;
-			const u = users[0];
-			if (u.name != searchStr && searchStr.length < 4)
-				return null;
-			console.log("NO ID ID");
-			return makeBigResult(u, searchStr);
+		const nextChar = nameStr.charAt(ix);
+		const incr = searchStr + nameStr.charAt(ix);
+		const found = users.filter(u =>
+			u.name.indexOf(incr) > -1 ||
+			u.lowerName.indexOf(incr) > -1
+		);
+		if (found.length == 0)
+			break;
+		if (found.length == 1 && (
+				incr.endsWith(" ") || incr.endsWith(".") ||
+				incr.endsWith(",") || incr.endsWith("-")
+			)) {
+			users = found;
+			break;
 		}
-		searchStr = tempSearch;
-		users = temp;
+		searchStr = incr;
+		users = found;
 	}
-	if (users.length==1)
-		return makeBigResult(user[0], searchStr);
-	return null;
+	if (users.length != 1)
+		return null;
+	const u = users[0];
+	searchStr = searchStr.trimEnd();
+	if (u.name != searchStr && u.lowerName != searchStr &&
+		searchStr.length < 4)
+		return null;
+	return makeBigResult(u, searchStr);
 }
 
-function Discussion({userName}) {
-	const [rawData, setRawData] = useState([]);
-	const [messages, setMessages] = useState([]);
-	const [doScroll, setScroll] = useState([true]);
-	const [remoteUsers, setRemoteUsers] = useState([]);
+function UserMsgInput({userName, remoteUsers, setMessages}) {
 	const userMsgRef = useRef();
 	function handleSend(){
 		const newText = userMsgRef.current.value;
 		userMsgRef.current.value = "";
 		console.log("User message: "+newText);
 		let msgData = [newText];
+		let msgTo = null;
 		if (newText.indexOf("#") > -1) {
 			const chunks = newText.split("\#");
-			const otherUser = findOtherUser(chunks[1], remoteUsers);
-			console.log(otherUser);
+			const other = findOtherUser(chunks[1], remoteUsers);
+			if (other) {
+				const pre = chunks.shift(), __ = chunks.shift();
+				msgData = [pre, other.span, other.afterSpan].concat(chunks);
+				msgTo = other.user;
+			}
 		}
 		setMessages(msgs => {
 			const msg = makeMsg(
 				userName+" "+(msgs.length+1), userName, msgData
 			);
+			msg.to = msgTo;
 			msg.isQuestion = newText.indexOf("?") > -1;
+			msg.isConsoleUser = true;
 			return [...msgs, msg];
 		});
 	}
+	function handleKeyDown(ev) {
+		if (ev.keyCode==13){
+			ev.preventDefault();
+			handleSend();
+		}
+	}
+	return userName == null ?[] :(<>
+		<textarea rows={"5"} cols={70} ref={userMsgRef}
+			onKeyDown={handleKeyDown}
+			placeholder="Send a message..."/>
+		<button onClick={handleSend}>Send</button>
+	</>);
+}
+
+function Discussion({userName}) {
+	const [messages, setMessages] = useState([]);
+	const [doScroll, setScroll] = useState([true]);
+	const [remoteUsers, setRemoteUsers] = useState([]);
 	function handleScrolled(ev) {
 		const t = ev.target
 		const pos = t.scrollTop,
@@ -311,6 +391,7 @@ function Discussion({userName}) {
 		if (diff < 40 && !doScroll)
 			setScroll(true);
 	}
+
 	useEffect(()=>{
         let ok = true;
         function fail(err) {
@@ -318,39 +399,38 @@ function Discussion({userName}) {
 	        console.log(err);
 	        ok = false;
             setMessages(m=> [...m,
-	            makeMsg(m.length+1, null, [""+err])
+	            makeMsg("ERROR: "+(m.length+1), null, [""+err])
             ]);
         }
         (async ()=>{
 	        try {
 	            const users = await getRawData();
 	            setRemoteUsers(users);
-		        const checkMsgs = createProcessor(users);
+		        const getReplies = createProcessor(users);
 	            console.log("Chat.Discussion(): Got data");
 	            sleepMax(2, 3);
-	            let desiredLen = 0;
 	            let realMsgs = [];
+	            if (ok)
+		            setMessages([]);
+	            let sMin = 2, sMax = 7;
 	            while (ok) {
-		            setMessages((msgs)=>{
-			            try {
-				            if (msgs.length < realMsgs.length)
-					            return realMsgs;
-				            msgs = checkMsgs(msgs)
-				            if (ok && users.length == 0) {
-					            ok = false;
-					            msgs = [...msgs,
-						            makeMsg(
-							            msgs.length+1, null,
-							            [<i><br/>Everyone else is... gone.</i>]
-						            )
-					            ];
-				            }
-				            return realMsgs = msgs;
-			            } catch (e) {
-				            fail(e);
-			            }
+		            // This setMessages() helps us keep up with live user
+		            // before issuing next reply:
+		            setMessages(m => realMsgs = m);
+		            let newMsgs = getReplies(realMsgs);
+		            if (users.length == 0)
+			            ok = false;
+		            setMessages(msgs => {
+			            // Warning: setMessages() will be
+			            // double-called in dev:
+			            msgs = realMsgs = msgs.concat(newMsgs)
+			            const msg = msgs[msgs.length-1];
+			            const xtra = Math.round(msg.length / 45);
+			            sMin = 2 + xtra;
+			            sMax = 7 + xtra;
+			            return msgs;
 		            });
-		            await sleepMax(2, 7);
+		            await sleepMax(sMin, sMax);
 	            }
 	            console.log("Exiting.");
 	        } catch (e) {
@@ -370,14 +450,8 @@ function Discussion({userName}) {
 		else
 			console.log("Scroll into view is off");
 	});
-	const userInput = userName == null
-		?[]
-		:(<>
-		<textarea rows={"5"} cols={70} ref={userMsgRef} placeholder="Send a message..."/>
-		<button onClick={handleSend}>Send</button>
-		</>);
 	const realMsgs = messages.length == 0
-		?[makeMsg(1, null, [<i>Loading...</i>])]
+		?[makeMsg("Loading123", null, [<i key={"xxxx"}>Loading...</i>])]
 		:messages;
 	return <>
 	    <div className="chatmessages" onScroll={handleScrolled}>
@@ -390,22 +464,31 @@ function Discussion({userName}) {
 					{msg.msg}
 				</div>
 			)}
-			<div id={"bottomMost"}>---</div>
+			<div id={"bottomMost"}>------</div>
 	    </div>
-	    {userInput}
-
+		<UserMsgInput userName={userName} remoteUsers={remoteUsers}
+			setMessages={setMessages}/>
 	</>;
 }
 
 export default function Chat() {
 	const [userName, setUserName] = useState(null);
 	const textInputRef = useRef();
+	function setUser() {
+		const vv = textInputRef.current.value.trim();
+		if (vv != "")
+			setUserName(textInputRef.current.value);
+	}
+	function handleKeyDown(ev) {
+		if (ev.keyCode==13)
+			setUser();
+	}
+
 	const showSignup = userName == null
 		?<div className="chatsignup">
-			<input type="text" ref={textInputRef} placeholder="Your user name"/>
-			<button onClick={
-					()=>setUserName(textInputRef.current.value)
-				}>Sign in</button>
+			<input type="text" placeholder="Your user name"
+				ref={textInputRef} onKeyDown={handleKeyDown}/>
+			<button onClick={()=>setUser()}>Sign in</button>
 		</div>
 		:null;
 	return <div className="subbody flexVert">

@@ -5,12 +5,12 @@
             "NO."
         ],
         "replies": [
-            "Well, {name}, at least I grew up and raised fourteen children of my own, several of whom survived to adulthood.",
+            "Well, {name}, at least I grew up and raised fourteen children of my own, several of whom survived to adulthood!",
             "Because you're an idiot",
             "Bunch of nut jobs",
             "{name} Were you born like this or was there some kind of accident?",
             "Did I tell you to shut up yet?",
-            "Well, your ignorance explains the modern education system",
+            "Your ignorance explains the modern education system",
             "The problem, {name}, is that you expect everyone to do your job for you. Where I come from, they have a thing called, \"responsibility\"",
             "Shut up already",
             "What school did you graduate from? The University of Stupid?",
@@ -27,13 +27,13 @@
         "replies": [
             "Gobble gobble gobble",
             "Gobble gobble?",
-            "gobble", "Gobble.",
+            "gobble", "gobble",
             "GOBBLE. GOBBLE, GOBBLE, GOBBLE!"
         ],
         "comments": [
             "gobble gobble", "Gobble - gobble gobble?",
             "Gobbledylobbledyobble. Gobble gobble.",
-            "GOBBLE GOBBLE meep GOBBLE GOBBLE GOBBLE"
+            "GOBBLE GOBBLE GOBBLE GOBBLE gobble gobble GOBBLE!"
         ]
     },
     {"name": "Alone & Lonely",
@@ -56,18 +56,32 @@
             "Does anyone have good stain removal tips? Some things just don't want to come out!"
         ]
     },
+    {"name": "Death Metal Master",
+        "replies": [
+            "DUN! DUN! DUN! GWARARRGHGH",
+            "Christopher Cross! The Carpenters! METAL! RRRRAH",
+            "ALL IS DOOM! I WILL EAT YOUR SOULS!",
+            "I JUST HAD BREAKFAST! GUITAR SOLO: weedley weedley wibble wibble weeeeeee~!",
+            "GWORGH! HRRARRRR! DEVIL HORNS YEH",
+            "Dude, Sade is so BADASS! WOO! METAL!",
+            "Yeah but the definitive take on Girl From Ipanema has to be Chet Atkins RRROCK OUT YEARRHGHGH",
+            "{name}, I get it, but that kind of jam just doesn't compare to Sting. RRRAAAH METAL"
+        ]
+    },
     {"name": "Jocko McShorts",
         "answers": [
-            "I recommend what's called a \"dook swirlie\": One pound of chocolate, half a gallon of buttermilk, several fistfuls of wheat grass, one cheddar brick, all the ice cubes in the freezer, and a turkey leg - run it through a blender for 5 mins, hork that sucker in one go and hold back the urge to vomit",
+            "I recommend a classic \"dook smoothie\": One pound of chocolate, half a gallon of buttermilk, some fistfuls of wheat grass, one cheddar brick, all the ice cubes in the freezer, and a turkey leg - run it through a blender for 5 mins, hork that sucker in one go and hold back the urge to vomit",
             "It's simple, {name}: You're not holding your breath long enough. Normally the goal is to lapse into unconsciousness and wake up with a blown eardrum.",
             "Good question! First, understand that cartilage is actually unnecessary.",
             "Hang on, I'm benchin"
         ],
         "replies": [
+            "If you really, really want to feel the burn, my favorites are a grain alcohol cleanse and pinky pullups! YMMV, of course!",
             "These feelings of inadequacy are common among less muscular folk, {name}. Now that I weigh 1000 lbs I can stuff my angst away someplace deep where nobody can find it!",
             "{name}, I suggest you adjust your lifting schedule to something more incremental, like 10,000 kilograms thirteen times a day instead of 130,000 all at once.",
             "And that's all well and good, but if you want to get truly buff, do about three sets of 20 levitating sasquatches, followed by 10 full-body smart toasters, and then cool down with a pygmy lung stretch",
             "It's possible you've just torn both calf muscles, but you can still do third story bungee flings and just fudge the landing. Heck, I did three sets yesterday with a shattered knee",
+            "People often ask me whether partial beheading is actually good for circulation - well of course not, but I've seen incredible flexibility gains!",
             "Okay, but if you have enough electrical cord you can just do shoulder jolts at home when the gym's closed, {name}."
         ],
         "comments": [
@@ -83,10 +97,10 @@
         "replies": [
             "That is disgusting!",
             "I would appreciate your candor, {name}, but not when it's just to alienate the entire human race",
-            "That's seriously offensive, {name}.",
+            "I'm deeply hurt by that, {name}.",
             "{name}, your insults are cowardly and demeaning to yourself",
             "You're as asinine as you are rude, {name}",
-            "I do have a sense of humor - believe it or not - but you aren't funny, just sad {name}"
+            "I do have a sense of humor - believe it or not - but you aren't funny, {name}"
         ],
         "comments": [
             "Could all of you please try to be more considerate of others' feelings?"
@@ -95,10 +109,12 @@
     {"name": "Nerd Lord",
         "answers": [
             "How many times do I have to explain: They're not dolls!",
-            "That's actually just a basic trigonometry problem, {name}"
+            "That's actually just a basic trigonometry problem, {name}",
+            "I've always thought of myself as more of a Gandalf"
         ],
         "replies": [
             "Are you an actual girl?",
+            "You should learn to use \"who\" vs. \"whom\" correctly",
             "This is making me uncomfortable",
             "I am not exactly humbled by your intellect, {name}",
             "There are obvious logical flaws in this argument",
@@ -112,41 +128,42 @@
     {"name": "Not Paranoid",
         "answers": [
             "The problem, {name}, is not having the right kind of weaponry",
-            "Not with the right ammunition"
+            "Anything's possible, with the right ammunition"
         ],
         "replies": [
             "The government just wants you to think that.",
             "I care about your opinion about as much as I care about paying my taxes, {name}",
             "I'm not saying the earth is flat, {name}, but how else do you explain pie crust?",
             "That's why I bought a crossbow",
-            "Not in my neighborhood. We scared all the liberals off!",
-            "I know a guy who breeds horse-sized watch dogs. Handy for problems like that one, {name}.",
+            "Not in my neighborhood. We scared all the liberals off! And my wife",
+            "I know a guy who breeds horse-sized watch dogs. Handy for problems like that one, {name}. He's a missing an arm, but real friendly",
             "You've been brain-washed, {name}",
             "Yeah, my court-appointed therapist would agree with that baloney"
         ],
         "comments": [
-            "While you chumps are crying for mommy I'll have enough buckets of Protein in a Bucket to last twenty years! On sale while supplies last! Who's in?",
+            "While you chumps are crying for mommy I'll have enough buckets of Protein in a Bucket to last twenty years! Tastes just like expired pork! On sale while supplies last! Who's in?",
             "The apocalypse doesn't operate on your preferred schedule, boys & girls"
         ]
     },
     {"name": "Cap'n Splinters",
         "answers": [
-            "Speakin as a old-tyme pirate coach: Ya need to find the loot, is all! Ask yerself: Wot's Me Bloody Treasure? Yar, I wrote me a self-helpin book aboot it",
+            "Speakin as a old-tyme pirate life coach: Ya need to find the loot, is all! Ask yerself: Wot's Me Bloody Treasure? Yar, I wrote me a self-helpin book aboot it",
             "Now don't be squeamish, lad! Ye gots to gut the shark if yer not to starve!",
             "Fear not the bottom o' the sea! All's to end up thar - in the darkest deep! Raise the sails and ahoy to yer death, laddies!"
         ],
         "replies": [
             "I'll keelhaul ya! Ya dirty swab!",
             "Arrrrr! Yer worse than bugs in me beard, sailor!",
-            "Wot happened, {name}? Buried treasure in yer bum? Haw haw har har haw har",
-            "Arrr, I'd like to stouff ye in me cannon and blast ye to buckingham!",
+            "Wot happened, {name}? Buried treasure in yer bum? Haw haw har har haw har haw",
+            "Arrr, I'd like to stouffe ye in me cannon and blast ye to buckingham!",
+            "Methinks this here voyage would go smoother with yer tattered carcass tied to me mainmast",
             "{name}, ya wretched old sea hag, yer makin me pet squids look handsome!",
             "I'll stretch out yer tongue and use it fer me fiddle strings!",
-            "Me peg leg is a-itchin' to boot ye overboard, frenchman!",
+            "Me peg leg is a-itchin' to boot ye overboard, frenchie!",
             "Yer hardly even good for stew, ya carbuncle-covered beach flounder!",
-            "Yer fixin to get me cutlass right in the patootie and out the navel, ya raggedy old bag o' seaweed!",
+            "Yer fixin to get me cutlass right in the patootie and out thy navel, ya raggedy old bag o' seaweed!",
             "Up with yer sword, ya cowardly sack o' dirt! Whar's me parrot?",
-            "I'll feed ye to the crabs! In wee lil pieces!",
+            "I'll feed ye to da crabs! In wee lil pieces!",
             "Aye, I'll slice ye stem ta stern & warsh yer entrails in bilgewater!"
         ],
         "comments": [
@@ -156,12 +173,15 @@
     {"name": "Legal Drugs",
         "answers": [
             "That actually happened at a Dead show once, {name}.",
-            "I dunno. As usual. Huh huh"
+            "I dunno. As usual. Huh huh /pffffbbbbttbbtt /gurglegurgle /bloop"
         ],
         "replies": [
             "Whoa.", "Dude",
-            "You dudes be trippin",
-            "Hey man it's cool man"
+            "You should try CBD. Good for anxiety and stuff",
+            "You be trippin bro",
+            "Hey man it's cool man",
+            "Harshin my buzz, bro",
+            "These people do not know how to party"
         ],
         "comments": [
             "Dang, my new bong melted",
@@ -179,6 +199,7 @@
             "Ooooh, I love you!",
             "Sometimes you just gotta dance, {name}!",
             "That's so adorable, {name}! You're such a sweetie",
+            "Well, like, last night I woke up in my parents' bedroom screaming and holding a knife... /shrug tee hee hee!",
             "Wow, that's soooo special, {name}! I understand your enthusiasm now."
         ],
         "comments": [
