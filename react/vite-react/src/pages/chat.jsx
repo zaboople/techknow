@@ -125,6 +125,7 @@ function createProcessor(rawData) {
     }
 	let msgKey = 10;
 	return (prevMsgs)=> {
+		console.log("Previous messages count: "+prevMsgs.length);
 		let newMsgs = [];
 		for (let i=users.length-1; i>=0; i--) {
 			const u = users[i];
@@ -204,7 +205,7 @@ function createProcessor(rawData) {
 		const liveMsg = findMsg(
 			prevMsgs, 4, msg => msg.isConsoleUser && (
 				msg.hasDirectReplies == 0 ||
-				randomRange(0, 1)==1
+				randomRange(0, 2)==2
 			)
 		);
 		if (liveMsg) {
@@ -214,7 +215,8 @@ function createProcessor(rawData) {
 		    if (!user)
 			    user = pickUser(u => u.replies.length > 0);
 		    if (user) {
-			    console.log("Reply to console user from: "+user.name);
+			    console.log("Reply to console user from: "+user.name
+				    +" total "+liveMsg.hasDirectReplies);
 			    const msg = pickMsgToSend(
 				    user, user.replies, ++msgKey, liveMsg.name, false
 			    );
@@ -408,29 +410,32 @@ function Discussion({userName}) {
 	            setRemoteUsers(users);
 		        const getReplies = createProcessor(users);
 	            console.log("Chat.Discussion(): Got data");
-	            sleepMax(2, 3);
 	            let realMsgs = [];
 	            if (ok)
 		            setMessages([]);
-	            let sMin = 2, sMax = 7;
+	            let sMin = 1, sMax = 2;
+
+	            // Warning: setMessages() will be double-called in dev, and
+	            // worse yet, it's secretly async, so we want to sleep in
+	            // between calls to setMessages() so that our own copy gets
+	            // updated, not only with our concatenation of new messages,
+	            // but with console user messages. However we only sleep once
+	            // because it makes sense for a user to have to wait on replies
+	            // to their own message.
 	            while (ok) {
-		            // This setMessages() helps us keep up with live user
-		            // before issuing next reply:
-		            setMessages(m => realMsgs = m);
+		            await sleepMax(sMin, sMax);
+		            setMessages(m => {
+			            realMsgs = [...m];
+			            return m;
+		            });
 		            let newMsgs = getReplies(realMsgs);
 		            if (users.length == 0)
 			            ok = false;
-		            setMessages(msgs => {
-			            // Warning: setMessages() will be
-			            // double-called in dev:
-			            msgs = realMsgs = msgs.concat(newMsgs)
-			            const msg = msgs[msgs.length-1];
-			            const xtra = Math.round(msg.length / 45);
-			            sMin = 2 + xtra;
-			            sMax = 7 + xtra;
-			            return msgs;
-		            });
-		            await sleepMax(sMin, sMax);
+		            const msg = newMsgs[newMsgs.length-1];
+		            const xtra = Math.round(msg.length / 45);
+		            sMin = 2 + xtra;
+		            sMax = 7 + xtra;
+		            setMessages(msgs => realMsgs = msgs.concat(newMsgs));
 	            }
 	            console.log("Exiting.");
 	        } catch (e) {
