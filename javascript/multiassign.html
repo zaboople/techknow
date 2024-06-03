@@ -19,32 +19,10 @@
 
     <script language="javascript">
 
-        /**
-        Bonus round: This shows how to do a `zip()` function, converting
-        a list of objects to a list of `[index, object]` pairs. But it
-        shows you all the javascript things you didn't know, or at least some
-        of them:
-            1. Use a secret variable named "arguments" to create a varargs function.
-            2. Arrow functions `x => y` (shortcut for lambdas)
-            3. Array.reduce(function, starting value)
-            4. Assignment of variables from array `const [x,y] = [1, 1]`
-                (but don't forget object too `const {x,y} = {x:1, y:1}`)
-            5. Build array from another array using `[...oldArray, newthing]` syntax
-        Of course, this is otherwise a polluted shitbox, but it's clever, which is a
-        perfectly good excuse:
-        **/
-        function zip() {
-            return Array.from(arguments).reduce(
-                ([i, vals], next) => [
-                    i+1,
-                    [...vals, [i, next]]
-                ],
-                [0, []]
-            )[1];
-        }
+        [{a:1, b:2, c:3}, {a:11, b:33, c:44}]
 
-        const zipray = zip("hi", "hello", "how are you").map(
-                x => ({index: x[0]+1, name: x[1]})
+        const zipray = new Array("hi", "hello", "how are you").map(
+                    (x, index) => ({index: index+1, name: x})
             );
 
         function setThing(id, value) {
