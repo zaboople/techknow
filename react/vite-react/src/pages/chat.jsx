@@ -93,9 +93,9 @@ function createProcessor(rawData) {
 	    if (!user.answers) user.answers=[];
 	    if (!user.replies) user.replies=[];
 	    totalMsgCount += user.comments.length + user.answers.length +  user.replies.length;
-	    hasComments.set(user.name, user.comments && user.comments.length > 0)
-	    hasAnswers.set(user.name, user.answers && user.answers.length > 0)
-	    hasReplies.set(user.name, user.replies && user.replies.length > 0)
+	    hasComments.set(user.name, user.comments.length > 0)
+	    hasAnswers.set(user.name, user.answers.length > 0)
+	    hasReplies.set(user.name, user.replies.length > 0)
     });
     console.log("Users: map/list: "+userMap.size+" "+users.length
 	    +" total comments: "+totalMsgCount);
@@ -115,7 +115,9 @@ function createProcessor(rawData) {
 		    //console.log("Warning: No user for condition");
 		    return null;
 	    }
-	    return list[randomRange(0, list.length-1)];
+	    const index = randomRange(0, list.length-1);
+	    //console.log("Pick user: "+index+" of "+list.map(u => u.name).join(", "));
+	    return list[index];
     }
     function checkHas(user, list, map) {
 	    if (list.length > 0)
@@ -125,7 +127,6 @@ function createProcessor(rawData) {
     }
 	let msgKey = 10;
 	return (prevMsgs)=> {
-		console.log("Previous messages count: "+prevMsgs.length);
 		let newMsgs = [];
 		for (let i=users.length-1; i>=0; i--) {
 			const u = users[i];
@@ -160,7 +161,7 @@ function createProcessor(rawData) {
 		    console.log("Remote user messages sent: "+remoteCount+
 			    " should have been: "+totalMsgCount);
             newMsgs = [...newMsgs, makeMsg(
-	            "Gone: "+(msgKey++),
+	            "Gone: "+(++msgKey),
 	            null,
 	            [<i key={++msgKey}><br/>Everyone else is... gone.</i>]
             )];
