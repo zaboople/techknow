@@ -1,0 +1,41 @@
+// This is where the contexts are created as (roughly) global variables:
+import {createContext} from 'react';
+export const TasksContext = createContext(null);
+export const TasksDispatchContext = createContext(null);
+
+// If we add this in, it's that much easier for others to just go to town.
+// NOTE: Putting "use" at the front a function makes it a custom hook that
+// calls other custom hooks.
+import {useContext} from 'react';
+export function useTasks() {
+  return useContext(TasksContext);
+}
+export function useTasksDispatch() {
+  return useContext(TasksDispatchContext);
+}
+
+// Just using useReducer here because of examples...
+const [tasks, dispatch] = useReducer(tasksReducer, initialTasks);
+
+// This is how we make the contexts available to children - the global variable isn't enough.
+return (
+    <TasksContext.Provider value={tasks}>
+        <TasksDispatchContext.Provider value={dispatch}>
+        {children}
+        </TasksDispatchContext.Provider>
+    </TasksContext.Provider>
+);
+
+// Child would import the context variables and then run them through useContext()
+// because I dunno why:
+import { useState, useContext } from 'react';
+const tasks = useContext(TasksContext);
+return (
+    <ul>
+        {tasks.map(task => (
+            <li key={task.id}>
+                <Task task={task} />
+            </li>
+        ))}
+    </ul>
+);

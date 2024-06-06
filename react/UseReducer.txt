@@ -1,0 +1,40 @@
+import { useReducer } from 'react';
+
+// This is just a typical reducer function that takes state & input passed to a special dispatcher:
+function tasksReducer(tasks, action) {
+  switch (action.type) {
+    case 'added': {
+      return [...tasks, {
+        id: action.id,
+        text: action.text,
+        done: false
+      }];
+    }
+    case 'changed': {
+      return tasks.map(t => {
+        if (t.id === action.task.id) {
+          return action.task;
+        } else {
+          return t;
+        }
+      });
+    }
+    case 'deleted': {
+      return tasks.filter(t => t.id !== action.id);
+    }
+    default: {
+      throw Error('Unknown action: ' + action.type);
+    }
+  }
+}
+
+// Call useReducer with a "reducer" function that you wrote, and your initial state
+// Get back a managed state variable and a "dispatcher" function that wraps your own.
+const [tasks, dispatcher] = useReducer(tasksReducer, []);
+
+// Now we call the managed dispatcher with arbitrary input; the dispatcher will
+// in turn call our tasksReducer() function with existing state (called "tasks") and our
+// arbitrary input.
+function handleDeleteTask(taskId) {
+    dispatcher({type: 'deleted', id: taskId});
+}

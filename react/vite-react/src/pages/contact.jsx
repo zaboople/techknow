@@ -22,7 +22,6 @@ const MSG_LIST_NEG = Object.freeze([
 ]);
 
 function Buttoon({enabled}) {
-	console.log(enabled);
     const [count, setCount] = useState(0);
     const [incr, setIncr] = useState(1);
     const list = MSG_LIST.filter(m => count > m.limit)

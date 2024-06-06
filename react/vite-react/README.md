@@ -22,6 +22,3 @@ Build static production site in `dist` directory and test it out with a quickie 
     ./runpythonwebserver.sh
 
 
-# LEARN: DOUBLE-QUESTION MARK
-    The double question mark ( ?? ) in JavaScript, also known as the nullish coalescing operator, is a logical operator that returns its right-hand side operand when its left-hand side operand is null or undefined , otherwise it returns the left-hand side.
-

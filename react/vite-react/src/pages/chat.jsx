@@ -340,6 +340,8 @@ function findOtherUser(nameStr, users) {
 
 function UserMsgInput({userName, remoteUsers, setMessages}) {
 	const userMsgRef = useRef();
+	const myId = useRef(1);
+	const [justLoggedIn, setJustLI] = useState(true);
 	function handleSend(){
 		const newText = userMsgRef.current.value;
 		userMsgRef.current.value = "";
@@ -355,15 +357,13 @@ function UserMsgInput({userName, remoteUsers, setMessages}) {
 				msgTo = other.user;
 			}
 		}
-		setMessages(msgs => {
-			const msg = makeMsg(
-				userName+" "+(msgs.length+1), userName, msgData
-			);
-			msg.to = msgTo;
-			msg.isQuestion = newText.indexOf("?") > -1;
-			msg.isConsoleUser = true;
-			return [...msgs, msg];
-		});
+		const msg = makeMsg(
+			userName+" "+(myId.current++), userName, msgData
+		);
+		msg.to = msgTo;
+		msg.isQuestion = newText.indexOf("?") > -1;
+		msg.isConsoleUser = true;
+		setMessages(msgs => [...msgs, msg]);
 	}
 	function handleKeyDown(ev) {
 		if (ev.keyCode==13){
@@ -371,6 +371,12 @@ function UserMsgInput({userName, remoteUsers, setMessages}) {
 			handleSend();
 		}
 	}
+	useEffect(()=>{
+		if (userName && justLoggedIn){
+			setJustLI(false);
+			userMsgRef.current.focus();
+		}
+	});
 	return userName == null ?[] :(<>
 		<textarea rows={"5"} cols={70} ref={userMsgRef}
 			onKeyDown={handleKeyDown}
@@ -479,6 +485,7 @@ function Discussion({userName}) {
 
 export default function Chat() {
 	const [userName, setUserName] = useState(null);
+	const [firstTime, setFirstTime] = useState(true);
 	const textInputRef = useRef();
 	function setUser() {
 		const vv = textInputRef.current.value.trim();
@@ -489,6 +496,12 @@ export default function Chat() {
 		if (ev.keyCode==13)
 			setUser();
 	}
+	useEffect(()=>{
+		if (userName==null && firstTime) {
+			setFirstTime(false);
+			textInputRef.current.focus();
+		}
+	});
 
 	const showSignup = userName == null
 		?<div className="chatsignup">
