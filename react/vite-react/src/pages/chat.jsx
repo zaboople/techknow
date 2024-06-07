@@ -532,7 +532,7 @@ export default function Chat() {
                 {showSignup}
             </div>
         </div>
-        <p class="small">Powered by Artificially Flavored Intelligence™</p>
+        <p className="small">Powered by Artificially Flavored Intelligence™</p>
     </div>;
 }
 
