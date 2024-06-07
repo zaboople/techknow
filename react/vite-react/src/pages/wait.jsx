@@ -2,6 +2,7 @@ import {useState, useEffect} from "react";
 import PropTypes from 'prop-types';
 
 import "./styles.css";
+import DotDot from "../components/DotDot.jsx";
 
 function makePromise(msg, index) {
     const msreal = (400 * (index+1) * Math.random()).toFixed(0);
@@ -22,10 +23,11 @@ function makePromises(itemCount) {
     return aray;
 }
 
+
+
 DrawIt.propTypes = {
 	toRender: PropTypes.array
 }
-
 function DrawIt({toRender}) {
     return <div className="subbody">
         <h2>Testing Await</h2>
@@ -46,7 +48,7 @@ function DrawIt({toRender}) {
             <tbody>
             {toRender.map(t=>
                 <tr key={t.key}>
-                    <td>{t.msg}</td>
+                    <td>{t.msg==null ?<DotDot/> :t.msg}</td>
                     <td className="slept">{t.slept}</td>
                     <td>{t.woke}</td>
                 </tr>
@@ -85,6 +87,6 @@ export default function Wait() {
     const toRender = [...waiting];
     const missing = itemCount - toRender.length;
     for (let i=0; i<missing; i++)
-        toRender.push({msg: "...", slept: null, woke:null, key:i});
+        toRender.push({msg: null, slept: null, woke:null, key:i});
     return <DrawIt toRender={toRender}/>;
 }
