@@ -63,7 +63,9 @@ div.atBottom {
     background-color:#206050;
 }
 
-
+p.small {
+    font-size: 12px;
+}
 .VerticalCenter {
     vertical-align:middle;
     top: 50%;

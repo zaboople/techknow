@@ -1,33 +1,7 @@
-import {React, useState, useEffect} from "react";
+import {useState, useEffect} from "react";
 import "./styles.css";
+import DotDot from "../components/DotDot.jsx";
 
-function DotDot() {
-    const maxDots = 3
-    const [dotCount, setDots] = useState(maxDots);
-    useEffect(()=>{
-        let ok = true;
-        async function doDots() {
-             while (ok) {
-                await new Promise(
-                    resolver => setTimeout(()=>resolver(), 200)
-                );
-                if (ok)
-                    setDots(x => (x==maxDots * 2) ?0 :(x+1));
-             }
-        }
-        doDots();
-        return ()=>{
-            ok=false;
-            console.log("Signup: Stopped dots.");
-        }
-    }, []);
-
-    const limit = Math.abs(dotCount - maxDots);
-    let s="";
-    for (let i=0; i<limit; i++)
-        s+=". "
-    return s;
-}
 function DoSignUp() {
     const [result, setResult] = useState({data: null, error: null, done: false});
     async function initFunc() {
@@ -66,7 +40,8 @@ function DoSignUp() {
 export default function SignUp() {
     return  <div className="subbody">
         <h2> Who... signed up? </h2>
-        These people signed up, for something, but we don't know what. Either way: <em>You</em> can't:
+        These people signed up, for something, but we don&apos;t know what.
+        Either way: <em>You</em> can&apos;t:
         <DoSignUp/>
     </div>;
-};
+}

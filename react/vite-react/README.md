@@ -17,8 +17,13 @@ Start up a development server on port 8080 (configurable in package.json):
 
     npm run dev
 
+## Getting ready for production:
+
 Build static production site in `dist` directory and test it out with a quickie python server (not npm) on port 80:
 
     ./runpythonwebserver.sh
 
+## Other build commands:
 
+    npm run lint  # Run the linter and find out you made a mess
+    npm run build # Built a production-ready deploy

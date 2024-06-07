@@ -1,4 +1,6 @@
-import React, {useState} from "react";
+import {useState} from "react";
+import PropTypes from 'prop-types';
+
 import "./styles.css";
 import "./button.css";
 
@@ -21,59 +23,57 @@ const MSG_LIST_NEG = Object.freeze([
     {limit: -160, msg: "Attentiveness: Not your strong suit."},
 ]);
 
+Buttoon.propTypes = {
+	enabled: PropTypes.bool
+}
 function Buttoon({enabled}) {
     const [count, setCount] = useState(0);
     const [incr, setIncr] = useState(1);
     const list = MSG_LIST.filter(m => count > m.limit)
-	    .concat(
-		    MSG_LIST_NEG.filter(m => count < m.limit)
-	    )
-	    .map(m=>
-		    <p key={m.limit}>{m.msg}</p>
-	    );
+        .concat(
+            MSG_LIST_NEG.filter(m => count < m.limit)
+        )
+        .map(m=>
+            <p key={m.limit}>{m.msg}</p>
+        );
     const text = count == 0
-	    ?"Get in touch"
-	    :("Got in touch "+count+" times");
-	const [upperLimit, lowerLimit] = [
-		MSG_LIST.findLast(()=>true).limit + 70,
-		MSG_LIST_NEG.findLast(()=>true).limit -70
-	]
+        ?"Get in touch"
+        :("Got in touch "+count+" times");
+    const upperLimit = MSG_LIST.findLast(()=>true).limit + 70;
     if (count > upperLimit && incr!=-1)
-	    setIncr(-1);
-    /*else if (count < lowerLimit && incr!=1)
-	    setIncr(1);*/
+        setIncr(-1);
 
     return <>
-	    <p>
-		    <button
-			    disabled={!enabled}
-			    onClick={_ => setCount(count => count + incr)}>
-		        {text}</button>
+        <p>
+            <button
+                disabled={!enabled}
+                onClick={() => setCount(count => count + incr)}>
+                {text}</button>
         </p>
         {list}
     </>;
 }
 
-const Contact = () => {
-	const [btnEnabled, setEnabled] = useState(true);
-	function handleCheck(e) {
-		setEnabled(!e.target.checked);
-	}
-	return <div className="subbody">
-		<h2>Contact Us</h2>
-		<p>
-			Click the button to contact us. We will be sure to get back to you soon.
-		</p><p>
-			Click it extra for more contacting. Click it a bunch, why don't you.
-		</p>
+export default function Contact() {
+    const [btnEnabled, setEnabled] = useState(true);
+    function handleCheck(e) {
+        setEnabled(!e.target.checked);
+    }
+    return <div className="subbody">
+        <h2>Contact Us</h2>
+        <p>
+            Click the button to contact us. We will be sure to get back to you soon.
+        </p><p>
+            Click it extra for more contacting. Click it a bunch, why don&apos;t you.
+        </p>
         <Buttoon enabled={btnEnabled}/>
         <div>
-	        <input className={"VerticalCenter"} type="checkbox" onChange={handleCheck}/>
-	        <span style={{fontSize:"11px"}} className={"VerticalCenter"}>
-		        Cat protector
-	        </span>
+            <input className={"VerticalCenter"} type="checkbox" onChange={handleCheck}/>
+            <span style={{fontSize:"11px"}} className={"VerticalCenter"}>
+                Cat protector
+            </span>
         </div>
     </div>;
-};
+}
 
-export default Contact;
+

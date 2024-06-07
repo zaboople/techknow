@@ -1,4 +1,6 @@
-import {React, useState, useMemo, useEffect} from "react";
+import {useState, useEffect} from "react";
+import PropTypes from 'prop-types';
+
 import "./styles.css";
 
 function makePromise(msg, index) {
@@ -20,12 +22,16 @@ function makePromises(itemCount) {
     return aray;
 }
 
+DrawIt.propTypes = {
+	toRender: PropTypes.array
+}
+
 function DrawIt({toRender}) {
     return <div className="subbody">
         <h2>Testing Await</h2>
         <p>
         This also tests useEffect() and even defies
-        useEffect()'s habit of running twice in dev.
+        useEffect()&apos;s habit of running twice in dev.
         </p>
         <p>
         Oh, actually, I ended up using <code>Promise.then()</code>
@@ -52,7 +58,6 @@ function DrawIt({toRender}) {
 export default function Wait() {
     //console.log("Wait()...");
     const itemCount = 25;
-    const [done, setDone] = useState(0);
     const [waiting, setWaiting] = useState([]);
 
     // Our cleanup function shuts us down in dev via "ok" because dev
