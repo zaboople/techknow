@@ -388,7 +388,9 @@ function UserMsgInput({userName, remoteUsers, setMessages}) {
         <textarea rows={"5"} cols={70} ref={userMsgRef}
             onKeyDown={handleKeyDown}
             placeholder="Send a message..."/>
+        <div>
         <button onClick={handleSend}>Send</button>
+        </div>
     </>);
 }
 
@@ -469,7 +471,7 @@ function Discussion({userName}) {
     useEffect(()=>{
         const bm = document.getElementById("bottomMost");
         if (bm && doScroll)
-            bm.scrollIntoView();
+            bm.scrollIntoView({behavior:"smooth"});
         else
             console.log("Scroll into view is off");
     });
