@@ -14,10 +14,10 @@ export default function VideoPlayer() {
         else
             videoRef.current.pause();
     }
-    function handleEnded(ev) {
+    function handleEnded() {
         setIsPlaying(false);
     }
-    function handleOnPlay(ev) {
+    function handleOnPlay() {
         setIsPlaying(true);
     }
 

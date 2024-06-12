@@ -13,7 +13,7 @@ export default function Cats() {
     const refNext = useRef(null);
     const mymap = useRef(new Map());
     const [firstLoad, setFirstLoad] = useState(true);
-    const [catList, setCatList] = useState(initCats);
+    const [catList] = useState(initCats);
     const [index, setIndex] = useState(0);
     function clickPrev() {
         clickTo(
@@ -28,7 +28,6 @@ export default function Cats() {
         );
     }
     function clickTo(ix) {
-        console.log("Index "+ix);
         setIndex(ix);
         refPrev.current.disabled = ix == 0;
         refNext.current.disabled = ix == catList.length -1;
