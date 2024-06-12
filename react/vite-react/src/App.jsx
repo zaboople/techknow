@@ -4,13 +4,14 @@ import {
     RouterProvider,
     Route,
 } from "react-router-dom";
+import Navbar from "./components/Navbar";
 import Home from "./pages";
 import SignUp from "./pages/signup";
 import Contact from "./pages/contact";
 import Chat from "./pages/chat";
 import Wait from "./pages/wait";
 import VideoPlayer from "./pages/video";
-import Navbar from "./components/Navbar";
+import Cats from "./pages/cats";
 
 
 function MyYear() {
@@ -39,6 +40,7 @@ function App() {
             {MyRoute("/chat" , <Chat />)}
             {MyRoute("/await"   , <Wait />)}
             {MyRoute("/videos"   , <VideoPlayer />)}
+            {MyRoute("/cats"   , <Cats />)}
         </>)
     );
 

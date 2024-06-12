@@ -15,8 +15,10 @@ export default function VideoPlayer() {
             videoRef.current.pause();
     }
     function handleEnded(ev) {
-        console.log("END "+new Date());
         setIsPlaying(false);
+    }
+    function handleOnPlay(ev) {
+        setIsPlaying(true);
     }
 
     useEffect(()=>{
@@ -28,11 +30,10 @@ export default function VideoPlayer() {
     return (
         <div className="subbody flexVert videoplayer">
             <h2>Here is a video from mozilla. I hope it works.</h2>
-            <video width="450" ref={videoRef} onEnded={handleEnded}>
-                <source
-                src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
-                type="video/mp4"
-                />
+            <video width="450" ref={videoRef}
+                    onEnded={handleEnded} onPlay={handleOnPlay} onPause={handleEnded}>
+                <source type="video/mp4"
+                src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"/>
             </video>
             <div className="videobutton">
                 <button onClick={handleClick} ref={btnRef}>

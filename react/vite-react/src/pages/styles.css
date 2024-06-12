@@ -10,6 +10,7 @@ body {
 /** LAYOUT ALIGNMENT **/
 html{
     height:100%;
+    scroll-behavior: smooth;
 }
 body {
     height:100%;
@@ -161,4 +162,30 @@ div.videoplayer {
 }
 div.videoplayer div.videobutton {
     margin:20px;
+}
+
+/** PAGE: /cats */
+div.catbox {
+    display:flex;
+    flex-direction:row;
+    justify-content: left;
+}
+div.catbox ul {
+    overflow:hidden;
+    padding: 0px;
+    list-style-type: none;
+    display:flex;
+    flex-direction:row;
+    justify-content: left;
+    width: 200px;
+}
+div.catbox li {
+    margin: 0px 0px 0px 0px;
+    transition: left 2s;
+}
+div.catbox img {
+    width:200px;
+}
+nav.catbox button {
+    margin-right:20px;
 }
