@@ -527,12 +527,10 @@ export default function Chat() {
         <h2>Hot Chat</h2>
         <p>Chat Yo&apos; Self Up W/ Hot People Who Can Chat Hot!</p>
         <div className="chat flexVert">
-            <div className="chatmain">
                 <Discussion userName={userName}/>
                 {showSignup}
-            </div>
         </div>
-        <p className="small">Powered by Artificially Flavored Intelligence™</p>
+        <p className="small">Enhanced by Artificially Flavored Intelligence™</p>
     </div>;
 }
 

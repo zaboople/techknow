@@ -9,6 +9,7 @@ import SignUp from "./pages/signup";
 import Contact from "./pages/contact";
 import Chat from "./pages/chat";
 import Wait from "./pages/wait";
+import VideoPlayer from "./pages/video";
 import Navbar from "./components/Navbar";
 
 
@@ -37,6 +38,7 @@ function App() {
             {MyRoute("/sign-up" , <SignUp />)}
             {MyRoute("/chat" , <Chat />)}
             {MyRoute("/await"   , <Wait />)}
+            {MyRoute("/videos"   , <VideoPlayer />)}
         </>)
     );
 

@@ -8,6 +8,7 @@ const MENU_ITEMS = Object.freeze([
     {href: "/sign-up" , text: "Sign Up"},
     {href: "/chat" , text: "Hot Chat"},
     {href: "/await" , text: "Await"},
+    {href: "/videos" , text: "Videos"},
 ]);
 
 function OneBullet() {
