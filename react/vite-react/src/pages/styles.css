@@ -177,14 +177,14 @@ div.catbox ul {
     display:flex;
     flex-direction:row;
     justify-content: left;
-    width: 200px;
+    width: 340px;
 }
 div.catbox li {
     margin: 0px 0px 0px 0px;
     transition: left 2s;
 }
 div.catbox img {
-    width:200px;
+    width:340px;
 }
 nav.catbox button {
     margin-right:20px;

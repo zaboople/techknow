@@ -1,19 +1,15 @@
 import {useEffect, useState, useRef} from 'react';
 
-function initCats() {
-    console.log("Initializing cats...");
-    const catList = [];
+function initUrls() {
+    console.log("Initializing cat urls...");
     const base = "https://loremflickr.com/320/240/cat?lock=";
-    for (let i = 0; i < 10; i++)
-        catList.push({id: i, imageUrl: (base + i)});
-    return catList;
+    return new Array(10).keys().map(i => base + i).toArray();
 }
 export default function Cats() {
     const refPrev = useRef(null);
     const refNext = useRef(null);
     const mymap = useRef(new Map());
-    const [firstLoad, setFirstLoad] = useState(true);
-    const [catList] = useState(initCats);
+    const [catList] = useState(initUrls);
     const [index, setIndex] = useState(0);
     function clickPrev() {
         clickTo(
@@ -29,46 +25,44 @@ export default function Cats() {
     }
     function clickTo(ix) {
         setIndex(ix);
-        refPrev.current.disabled = ix == 0;
-        refNext.current.disabled = ix == catList.length -1;
-        if (refPrev.current.disabled)
-            refNext.current.focus();
-        else if (refNext.current.disabled)
-            refPrev.current.focus();
+        const [bprev, bnext] = [refPrev.current, refNext.current];
+        bprev.disabled = ix == 0;
+        if (bprev.disabled)
+            bnext.focus();
+        bnext.disabled = ix == catList.length -1;
+        if (bnext.disabled)
+            bprev.focus();
         const pic = mymap.current.get(ix);
         if (pic)
             pic.scrollIntoView({behavior:"smooth"});
         else
             console.log("No pic!");
     }
-    function toRef(xx, cat){
-        if (xx)
-            mymap.current.set(cat.id, xx)
+    function toRef(imgElem, id){
+        if (imgElem)
+            mymap.current.set(id, imgElem)
         else
-            mymap.current.delete(cat.id)
+            mymap.current.delete(id)
     }
     useEffect(()=>{
-        if (firstLoad) {
-            refNext.current.focus();
-            refPrev.current.disabled=true;
-            setFirstLoad(false);
-        }
-    }, [firstLoad]);
+        refNext.current.focus();
+        refPrev.current.disabled=true;
+    }, []);
     return (
         <div className="subbody flexVert">
-            <h2>Cats - What? Cats</h2>
+            <h2>What? Cats? Meow!</h2>
             <nav className="catbox">
                 <button ref={refPrev} onClick={clickPrev}>Previous</button>
                 <button ref={refNext} onClick={clickNext}>Next</button>
             </nav>
             <div className="catbox">
                 <ul>
-                    {catList.map((cat, i) => (
-                        <li key={cat.id}>
-                            <img ref={xx=>toRef(xx, cat)}
+                    {catList.map((url, i) => (
+                        <li key={i}>
+                            <img ref={img => toRef(img, i)}
                                 className={index === i ?'active' :''}
-                                src={cat.imageUrl}
-                                alt={'Cat #' + cat.id}
+                                src={url}
+                                alt={'Cat #' + i}
                             />
                         </li>
                     ))}
@@ -77,6 +71,3 @@ export default function Cats() {
         </div>
     );
 }
-
-
-

@@ -2,7 +2,6 @@ import {useEffect, useState, useRef} from 'react';
 
 export default function VideoPlayer() {
     const [isPlaying, setIsPlaying] = useState(false);
-    const [firstLoad, setFirstLoad] = useState(true);
     const videoRef = useRef(null);
     const btnRef = useRef(null);
 
@@ -21,12 +20,7 @@ export default function VideoPlayer() {
         setIsPlaying(true);
     }
 
-    useEffect(()=>{
-        if (firstLoad) {
-            btnRef.current.focus();
-            setFirstLoad(false)
-        }
-    }, [firstLoad]);
+    useEffect(()=>btnRef.current.focus(), []);
     return (
         <div className="subbody flexVert videoplayer">
             <h2>Here is a video from mozilla. I hope it works.</h2>
