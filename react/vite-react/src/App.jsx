@@ -12,6 +12,7 @@ import Chat from "./pages/chat";
 import Wait from "./pages/wait";
 import VideoPlayer from "./pages/video";
 import Cats from "./pages/cats";
+import RerenderTest from "./pages/rerender";
 
 
 function MyYear() {
@@ -41,6 +42,7 @@ function App() {
             {MyRoute("/await"   , <Wait />)}
             {MyRoute("/videos"   , <VideoPlayer />)}
             {MyRoute("/cats"   , <Cats />)}
+            {MyRoute("/rerender"   , <RerenderTest />)}
         </>)
     );
 

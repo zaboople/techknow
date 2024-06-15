@@ -3,7 +3,7 @@ import {useEffect, useState, useRef} from 'react';
 function initUrls() {
     console.log("Initializing cat urls...");
     const base = "https://loremflickr.com/320/240/cat?lock=";
-    return new Array(10).keys().map(i => base + i).toArray();
+    return new Array(20).keys().map(i => base + i).toArray();
 }
 export default function Cats() {
     const refPrev = useRef(null);
