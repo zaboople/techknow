@@ -525,10 +525,10 @@ export default function Chat() {
             <button onClick={()=>setUser()}>Sign in</button>
         </div>
         :null;
-    return <div className="subbody flexVert">
+    return <div className="subbody">
         <h2>Hot Chat</h2>
         <p>Chat Yo&apos; Self Up W/ Hot People Who Can Chat Hot!</p>
-        <div className="chat flexVert">
+        <div className="chat">
                 <Discussion userName={userName}/>
                 {showSignup}
         </div>

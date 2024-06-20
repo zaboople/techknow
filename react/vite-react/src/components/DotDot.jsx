@@ -16,7 +16,7 @@ export default function DotDot() {
         doDots();
         return ()=>{
             ok=false;
-            console.log("DotDot.jsx: Stopped dots.");
+            //console.log("DotDot.jsx: Stopped dots.");
         }
     }, []);
 

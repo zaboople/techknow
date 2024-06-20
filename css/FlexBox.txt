@@ -6,23 +6,34 @@ You can add further container-level designations to control the flow of items af
 
 # Container-level CSS designations
 
-## JUSTIFY-CONTENT
+## flex-direction
 
-Aligns items **horizontally** and accepts the following values:
+Defines the direction items are placed in the container:
+
+    row: The same as the text direction.
+    row-reverse: Opposite to the text direction.
+    column: Top to bottom.
+    column-reverse: Bottom to top.
+
+## justify-content
+
+    - When flex-direction is column, aligns items **vertically**
+    - When flex-direction is row, aligns items **horizontally**
 
     flex-start: Items align to the left side of the container.
     flex-end: Items align to the right side of the container.
     center: Items align at the center of the container.
     space-between: Items display with equal spacing between them.
     space-around: Items display with equal spacing around them.
+    space-evenly: ALMOST like space-around
 
 
-## ALIGN-ITEMS vs. ALIGN-CONTENT
+## align-items
 
-Both set how multiple things are spaced apart from each other.
+Sets how multiple things are spaced apart from each other.
 
-    - align-items determines how the items as a whole are aligned within the container.
-    - align-content determines the spacing between lines. When there is only one line, align-content has no effect.
+    - When flex-direction is column, aligns items **horizontally**
+    - When flex-direction is row, aligns items **vertically**
 
     flex-start: Packed at the top of the container.
     flex-end: Packed at the bottom of the container.
@@ -32,37 +43,31 @@ Both set how multiple things are spaced apart from each other.
     stretch: Stretched to fit the container.
 
 
-## FLEX-DIRECTION
-
-Defines the direction items are placed in the container:
-
-    row: The same as the text direction.
-    row-reverse: Opposite to the text direction.
-    column: Top to bottom.
-    column-reverse: Bottom to top.
-
-## FLEX-WRAP
+## flex-wrap
 
 Only useful when items overflow or at least threaten to.
 
-    nowrap: Every item is fit to a single line.
+    no-wrap: Every item is fit to a single line.
     wrap: Items wrap around to additional lines.
     wrap-reverse: Items wrap around to additional lines in reverse.
 
-## FLEX-FLOW
+## flex-flow
 
 Allows you to specify a flex-direction & flex-wrap both at the same time. Example:
 
     flex-flow: column wrap;
 
+## align-content
+
+This is not used often, but is similar to align-items; it only applies to when there are enough items to overflow into multiple lines. This controls the spacing of those lines. It uses the same settings as align-items.
 
 # CSS designations applied to items *within* a container
 
 
-## ORDER
+## order
 
 Changes the ordering of an element; everything defaults to zero, but you can move an element backwards and forwards by applying a negative or positive number to it.
 
-## ALIGN-SELF
+## align-self
 
 Accepts the same properties as align-items / align-content.

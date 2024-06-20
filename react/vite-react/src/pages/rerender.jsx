@@ -31,7 +31,7 @@ export default function RerenderTest() {
     });
 
     return (
-        <div className="subbody flexVert">
+        <div className="subbody">
             <div>
                 <button onClick={handleClick}>Clicky le buttoon!</button>
             </div>

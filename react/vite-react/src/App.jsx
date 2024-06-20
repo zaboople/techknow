@@ -10,6 +10,7 @@ import SignUp from "./pages/signup";
 import Contact from "./pages/contact";
 import Chat from "./pages/chat";
 import Wait from "./pages/wait";
+import Wait2 from "./pages/wait2";
 import VideoPlayer from "./pages/video";
 import Cats from "./pages/cats";
 import RerenderTest from "./pages/rerender";
@@ -40,6 +41,7 @@ function App() {
             {MyRoute("/sign-up" , <SignUp />)}
             {MyRoute("/chat" , <Chat />)}
             {MyRoute("/await"   , <Wait />)}
+            {MyRoute("/await2"   , <Wait2 />)}
             {MyRoute("/videos"   , <VideoPlayer />)}
             {MyRoute("/cats"   , <Cats />)}
             {MyRoute("/rerender"   , <RerenderTest />)}
@@ -50,7 +52,9 @@ function App() {
     // Otherwise, it will *seem* to work, but it will reload
     // the application.
     return (<>
-        <RouterProvider router={router} />
+        <div className="atTop">
+            <RouterProvider router={router} />
+        </div>
         <div className="atBottom">
             &copy; Mine <MyYear/>
         </div>

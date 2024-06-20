@@ -23,7 +23,6 @@ Failing java preferences (copied from stackoverflow):
 Get system uptime:
     System.out.println("Uptime "+java.lang.management.ManagementFactory.getRuntimeMXBean().getUptime());
 
-
 Make java respect UTF-8 for System.out & System.in:
     System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, "UTF-8"));
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in, "UTF-8"));

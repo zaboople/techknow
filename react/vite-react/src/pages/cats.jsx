@@ -49,7 +49,7 @@ export default function Cats() {
         refPrev.current.disabled=true;
     }, []);
     return (
-        <div className="subbody flexVert">
+        <div className="subbody">
             <h2>What? Cats? Meow!</h2>
             <nav className="catbox">
                 <button ref={refPrev} onClick={clickPrev}>Previous</button>

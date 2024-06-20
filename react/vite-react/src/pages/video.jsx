@@ -22,7 +22,7 @@ export default function VideoPlayer() {
 
     useEffect(()=>btnRef.current.focus(), []);
     return (
-        <div className="subbody flexVert videoplayer">
+        <div className="subbody videoplayer">
             <h2>Here is a video from mozilla. I hope it works.</h2>
             <video width="450" ref={videoRef}
                     onEnded={handleEnded} onPlay={handleOnPlay} onPause={handleEnded}>
