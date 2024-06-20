@@ -2,10 +2,9 @@ import {useState, useEffect} from "react";
 import PropTypes from 'prop-types';
 
 import "./styles.css";
-import DotDot from "../components/DotDot.jsx";
 
 function makePromise(msg, index) {
-    console.log("Make: "+msg+" "+index);
+    //console.log("Make: "+msg+" "+index);
     const msreal = (400 * (index+1) * Math.random()).toFixed(0);
     return new Promise(
         resolve => setTimeout(
@@ -22,9 +21,9 @@ function makePromises2(name, itemCount) {
     for (let i=0; i<itemCount; i++){
         const p = makePromise(name+(i+1), i) ;
         aray[i]=p.then(x=>{
-	        let r = (i>1) ?makePromises2(name+(i+1)+" > ", i-1) :[];
-	        r.unshift(x);
-	        return r;
+            let r = (i>0) ?makePromises2(name+(i+1)+" > ", i) :[];
+            r.unshift(x);
+            return r;
         });
     }
     return aray;
@@ -33,7 +32,7 @@ function makePromises2(name, itemCount) {
 
 
 DrawIt.propTypes = {
-	toRender: PropTypes.array
+    toRender: PropTypes.array
 }
 function DrawIt({toRender}) {
     return <div className="subbody">
@@ -68,7 +67,7 @@ function DrawIt({toRender}) {
 
 export default function Wait2() {
     //console.log("Wait()...");
-    const itemCount = 9;
+    const itemCount = 8;
     const [waiting, setWaiting] = useState([]);
 
     // Our cleanup function shuts us down in dev via "ok" because dev
@@ -78,32 +77,33 @@ export default function Wait2() {
         try {
             let finished = [];
             let ok=true;
-            function logItem(i1) {
+
+            const logItem = i1 => {
+                // Array, custom result object, or Promise:
                 if (i1.length)
-                    return logItems(i1);
+                    logItems(i1);
                 else if (i1.woke)
-                    ok && setWaiting(finished=[...finished, i1])
+                    ok && setWaiting(finished=
+                        [...finished, i1].toSorted((x,y)=>x.woke - y.woke)
+                    );
                 else
                     i1.then(i2=>logItem(i2));
             }
-            function logItems(aray) {
-                aray.forEach((i1, index)=>{
-                    if (ok)
-                        logItem(i1);
-                });
-            }
+            const logItems = aray => aray.forEach(i1 => ok && logItem(i1));
+
             logItem(makePromises2("X: ", itemCount))
+            console.log("Wait2: Promises accounted for.");
             return () => {
                 ok=false;
-                console.log("UNLOADED.");
+                console.log("Wait2: Unloaded useEffect()");
             }
         } catch (err) {
             console.log("Async FAIL: "+err);
         }
     }, []);
-
+    const realCount = Math.pow(2, itemCount) -1;
     const toRender = [...waiting];
-    const missing = itemCount - toRender.length;
+    const missing = realCount - toRender.length;
     for (let i=0; i<missing; i++)
         toRender.push({msg: null, slept: null, woke:null, key:i});
     return <DrawIt toRender={toRender}/>;

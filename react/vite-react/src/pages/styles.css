@@ -101,12 +101,12 @@ p.small {
 }
 
 /** PAGE: /wait **/
-table.AwaitTable {margin-top:4px; max-width:600px;}
+table.AwaitTable {margin-top:4px;}
 table.AwaitTable td, table.AwaitTable th {
     padding:0px 13px 0px 0px;
     text-align: left;
     font-size:9px;
-    width:125px;
+    width:135px;
 }
 table.AwaitTable td.slept, table.AwaitTable th.slept {
     width:75px;
