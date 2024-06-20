@@ -3,47 +3,14 @@ import PropTypes from 'prop-types';
 
 import "./styles.css";
 
-function makePromise(msg, index) {
-    //console.log("Make: "+msg+" "+index);
-    const msreal = (400 * (index+1) * Math.random()).toFixed(0);
-    return new Promise(
-        resolve => setTimeout(
-            () => resolve({
-                msg: msg, slept: msreal,
-                woke: Date.now(), key: msg
-            }),
-            msreal
-        )
-    );
-}
-function makePromises2(name, itemCount) {
-    const aray = new Array(itemCount);
-    for (let i=0; i<itemCount; i++){
-        const p = makePromise(name+(i+1), i) ;
-        aray[i]=p.then(x=>{
-            let r = (i>0) ?makePromises2(name+(i+1)+" > ", i) :[];
-            r.unshift(x);
-            return r;
-        });
-    }
-    return aray;
-}
-
-
-
 DrawIt.propTypes = {
     toRender: PropTypes.array
 }
 function DrawIt({toRender}) {
     return <div className="subbody">
-        <h2>Testing Await</h2>
+        <h2>Testing Promises Part II</h2>
         <p>
-        This also tests useEffect() and even defies
-        useEffect()&apos;s habit of running twice in dev.
-        </p>
-        <p>
-        Oh, actually, I ended up using <code>Promise.then()</code>
-        &nbsp; instead of <code>await</code> anyhow.
+        This uses Promises that are then()&apos;d to more Promises.
         </p>
         <div>
             <table className="AwaitTable">
@@ -107,4 +74,30 @@ export default function Wait2() {
     for (let i=0; i<missing; i++)
         toRender.push({msg: null, slept: null, woke:null, key:i});
     return <DrawIt toRender={toRender}/>;
+}
+
+function makePromise(msg, index) {
+    //console.log("Make: "+msg+" "+index);
+    const msreal = (400 * (index+1) * Math.random()).toFixed(0);
+    return new Promise(
+        resolve => setTimeout(
+            () => resolve({
+                msg: msg, slept: msreal,
+                woke: Date.now(), key: msg
+            }),
+            msreal
+        )
+    );
+}
+function makePromises2(name, itemCount) {
+    const aray = new Array(itemCount);
+    for (let i=0; i<itemCount; i++){
+        const p = makePromise(name+(i+1), i) ;
+        aray[i]=p.then(x=>{
+            let r = (i>0) ?makePromises2(name+(i+1)+" > ", i) :[];
+            r.unshift(x);
+            return r;
+        });
+    }
+    return aray;
 }
