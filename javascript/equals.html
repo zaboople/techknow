@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Hello World</title>
+        <style>
+            p {padding:3px;margin:0px;font-size:17px;}
+        </style>
+
+    </head>
+    <body>
+        <div>
+            <p><b>Variable ff: </b> <span id="0"></span>
+            <p><b>Variable gg: </b> <span id="1"></span>
+            <p><b>Compare:</b>
+            <p><span id="2"></span>
+            <p><span id="3"></span>
+        </div>
+        <div style="padding-top: 30px;">
+            <p><b>Variable hh: </b> <span id="10"></span>
+            <p><b>Variable ii: </b> <span id="11"></span>
+            <p><b>Compare:</b>
+            <p><span id="12"></span>
+            <p><span id="13"></span>
+        </div>
+        <div style="padding-top: 30px;">
+            <p><b>Compare two strings with the same value:</b>
+            <p><span id="4"></span>
+            <p><span id="5"></span>
+        </div>
+
+        <script language="javascript">
+            function setH(id, str) {
+                document.getElementById(id).innerHTML = str;
+            }
+            const ff = {};
+            const gg = {};
+            setH(0, JSON.stringify(ff));
+            setH(1, JSON.stringify(gg));
+            setH(2, "ff === gg -> "+(ff === gg))
+            setH(3, "ff == gg -> "+(ff == gg));
+
+            const hh = [];
+            const ii = [];
+            setH(10, JSON.stringify(hh));
+            setH(11, JSON.stringify(ii));
+            setH(12, "hh === ii -> "+(hh === ii))
+            setH(13, "hh == ii -> "+(hh == ii));
+
+            const a = "hello", b="hello";
+            setH(4, "== -> " + (a == b));
+            setH(5, "=== -> " + (a === b));
+        </script>
+    </body>
+</html>
