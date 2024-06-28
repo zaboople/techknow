@@ -9,6 +9,7 @@ import Home from "./pages";
 import SignUp from "./pages/signup";
 import Contact from "./pages/contact";
 import Chat from "./pages/chat";
+import DotChaser from "./pages/dotchaser";
 import Wait from "./pages/wait";
 import Wait2 from "./pages/wait2";
 import VideoPlayer from "./pages/video";
@@ -45,6 +46,7 @@ function App() {
             {MyRoute("/videos"   , <VideoPlayer />)}
             {MyRoute("/cats"   , <Cats />)}
             {MyRoute("/rerender"   , <RerenderTest />)}
+            {MyRoute("/dotchaser"   , <DotChaser />)}
         </>)
     );
 

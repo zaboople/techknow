@@ -8,6 +8,7 @@ const MENU_ITEMS = Object.freeze([
     {href: "/chat" , text: "Hot Chat"},
     {href: "/videos" , text: "Videos"},
     {href: "/cats" , text: "Cats"},
+    {href: "/dotchaser" , text: "Chase the dots"},
     {href: "/sign-up" , text: "Sign Up"},
     {href: "/await" , text: "Promises"},
     {href: "/await2" , text: "Promises II"},

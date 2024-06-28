@@ -191,3 +191,11 @@ div.catbox img {
 nav.catbox button {
     margin-right:20px;
 }
+
+/** PAGE: /dotchaser */
+div.mycanvas {
+    height:500px;
+    margin-left:10px;
+    margin-right:10px;
+    background-color:#D0D0C6;
+}
