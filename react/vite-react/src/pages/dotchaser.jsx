@@ -12,66 +12,83 @@ export default function DotChaser() {
 function DotChaser2() {
     const listLen = 1000;
     const fullDelay = 2 * (listLen+1);
+    const [dragOn, setDragOn] = useState(true);
     const [posList, setPosList] = useState([]);
+    const [posList2, setPosList2] = useState([]);
     const [last, setLast] = useState({x: -40, y: -40, opacity:1});
-    useEffect(() =>
-        setupHandlers(event => {
-            const next = {
-                x:event.clientX, y:event.clientY,
-                expire: Date.now() + fullDelay
-            };
-            setLast(next);
-            setPosList(list=>[...list, next]);
-            setTimeout(
-                () => setPosList(list=> {
-                    const nowTime = Date.now();
-                    return list.filter(x=>x.expire-1 > nowTime);
-                }),
-                fullDelay
-            );
-        }),
-        [fullDelay]
+    useEffect(
+        () => {
+            const handler = event => {
+                const next = {
+                    x:event.clientX, y:event.clientY,
+                    expire: Date.now() + fullDelay
+                };
+                setLast(next);
+                setPosList(list=>[...list, next]);
+                setTimeout(
+                    () => setPosList(list=> {
+                        const nowTime = Date.now();
+                        return list.filter(x=>x.expire-1 > nowTime);
+                    }),
+                    fullDelay
+                );
+            }
+            if (dragOn)
+                return addHandler("pointermove", handler);
+        },
+        [fullDelay, dragOn]
     );
+    useEffect(
+        () => addHandler("click", ()=>setDragOn(x => !x)),
+        []
+    );
+    useEffect(
+        () => addHandler(
+            "mouseout", ()=>setLast({x: -40, y: -40, opacity:0})
+        ),
+        []
+    );
+
+    // Tricky freeze-in-place with dragOn var & switch lists:
+    if (!dragOn && posList2.length==0 && posList.length!=0)
+        setPosList2(posList);
+    else
+    if (dragOn && posList2.length!=0)
+        setPosList2([]);
+    let newList = dragOn ?posList :posList2;
 
     // Add opacity spread according to age,
     // or maybe just list position, yeah:
     const n1 = Date.now();
-    const lipLen = posList.length;
-    const newList = posList.map((x, ix)=>{
+    const actualLen = newList.length;
+    newList = newList.map((x, ix)=>{
         let left = x.expire - n1;
         if (left <= 0) left = 0;
-        const op = 1.0 * (ix / lipLen)
+        const op = 1.0 * (ix / actualLen)
         return {x:x.x, y:x.y, opacity:op};
     });
 
     // This filter will allow us to make the balls appear to
     // move rather than simply fade out:
-    //const finalList = newList.filter((x,ix)=> ix%4 == 0);
-    const finalList = newList;
+    //newList = newList.filter((x,ix)=> ix%4 == 0);
 
     // Ensures that we *always* have a big dot where the cursor is:
-    finalList.push(last);
+    newList.push(last);
 
     return <>
-        {finalList.map((value, index)=>
+        {newList.map((value, index)=>
             <Dot key={index} position={value}/>
         )}
     </>;
 }
 
-function setupHandlers(handleMove) {
-    console.log("Entering...");
-    //const handleOut = () => console.log("OUT!");
-    //const handleIn = () => console.log("IN!");
+function addHandler(eventName, handleMove) {
+    console.log("Add: "+eventName);
     const div = document.getElementById("mycanvas");
-    div.addEventListener('pointermove', handleMove);
-    //div.addEventListener('mouseout', handleOut);
-    //div.addEventListener('mouseenter', handleIn);
+    div.addEventListener(eventName, handleMove);
     return () => {
-        console.log("Unloading...");
-        div.removeEventListener('pointermove', handleMove);
-        //div.removeEventListener('mouseenter', handleIn);
-        //div.removeEventListener('mouseout', handleOut);
+        console.log("Remove: "+eventName);
+        div.removeEventListener(eventName, handleMove);
     }
 }
 
@@ -89,10 +106,7 @@ function Dot({position}) {
             opacity: op,
             transform: `translate(${position.x}px, ${position.y}px)`,
             pointerEvents: 'none',
-            left: -20,
-            top: -20,
-            width: 25,
-            height: 25,
+            left: -20, top: -20, width: 20, height: 20,
         }} />
     );
 }
