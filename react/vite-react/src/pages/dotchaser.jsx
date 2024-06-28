@@ -96,7 +96,7 @@ function addHandler(eventName, handleMove) {
 Dot.propTypes = {position: PropTypes.object}
 function Dot({position}) {
     const op = position.opacity;
-    if (position.x < 30 || position.y < 80)
+    if (position.x < 20 || position.y < 90)
         return <></>;
     return (
         <div style={{
@@ -106,7 +106,7 @@ function Dot({position}) {
             opacity: op,
             transform: `translate(${position.x}px, ${position.y}px)`,
             pointerEvents: 'none',
-            left: -20, top: -20, width: 20, height: 20,
+            left: -10, top: -10, width: 20, height: 20,
         }} />
     );
 }
