@@ -81,7 +81,7 @@ function pickMsgToSend(user, list, key, replyTo, forceReply) {
     return newMsg;
 }
 
-function createProcessor(rawData) {
+function getBotProcessor(rawData) {
     const users = rawData;
     const goneUsers = [];
     const userMap = new Map(), hasAnswers = new Map(),
@@ -126,7 +126,7 @@ function createProcessor(rawData) {
         map.delete(user.name);
         return false;
     }
-    let msgKey = 10;
+    let msgKey = Date.now();
     return (prevMsgs)=> {
         let newMsgs = [];
         for (let i=users.length-1; i>=0; i--) {
@@ -142,7 +142,7 @@ function createProcessor(rawData) {
                 goneUsers.push(u);
             }
         }
-        if (prevMsgs.length % 8 == 0 || users.length ==0) {
+        if (prevMsgs.length % 8 == 0 || users.length == 0)
             while (goneUsers.length > 0) {
                 const u = goneUsers.pop();
                 const msg = makeMsg(
@@ -151,7 +151,7 @@ function createProcessor(rawData) {
                 );
                 newMsgs = [...newMsgs, msg];
             }
-        }
+
         if (users.length==0) {
             console.log("No users left");
             const remoteCount = prevMsgs.reduce(
@@ -207,7 +207,7 @@ function createProcessor(rawData) {
         const liveMsg = findMsg(
             prevMsgs, 4, msg => msg.isConsoleUser && (
                 msg.hasDirectReplies == 0 ||
-                randomRange(0, 2)==2
+                (randomRange(0, 2)==2 && ! msg.to)
             )
         );
         if (liveMsg) {
@@ -217,12 +217,12 @@ function createProcessor(rawData) {
             if (!user)
                 user = pickUser(u => u.replies.length > 0);
             if (user) {
-                console.log("Reply to console user from: "+user.name
-                    +" total "+liveMsg.hasDirectReplies);
                 const msg = pickMsgToSend(
                     user, user.replies, ++msgKey, liveMsg.name, false
                 );
                 liveMsg.hasDirectReplies++;
+                console.log("Reply to console user from: "+user.name
+                    +" total "+liveMsg.hasDirectReplies);
                 return [...newMsgs, msg];
             }
         }
@@ -428,7 +428,7 @@ function Discussion({userName}) {
             try {
                 const users = await getRawData();
                 setRemoteUsers(users);
-                const getReplies = createProcessor(users);
+                const getRobotReplies = getBotProcessor(users);
                 console.log("Chat.Discussion(): Got data");
                 let realMsgs = [];
                 if (ok)
@@ -445,19 +445,23 @@ function Discussion({userName}) {
                 while (ok) {
                     await sleepMax(sMin, sMax);
                     setMessages(m => {
-                        realMsgs = [...m];
+                        for (let i=realMsgs.length; i<m.length; i++)
+                            realMsgs.push(m[i]);
                         return m;
                     });
-                    let newMsgs = getReplies(realMsgs);
+                    let newMsgs = getRobotReplies(realMsgs);
                     if (users.length == 0)
                         ok = false;
                     const msg = newMsgs[newMsgs.length-1];
                     const xtra = Math.round(msg.length / 45);
                     sMin = 2 + xtra;
                     sMax = 7 + xtra;
-                    setMessages(msgs => realMsgs = msgs.concat(newMsgs));
+                    setMessages(msgs => {
+                        realMsgs = msgs.concat(newMsgs)
+                        return ok ?realMsgs :msgs;
+                    });
                 }
-                console.log("Exiting.");
+                console.log("Exiting...");
             } catch (e) {
                 fail(e);
             }
