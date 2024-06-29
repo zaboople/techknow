@@ -2,11 +2,9 @@ import {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 
 export default function DotChaser() {
-    return (
-        <div id="mycanvas" className="subbody mycanvas">
-            <DotChaser2/>
-        </div>
-    );
+    return <div id="mycanvas" className="subbody mycanvas">
+        <DotChaser2/>
+    </div>;
 }
 
 const OFF_MAP = {x: -40, y: -40, opacity:1};
@@ -61,15 +59,13 @@ function DotChaser2() {
     const n1 = Date.now();
     const actualLen = newList.length;
     newList = newList.map((x, ix)=>{
-        let left = x.expire - n1;
-        if (left <= 0) left = 0;
         const op = 1.0 * (ix / actualLen)
         return {x:x.x, y:x.y, opacity:op};
     });
 
     // This filter will allow us to make the balls appear to
     // move rather than simply fade out:
-    //newList = newList.filter((x,ix)=> ix%4 == 0);
+    // newList = newList.filter((x,ix)=> ix%10 == 0);
 
     // Ensures that we *always* have a big dot where the cursor is:
     newList.push(last);
