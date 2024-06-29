@@ -9,13 +9,14 @@ export default function DotChaser() {
     );
 }
 
+const OFF_MAP = {x: -40, y: -40, opacity:1};
+
 function DotChaser2() {
-    const listLen = 1000;
-    const fullDelay = 2 * (listLen+1);
+    const fullDelay = 5000;
     const [dragOn, setDragOn] = useState(true);
     const [posList, setPosList] = useState([]);
     const [posList2, setPosList2] = useState([]);
-    const [last, setLast] = useState({x: -40, y: -40, opacity:1});
+    const [last, setLast] = useState(OFF_MAP);
     useEffect(
         () => {
             const handler = event => {
@@ -43,9 +44,7 @@ function DotChaser2() {
         []
     );
     useEffect(
-        () => addHandler(
-            "mouseout", ()=>setLast({x: -40, y: -40, opacity:0})
-        ),
+        () => addHandler("mouseout", ()=>setLast(OFF_MAP)),
         []
     );
 
@@ -96,7 +95,7 @@ function addHandler(eventName, handleMove) {
 Dot.propTypes = {position: PropTypes.object}
 function Dot({position}) {
     const op = position.opacity;
-    if (position.x < 20 || position.y < 90)
+    if (position.x < 20 || position.y < 70)
         return <></>;
     return (
         <div style={{
