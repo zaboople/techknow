@@ -93,6 +93,8 @@ function Dot({position}) {
     const op = position.opacity;
     if (position.x < 20 || position.y < 70)
         return <></>;
+    const width = 12;
+    const offset = -width / 2;
     return (
         <div style={{
             position: 'absolute',
@@ -101,7 +103,7 @@ function Dot({position}) {
             opacity: op,
             transform: `translate(${position.x}px, ${position.y}px)`,
             pointerEvents: 'none',
-            left: -10, top: -10, width: 20, height: 20,
+            left: offset, top: offset, width: width, height: width,
         }} />
     );
 }
