@@ -132,6 +132,7 @@ git revert <hash>
 
 # Revert a merge post push:
 git revert -m 1 <merge-commit-hash>
+git push
 
 
 # COLORS edit your ~/.gitconfig
