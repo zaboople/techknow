@@ -4,13 +4,45 @@
         <meta charset="UTF-8" />
         <title>Hello World</title>
         <style>
-            p {padding:0px;margin:0px;font-size:7px;}
+            p {padding:0px;margin:0px;font-size:16px;}
         </style>
 
-        <script language="javascript" src="myprototype.js"></script>
     </head>
   <body>
-    Hello.
     <p id="1">
-  </body>
+    <p id="2">
+
+
+        <script language="javascript">
+            const bod = document.getElementsByTagName("body").item(0);
+            function addHtml(str) {
+                const elem = document.createElement("p");
+                elem.innerHTML = str;
+                bod.append(elem);
+            }
+
+            // This creates a function named Foo(); but we can use Foo as an object if
+            // we put a new in the call, as with foo1 below. Notice how "this" changes from
+            // an object to the Window instance depending on the caller's use of new or not:
+            function Foo(x) {
+                this.value = x;
+            }
+            Foo.prototype.getValue = function () {
+              return this.value;
+            };
+
+            // Here we are using Foo as an object:
+            const foo1 = new Foo(2);
+            addHtml("foo1: "+JSON.stringify(foo1));
+            addHtml("foo1.value: "+foo1.value);
+            addHtml("foo1.getValue(): "+foo1.getValue())
+
+            // We can legally use Foo() as a function,
+            // but we're not going to get the same results
+            // because we skipped over "new " this time:
+            const foo2 = Foo(3);
+            addHtml("foo2: "+JSON.stringify(foo2));
+
+        </script>  </body>
+
 </html>

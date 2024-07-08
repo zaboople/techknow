@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Hello World</title>
+        <style>
+            p {padding:0px;margin:0px;font-size:16px;}
+        </style>
+
+    </head>
+  <body>
+    <p id="1">
+    <p id="2">
+
+
+        <script language="javascript">
+            const bod = document.getElementsByTagName("body").item(0);
+            function addHtml(str) {
+                const elem = document.createElement("p");
+                elem.innerHTML = str;
+                bod.append(elem);
+            }
+            function jso(o) {
+                addHtml(JSON.stringify(o));
+            }
+            function prommy(name, time) {
+                return new Promise(
+                    resolver => setTimeout(()=>resolver(name+" "+time), time)
+                );
+            }
+            async function asy(name, time) {
+                x = await prommy(name, time);
+                addHtml(x);
+                return x;
+            }
+
+            prommy("Plain promise", 500).then(x=>addHtml(x));
+            const pro = asy("Async Await", 600);
+            addHtml("Promise? "+pro.then);
+            pro.then(x=>addHtml("Then..."+x));
+
+
+        </script>  </body>
+
+</html>
