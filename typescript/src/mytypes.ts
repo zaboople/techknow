@@ -35,17 +35,4 @@ export function test() {
     checkAggregate({foo: 1, bar:"hi"});
     onAny(2);
     printClod({foo: 1, clod: 2});
-
-    function doit() {
-        const x = {foo:"string", bar:"cant"};
-        const {foo, bar} = x;
-        console.log(x);
-    }
-    doit();
-    function do2({pos, nut}: any) {
-        console.log(pos);
-        console.log(nut);
-    }
-
-    do2({pos: 12});
 }

@@ -1,2 +1,4 @@
 import {test as testTypes} from "./mytypes.js";
-testTypes();
+import {test as testObjects} from "./myobjects.js";
+import {test as testMods} from "./mymodule-test.js";
+testObjects();
