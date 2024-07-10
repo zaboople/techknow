@@ -1,10 +1,10 @@
-import {useState} from "react";
-import PropTypes from 'prop-types';
+import {React, useState} from "react";
 
 import "./styles.css";
 import "./button.css";
 
-const MSG_LIST = Object.freeze([
+type TMsg = {limit: number, msg: string};
+const MSG_LIST: array<TMsg> = Object.freeze([
     {limit: 5, msg: "That's definitely helping."},
     {limit: 12, msg: "Wow! This must be urgent."},
     {limit: 30, msg: "We're dropping everything! Right now!"},
@@ -15,7 +15,7 @@ const MSG_LIST = Object.freeze([
     {limit: 430, msg: "Turning on Special Messaging Protocol Q.z00t!"},
 ]);
 
-const MSG_LIST_NEG = Object.freeze([
+const MSG_LIST_NEG: array<TMsg> = Object.freeze([
     {limit: -5, msg: "Sending your messages back to you..."},
     {limit: -20, msg: "This is what you get for letting your cat sleep on the keyboard"},
     {limit: -40, msg: "Actually the cat stole all your passwords..."},
@@ -23,13 +23,10 @@ const MSG_LIST_NEG = Object.freeze([
     {limit: -160, msg: "Attentiveness: Not your strong suit."},
 ]);
 
-Buttoon.propTypes = {
-	enabled: PropTypes.bool
-}
-function Buttoon({enabled}) {
+function Buttoon({enabled}: {enabled:boolean}) {
     const [count, setCount] = useState(0);
     const [incr, setIncr] = useState(1);
-    const list = MSG_LIST.filter(m => count > m.limit)
+    const list: array<NonNullable<unknown>> = MSG_LIST.filter(m => count > m.limit)
         .concat(
             MSG_LIST_NEG.filter(m => count < m.limit)
         )
@@ -55,8 +52,8 @@ function Buttoon({enabled}) {
 }
 
 export default function Contact() {
-    const [btnEnabled, setEnabled] = useState(true);
-    function handleCheck(e) {
+    const [btnEnabled, setEnabled]: [boolean, (boolean)=>void] = useState(true);
+    function handleCheck(e:Element) {
         setEnabled(!e.target.checked);
     }
     return <div className="subbody">
@@ -75,5 +72,3 @@ export default function Contact() {
         </div>
     </div>;
 }
-
-

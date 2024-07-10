@@ -56,7 +56,6 @@ function DotChaser2() {
 
     // Add opacity spread according to age,
     // or maybe just list position, yeah:
-    const n1 = Date.now();
     const actualLen = newList.length;
     newList = newList.map((x, ix)=>{
         const op = 1.0 * (ix / actualLen)
