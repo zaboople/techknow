@@ -1,7 +1,7 @@
-export function myFunc1() {
+export function myFunc1(divs) {
     console.log("mymodule myFunc1")
-    var i = 0;
-    Array.from(document.getElementsByTagName("div")).forEach(
+    let i = 0;
+    divs.forEach(
         (e)=>{
             e.innerHTML += "<p> Iterate to div "+(++i)+" from func1 ";
         }

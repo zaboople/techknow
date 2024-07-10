@@ -1,17 +1,18 @@
 console.log("Loading mymodule2")
 import {myFunc1, myFunc2} from "./mymodule.js";
 
-myFunc1();
+myFunc1([]);
 
 let i = 10
 export default function myclick() {
     try {
-        Array.from(document.getElementsByTagName("div")).forEach(
+        const divs = Array.from(document.getElementsByTagName("div"));
+        divs.forEach(
             (e)=>{
                 e.innerHTML += "<p>Iteration "+(i+=10)+" from mymodule2 ";
             }
         );
-        myFunc1();
+        myFunc1(divs);
         myFunc2();
     } catch (e) {
         console.log("I have to catch if I finally, or errors won't happen: "+e);

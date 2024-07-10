@@ -2,54 +2,73 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>Hello World</title>
+        <title>Equality</title>
         <style>
-            p {padding:3px;margin:0px;font-size:17px;}
+            p {padding:3px;margin:0px;font-size:13px;}
+            div {padding-top:20px}
         </style>
 
     </head>
     <body>
-        <div>
-            <p><b>Variable ff: </b> <span id="0"></span>
-            <p><b>Variable gg: </b> <span id="1"></span>
-            <p><b>Compare:</b>
-            <p><span id="2"></span>
-            <p><span id="3"></span>
-        </div>
-        <div style="padding-top: 30px;">
-            <p><b>Variable hh: </b> <span id="10"></span>
-            <p><b>Variable ii: </b> <span id="11"></span>
-            <p><b>Compare:</b>
-            <p><span id="12"></span>
-            <p><span id="13"></span>
-        </div>
-        <div style="padding-top: 30px;">
-            <p><b>Compare two strings with the same value:</b>
-            <p><span id="4"></span>
-            <p><span id="5"></span>
-        </div>
+        <p><b>The only things noteworthy here are:</b></p>
+        <ol>
+            <li>Similar arrays & objects don't actually equal one another
+            <li>null and undefined are only different when you compare with === & !==
+        </ol>
+        <code id="core">
+        </code>
 
         <script language="javascript">
+            function makeDiv(id) {
+                const base = document.getElementById("core");
+                const div=document.createElement("div");
+                div.id = id;
+                base.append(div);
+                return div;
+            }
+            function addH(id, str) {
+                const base = document.getElementById(id);
+                const elem = document.createElement("p");
+                elem.innerHTML = str;
+                base.append(elem);
+            }
             function setH(id, str) {
                 document.getElementById(id).innerHTML = str;
             }
+            function allCompare(id, name1, name2, v1, v2) {
+                makeDiv(id);
+                function res(comp, output) {
+                    addH(id, name1+" "+comp+" "+name2+" -> "+output);
+                }
+                function name(n, v) {
+                    addH(id, `<b>Variable ${n}: </b>`+JSON.stringify(v));
+                }
+                name(name1, v1);
+                name(name2, v2);
+                res("==", v1==v2);
+                res("!=", v1!=v2);
+                res("===", v1===v2);
+                res("!==", v1!==v2);
+            }
             const ff = {};
             const gg = {};
-            setH(0, JSON.stringify(ff));
-            setH(1, JSON.stringify(gg));
-            setH(2, "ff === gg -> "+(ff === gg))
-            setH(3, "ff == gg -> "+(ff == gg));
+            allCompare("obj", "ff", "gg", ff, gg);
 
             const hh = [];
             const ii = [];
-            setH(10, JSON.stringify(hh));
-            setH(11, JSON.stringify(ii));
-            setH(12, "hh === ii -> "+(hh === ii))
-            setH(13, "hh == ii -> "+(hh == ii));
+            allCompare("array", "hh", "ii", hh, ii);
 
             const a = "hello", b="hello";
-            setH(4, "== -> " + (a == b));
-            setH(5, "=== -> " + (a === b));
+            allCompare("strs", "a", "b", a, b);
+
+            const aa = null, bb=undefined;
+            allCompare("nullundef", "aa", "bb", aa, bb);
+            makeDiv("dull").innerHTML = "<p><b>*** Below here is uneventful but hey: ***</b></p>";
+            allCompare("nullnull", "aa", "aa", aa, aa);
+            allCompare("undefundef", "bb", "bb", bb, bb);
+            allCompare("strundef", "b", "bb", b, bb);
+            allCompare("objundef", "ff", "bb", ff, bb);
+
         </script>
     </body>
 </html>

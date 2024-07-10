@@ -2,26 +2,21 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>Hello World</title>
+        <title>??</title>
         <style>
             p {padding:3px;margin:0px;font-size:17px;}
         </style>
-
     </head>
   <body>
     <p id="0">
     <p id="1">
     <p id="2">
-    <p id="3">
-    <p id="4">
-    <p id="5">
-    <p id="6">
 
     <script language="javascript">
-        let foo = null, bar = "Has stuff";
-        document.getElementById("0").innerHTML = foo ?? "Was empty";
-        document.getElementById("1").innerHTML = bar ?? "Also was empty";
-
+        let foo = null, foo2=undefined, bar = "Has stuff";
+        document.getElementById("0").innerHTML = foo ?? "Null variable was empty";
+        document.getElementById("1").innerHTML = foo2 ?? "Undefined variable also was empty";
+        document.getElementById("2").innerHTML = bar ?? "Shouldn't have been empty";
     </script>
   </body>
 </html>

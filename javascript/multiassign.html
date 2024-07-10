@@ -2,45 +2,49 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>Hello World</title>
+        <title>Multi-assign off object</title>
         <style>
             p {padding:3px;margin:0px;font-size:17px;}
         </style>
 
     </head>
   <body>
-    <p id="0">
-    <p id="1">
-    <p id="2">
-    <p id="3">
-    <p id="4">
-    <p id="5">
-    <p id="6">
+        <code id="core">
+        </code>
+        <script language="javascript">
+            function makeDiv(id) {
+                const div=document.createElement("div");
+                div.id = id;
+                document.getElementById("core").append(div);
+                return div;
+            }
+            function addH(id, str) {
+                const base = document.getElementById("core");
+                const elem = document.createElement("p");
+                elem.id = id;
+                elem.innerHTML = str;
+                base.append(elem);
+            }
 
-    <script language="javascript">
+            const zipray = new Array("hi", "hello", "how are you").map(
+                (x, index) => ({index: index+1, name: x})
+            );
 
-        [{a:1, b:2, c:3}, {a:11, b:33, c:44}]
+            function setThing(id, value) {
+                document.getElementById(id).innerHTML += value;
+            }
 
-        const zipray = new Array("hi", "hello", "how are you").map(
-            (x, index) => ({index: index+1, name: x})
-        );
+            // We are assigning variables a, b, c using an array:
+            const [a, b, c] = zipray
+            addH(a.index, a.name)
+            addH(b.index, b.name)
+            addH(c.index, c.name);
 
-        function setThing(id, value) {
-            document.getElementById(id).innerHTML += value;
-        }
+            // More fun: Assign variables off an object:
+            zipray.forEach(({index, name}) =>
+                addH(index+3, name + " ... from Object")
+            );
 
-        // We are assigning variables a, b, c using an array:
-        const [a, b, c] = zipray
-        setThing(a.index, a.name)
-        setThing(b.index, b.name)
-        setThing(c.index, c.name);
-
-        // More fun: Assign variables off an object:
-        zipray.forEach((n) => {
-            const {index, name} = n;
-            setThing(index+3, name + " ...from Object");
-        });
-
-    </script>
-  </body>
+        </script>
+    </body>
 </html>

@@ -2,25 +2,33 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>Hello World</title>
+        <title>Yield!</title>
         <style>
             p {padding:0px;margin:0px;font-size:17px;}
         </style>
 
     </head>
-  <body>
-    <p id="1">
-    <p id="2">
-    <p id="3">
+    <body>
+        <code id="core">
+        </code>
 
-    <script language="javascript">
-        var qq = function*(){
-            var i=10;
-            while (i-- > 0)
-                yield i;
-        }();
-        xx = qq.map(x=>x+1);
-        console.log(xx)
-    </script>
-  </body>
+        <script language="javascript">
+            function addH(id, str) {
+                const base = document.getElementById("core");
+                const elem = document.createElement("p");
+                elem.id = id;
+                elem.innerHTML = str;
+                base.append(elem);
+            }
+
+            var qq = function*(){
+                var i=10;
+                while (i-- > 0)
+                    yield i;
+            }();
+            const xx = Array.from(qq.map(x=>x*10));
+            console.log(xx)
+            xx.forEach(x=>addH(x, x.toString()));
+        </script>
+    </body>
 </html>
