@@ -53,7 +53,7 @@ function Buttoon({enabled}: {enabled:boolean}) {
 
 export default function Contact() {
     const [btnEnabled, setEnabled]: [boolean, (boolean)=>void] = useState(true);
-    function handleCheck(e:Element) {
+    function handleCheck(e:{target: {checked: boolean}}) {
         setEnabled(!e.target.checked);
     }
     return <div className="subbody">
