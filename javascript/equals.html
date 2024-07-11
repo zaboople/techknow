@@ -10,10 +10,11 @@
 
     </head>
     <body>
-        <p><b>The only things noteworthy here are:</b></p>
+        <p><b>The things noteworthy here are:</b></p>
         <ol>
             <li>Similar arrays & objects don't actually equal one another
             <li>null and undefined are only different when you compare with === & !==
+            <li>A string can be coerced to a number - e.g. "12" to 12 - when you use ==, but not ===
         </ol>
         <code id="core">
         </code>
@@ -46,8 +47,8 @@
                 name(name1, v1);
                 name(name2, v2);
                 res("==", v1==v2);
-                res("!=", v1!=v2);
                 res("===", v1===v2);
+                res("!=", v1!=v2);
                 res("!==", v1!==v2);
             }
             const ff = {};
@@ -58,12 +59,15 @@
             const ii = [];
             allCompare("array", "hh", "ii", hh, ii);
 
-            const a = "hello", b="hello";
-            allCompare("strs", "a", "b", a, b);
 
             const aa = null, bb=undefined;
             allCompare("nullundef", "aa", "bb", aa, bb);
+            allCompare("s1n1", "s1", "n1", "12", 12);
+
             makeDiv("dull").innerHTML = "<p><b>*** Below here is uneventful but hey: ***</b></p>";
+
+            const a = "hello", b="hello";
+            allCompare("strs", "a", "b", a, b);
             allCompare("nullnull", "aa", "aa", aa, aa);
             allCompare("undefundef", "bb", "bb", bb, bb);
             allCompare("strundef", "b", "bb", b, bb);

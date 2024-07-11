@@ -29,6 +29,15 @@ function printClod<T extends ClodHaver>(x: T) {
     console.log(x.clod);
 }
 
+type Agg2 = {
+    foo?: number;
+    bar?: string;
+}
+function checkAgg(a: Agg2) {
+    console.log(a);
+    console.log(a.foo +" "+a.bar);
+}
+
 export function test() {
     runStringToNum(s => s.length);
     runStringToNum(s => (s+s).length);
@@ -36,3 +45,5 @@ export function test() {
     onAny(2);
     printClod({foo: 1, clod: 2});
 }
+
+
