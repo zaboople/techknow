@@ -16,6 +16,7 @@
             <li>null and undefined are only different when you compare with === & !==
             <li>A string can be coerced to a number - e.g. "12" to 12 - when you use ==, but not ===
         </ol>
+        (also note that null & 0 are not equivalent even if null is arithmetically coerced to 0)
         <code id="core">
         </code>
 
@@ -36,16 +37,16 @@
             function setH(id, str) {
                 document.getElementById(id).innerHTML = str;
             }
-            function allCompare(id, name1, name2, v1, v2) {
+            function allCompare(id, v1, v2) {
                 makeDiv(id);
                 function res(comp, output) {
-                    addH(id, name1+" "+comp+" "+name2+" -> "+output);
+                    addH(id, `a ${comp} b -> ${output}`);
                 }
                 function name(n, v) {
                     addH(id, `<b>Variable ${n}: </b>`+JSON.stringify(v));
                 }
-                name(name1, v1);
-                name(name2, v2);
+                name("a", v1);
+                name("b", v2);
                 res("==", v1==v2);
                 res("===", v1===v2);
                 res("!=", v1!=v2);
@@ -53,25 +54,26 @@
             }
             const ff = {};
             const gg = {};
-            allCompare("obj", "ff", "gg", ff, gg);
+            allCompare("obj", ff, gg);
 
             const hh = [];
             const ii = [];
-            allCompare("array", "hh", "ii", hh, ii);
+            allCompare("array", hh, ii);
 
 
             const aa = null, bb=undefined;
-            allCompare("nullundef", "aa", "bb", aa, bb);
-            allCompare("s1n1", "s1", "n1", "12", 12);
+            allCompare("nullundef", aa, bb);
+            allCompare("s1n1", "12", 12);
 
             makeDiv("dull").innerHTML = "<p><b>*** Below here is uneventful but hey: ***</b></p>";
 
+            allCompare("null0", null, 0);
             const a = "hello", b="hello";
-            allCompare("strs", "a", "b", a, b);
-            allCompare("nullnull", "aa", "aa", aa, aa);
-            allCompare("undefundef", "bb", "bb", bb, bb);
-            allCompare("strundef", "b", "bb", b, bb);
-            allCompare("objundef", "ff", "bb", ff, bb);
+            allCompare("strs", a, b);
+            allCompare("nullnull", aa, aa);
+            allCompare("undefundef", bb, bb);
+            allCompare("strundef", b, bb);
+            allCompare("objundef", ff, bb);
 
         </script>
     </body>
