@@ -18,3 +18,4 @@ export function test() {
     );
     arbitrary("Hello");
 }
+

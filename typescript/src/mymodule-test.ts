@@ -1,5 +1,4 @@
 import {Buglar, doober, mania} from "./mymodule.js";
-type FF = (s: string) => number;
 export function test() {
 
     mania();
@@ -20,4 +19,6 @@ export function test() {
     console.log(
         "Object.entries(): "+Object.entries(bug1).map(([x,y])=> `${x}: ${y}` ).join(", ")
     );
+
+    console.log("Explodo: "+bug1.explodo(2)+" "+bug1.explodo(1.32));
 }

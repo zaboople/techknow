@@ -12,6 +12,7 @@ function stiff(input: {pos:number, nut:number}) {
 
     // The ? operator prevents us from blowing up, of course. It only can be used
     // before a "." and results in "undefined" when confronted with null *or* undefined.
+    // This is an existing javascript operator, BTW, not a new typescript thing:
     console.log(`stiff() inputs: ${input.pos} ${input.nut}`);
     console.log(`stiff() inputs toString()'d: ${input.pos?.toString()} ${input.nut?.toString()}`);
 

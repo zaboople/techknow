@@ -19,4 +19,7 @@ export class Buglar extends Std{
         super();
         this.name=s;
     }
+    explodo(i: number): number {
+        return this.id = this.id * i;
+    }
 }
