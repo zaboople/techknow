@@ -14,6 +14,7 @@
         <ol>
             <li>Similar arrays & objects don't actually equal one another
             <li>null and undefined are only different when you compare with === & !==
+            <li>false and 0 are " " " " as well
             <li>A string can be coerced to a number - e.g. "12" to 12 - when you use ==, but not ===
         </ol>
         (also note that null & 0 are not equivalent even if null is arithmetically coerced to 0)
@@ -65,8 +66,9 @@
             allCompare("nullundef", aa, bb);
             allCompare("s1n1", "12", 12);
 
-            makeDiv("dull").innerHTML = "<p><b>*** Below here is uneventful but hey: ***</b></p>";
+            allCompare("fals", false, 0);
 
+            makeDiv("dull").innerHTML = "<p><b>*** Below here is uneventful but hey: ***</b></p>";
             allCompare("null0", null, 0);
             const a = "hello", b="hello";
             allCompare("strs", a, b);

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>in</title>
+        <style>
+            p {padding:3px;margin:0px;font-size:17px;}
+        </style>
+
+    </head>
+    <body>
+        <p>
+            Yes you can use "in" with for loops (and "of", confusingly)
+            but it's also a test for object membership:
+        </p>
+        <code id="core">
+        </code>
+        <script language="javascript">
+            function addH(id, str) {
+                const base = document.getElementById("core");
+                const elem = document.createElement("p");
+                elem.id = id;
+                elem.innerHTML = str;
+                base.append(elem);
+            }
+            const foo = {a: "aaaa", b: "bbbb", c: "cccc", e:"eeee", g:"gggg"};
+            for (key of "abcdefg".split(""))
+                addH(
+                    key, key+": "+
+                    ((key in foo) ?foo[key] :"*")
+                );
+
+        </script>
+    </body>
+</html>
