@@ -6,10 +6,15 @@ import {test as testExc} from "./exclamate.js";
 import {test as testIf} from "./myinterface.js";
 import {test as testFunc} from "./myfunctions.js";
 import {test as testAsConst} from "./asconst.js";
+import {test as testAssert} from "./asserting.js";
+import {test as testNever} from "./mynever.js";
+import {test as testConstr} from "./myconstructor.js";
 
 //testMod();
 //testExc();
 //testObjects();
 //testIf();
 //testFunc();
-testAsConst();
+//testAssert();
+//testNever();
+testConstr();
