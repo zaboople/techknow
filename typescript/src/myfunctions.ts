@@ -1,4 +1,4 @@
-const log = (a: any) => console.log(a);
+import {json, log} from "./util.js";
 
 function testOverloads() {
     // This is just crap. You have to declare all the overloads,
@@ -71,11 +71,21 @@ function testOptionalParams() {
     fn("a", "b", "c");
     fn("a", "b", "c", "d");
 }
+function testDefaultParams() {
+    function fn(x: string, y:number = 1, z:number = 2, a:string="3") {
+        log("testDefaultParams(): ", x, " ", y, " ", z, " ", a);
+    }
+    fn("hello");
+    fn("hello", 33);
+    fn("hello", 33, 44);
+    fn("hello", 33, 44, "eek");
+}
 
 export function test() {
     testOverloads();
     testArrowAsType();
     testInlineDiamond();
     testOptionalParams();
+    testDefaultParams();
 }
 

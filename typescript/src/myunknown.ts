@@ -5,6 +5,8 @@ class Junk {
     constructor(x:string) {this.x=x;}
 }
 function unk(q: unknown) {
+    // Have to use typeof() on non-objects because instanceof
+    // will not accept types of literals like string & number
     if (q instanceof Junk)
         log("unk(): ", `Junk: ${(q as Junk).x}`);
     else if (typeof(q) == "string")
