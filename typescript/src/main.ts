@@ -14,7 +14,6 @@ import {test as testVarargs} from "./varargs.js";
 
 //testMod();
 //testExc();
-//testObjects();
 //testIf();
 //testAssert();
 //testNever();
@@ -22,4 +21,5 @@ import {test as testVarargs} from "./varargs.js";
 //testUnknown();
 //testVarargs();
 //testAsConst();
-testFunc();
+//testFunc();
+testObjects();
