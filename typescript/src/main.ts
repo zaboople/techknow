@@ -9,12 +9,16 @@ import {test as testAsConst} from "./asconst.js";
 import {test as testAssert} from "./asserting.js";
 import {test as testNever} from "./mynever.js";
 import {test as testConstr} from "./myconstructor.js";
+import {test as testUnknown} from "./myunknown.js";
+import {test as testVarargs} from "./varargs.js";
 
 //testMod();
 //testExc();
 //testObjects();
 //testIf();
-//testFunc();
 //testAssert();
 //testNever();
-testConstr();
+//testConstr();
+//testFunc();
+//testUnknown();
+testVarargs();
