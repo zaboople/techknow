@@ -1,11 +1,12 @@
 import {json, log} from "./util.js";
 
+/**
+    This is just crap. You have to declare all the overloads, then
+    implement one function that tries to be all of them. What's the
+    point? Anyhow, the initial signatures define what you can actually
+    call. The function itself is sort of... masked? Masked, yes.
+*/
 function testOverloads() {
-    // This is just crap. You have to declare all the overloads,
-    // then implement one function that tries to be all of them.
-    // What's the point? Anyhow, the initial signatures define
-    // what you can actually call. The function itself is sort of...
-    // masked? Masked, yes.
     function shib(): string;
     function shib(s: string): string;
     function shib(s: string, i: number): string;
@@ -88,4 +89,3 @@ export function test() {
     testOptionalParams();
     testDefaultParams();
 }
-

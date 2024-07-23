@@ -3,7 +3,7 @@
 import {test as testMod} from "./mymodule-test.js";
 import {test as testObjects} from "./myobjects.js";
 import {test as testExc} from "./exclamate.js";
-import {test as testIf} from "./myinterface.js";
+import {test as testIfc} from "./myinterface.js";
 import {test as testFunc} from "./myfunctions.js";
 import {test as testAsConst} from "./asconst.js";
 import {test as testAssert} from "./asserting.js";
@@ -14,7 +14,7 @@ import {test as testVarargs} from "./varargs.js";
 
 //testMod();
 //testExc();
-//testIf();
+testIfc();
 //testAssert();
 //testNever();
 //testConstr();
@@ -22,4 +22,4 @@ import {test as testVarargs} from "./varargs.js";
 //testVarargs();
 //testAsConst();
 //testFunc();
-testObjects();
+//testObjects();

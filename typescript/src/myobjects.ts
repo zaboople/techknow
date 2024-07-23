@@ -22,33 +22,33 @@ function testParamsAsObj() {
     log("\ntestParamsAsObj():");
     // The variables-in-one-big-object parameter is a common practice in react
     // with its custom elements/attributes stuff. This is the dumb way:
-    function paramsAsObj1({pos, nut}: any) {
-        log("paramsAsObj1()", pos, " ", nut);
+    function test1({pos, nut}: any) {
+        log("test1()", pos, " ", nut);
     }
-    paramsAsObj1({pos: 12});
+    test1({pos: 12});
 
     // Now we can make last example properly typed in typescript like so:
-    function paramsAsObj2({pos, nut}: {pos:number, nut:number}) {
-        log("paramsAsObj2()", pos, " ", nut);
+    function test2({pos, nut}: {pos:number, nut:number}) {
+        log("test2()", pos, " ", nut);
     }
-    paramsAsObj2({pos: 42, nut:523});
+    test2({pos: 42, nut:523});
 
     // Doing it with "optional" params, which will become "undefined" rather
     // than "null" when missing; the specified params are still the *only*
     // ones allowed, though:
-    function paramsAsObj3({pos, nut}: {pos?:number, nut?:number}) {
-        log("paramsAsObj3(): ", pos, " ", nut);
+    function test3({pos, nut}: {pos?:number, nut?:number}) {
+        log("test3(): ", pos, " ", nut);
     }
-    paramsAsObj3({});
-    paramsAsObj3({nut:12});
-    paramsAsObj3({pos:4, nut:12});
+    test3({});
+    test3({nut:12});
+    test3({pos:4, nut:12});
 
     // A different angle: We only care about one thing on the object; we don't
     // care about the rest. Yes we have to use the "extends" and a generic for this:
-    function paramsAsObj4<T extends {foo:number}>({foo}: T){
-        log("paramsAsObj4(): ", json(foo));
+    function test4<T extends {foo:number}>({foo}: T){
+        log("test4(): ", json(foo));
     }
-    paramsAsObj4({rando: "slop", junk: 222, glop: 13, foo:222.22});
+    test4({rando: "slop", junk: 222, glop: 13, foo:222.22});
 }
 
 function testTypeAlias() {
@@ -79,9 +79,9 @@ function testTypeAlias() {
 
 function testObjDefaults() {
     console.log("\ntestObjDefaults(): ");
-    function fn({a=1, b=2, c=3}: {a?:number, b?:number, c?:number}) {
+    type Parms = {a?:number, b?:number, c?:number};
+    const fn = ({a=1, b=2, c=3}: Parms) =>
         log("fn(): ", a, " ", b, " ", c);
-    }
     fn({});
     fn({a:33});
     fn({a:33, b:44});
@@ -92,4 +92,9 @@ export function test() {
     testParamsAsObj();
     testTypeAlias();
     testObjDefaults();
+
+    // I didn't know this part, even though it's probably just regular javascript:
+    const x=1, y="hi";
+    const o = {x,y};
+    log("\nAssemble variables as object: ", json(o));
 }
