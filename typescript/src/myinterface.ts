@@ -4,8 +4,8 @@ import {json, log} from "./util.js";
    Typescript will tend to blow up if we define an object type that only has .junk
    and something tries to pass us something with *other* fields. We can throw up our
    hands and drop an "any" to force our way, but extends can help here: */
-function testExtends() {
-    log("\ntestExtends(): ");
+function testExtraFields() {
+    log("\ntestExtraFields(): ");
     function printClod(x: any) {
         log("printClod(): ", x.clod);
     }
@@ -28,12 +28,24 @@ function testExtends() {
         extraordinary quirks but in the end it's hard to recommend interfaces...
         https://www.typescriptlang.org/docs/handbook/2/everyday-types.html
     */
-    type ClodHaver2 = {clod: number | null;};
+    type ClodHaver2 = {clod: number | null};
     function printClod2<T extends ClodHaver2>(x: T) {
         log("printClod2(): ", json(x), " ", x.clod ?? "<null>");
     }
     printClod2({foo: 1, clod: 2});
     printClod2({foo: 1, clod: null});
+
+    /** Oh boy, this is weird, but it's more straightforward than ever.
+        This brackety thing is utterly absurd, but it's a way of saying
+        that you can have any property you want. */
+    interface ClodHaver3 {
+        clod: number | null;
+        [crudBomb: string]: any;
+    }
+    function printClod3(x: ClodHaver3) {
+        log("printClod3(): ", json(x), " ", x.clod ?? "<null>");
+    }
+    printClod3({clod: null, foo: "bar", key: "nud"});
 }
 
 /**
@@ -69,7 +81,30 @@ function testFunctionDeclare() {
     new MyMaker("hey", 4).makeHay2();
 }
 
+function testIntersect() {
+    log("\ntestIntersect(): ");
+    interface A {a: number;}
+    interface B {b: number;}
+    interface C extends A, B {c: number;};
+
+    // This accomplishes the same as `extends A, B` but
+    // intersect operator cannot be used with interfaces,
+    // only types - but notice how I can turn around and extend
+    // yet another interface *from* that type:
+    type CC = A & B & {c: number;};
+    interface D extends CC {d: number;};
+
+    function fn(c: C, cc: CC, d: D) {
+        log(json(c));
+        log(json(cc));
+        log(json(d));
+    }
+    const x = {a: 1, b: 2, c:3};
+    fn(x, x, {...x, d:4});
+}
+
 export function test() {
-    testExtends();
+    testExtraFields();
     testFunctionDeclare();
+    testIntersect();
 }

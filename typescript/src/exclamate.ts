@@ -1,41 +1,42 @@
+import {json, log} from "./util.js";
 
-type KlutzNum = number | null | undefined;
-function flex(input: {pos:KlutzNum, nut:KlutzNum}) {
-    // This is the real point of "!": To avoid a compiler error by admitting you're doing
-    // something that is likely to blow up on you, i.e. your input is allowing null/undefined
-    // (Note: Null will just be treated as "0", FWIW)
-    console.log(input.pos! + input.nut!);
-}
+/*
+    The real point of "!" is only to bypass compiler errors, not to prevent javascript
+    from blowing up (like ? && ?? can do). With "!" you're saying, "Yes this might
+    blow up on me but I don't care, so stop complaining."
+*/
 
-function stiff(input: {pos:number, nut:number}) {
-    console.log("\n");
+function testIgnoreMissingValue() {
+    log("\ntestIgnoreMissingValue(): ");
 
-    // The ? operator prevents us from blowing up, of course. It only can be used
-    // before a "." and results in "undefined" when confronted with null *or* undefined.
-    // This is an existing javascript operator, BTW, not a new typescript thing:
-    console.log(`stiff() inputs: ${input.pos} ${input.nut}`);
-    console.log(`stiff() inputs toString()'d: ${input.pos?.toString()} ${input.nut?.toString()}`);
+    type KlutzNum = number | null | undefined;
+    function flex(input: {pos:KlutzNum, nut:KlutzNum}) {
+        log("flex(): ", (input.pos! + input.nut!));
+    }
+    // This will work out because null ~~ 0 (sorta)
+    flex({pos:null, nut:null});
 
-    // Humorously the ! makes no difference (again); even with a missing value it
-    // just treats undefined as NaN and null as 0, with or without "!".
-    console.log("stiff() add: "+(input.pos! + input.nut!));
-}
-
-export function test() {
-
-    // Sorry, but exclamation mark is not an elvis operator (but don't forget "??")
-    // I can change nut's vaue to null but exclamation mark won't stop it from blowing up.
+    // The exclamation mark makes no difference here:
     const x: {pos:number, nut:number | null} = {pos:1, nut:2};
-    console.log(x.pos!.toString());
-    console.log(x.nut!.toString());
+    log(x.pos!.toString());
+    log(x.nut!.toString());
+}
 
-    // However we also have a "?" operator that allows something to be "undefined"
-    // but not *null*.
-    const y: {pos?:number, nut?:number} = {nut:4};
-    console.log(y.pos?.toString() +" "+y.nut?.toString());
-    const q = y.pos??0 + (y.nut??0);
-    console.log(`q ${q}`);
+function testQuestionMark1() {
+    log("\ntestQuestionMark1(): ");
 
+    function stiff(input: {pos:number, nut:number}) {
+        // The ? operator prevents us from blowing up, of course. It only can be used
+        // before a "." and results in "undefined" when confronted with null *or* undefined.
+        // This is an existing javascript operator, BTW, not a new typescript thing:
+        log("stiff() inputs: ", json(input));
+        log("stiff() inputs toString()'d: ",
+            input.pos?.toString() + " " + input.nut?.toString());
+
+        // Things don't actually blow up, because javascript just treats
+        // undefined as NaN and null as 0.
+        log("stiff() add: ", (input.pos! + input.nut!));
+    }
     // By declaring z as "any" I can steer around uncooperative type signatures.
     let z:any = {pos: 3, nut:null};
     stiff(z);
@@ -43,8 +44,43 @@ export function test() {
     stiff(z);
     z.pos=null;
     stiff(z);
-
-    // This will work out because null ~~ 0 (sorta)
-    flex({pos:null, nut:null});
 }
 
+function testQuestionMark2() {
+    log("\ntestQuestionMark2(): ");
+
+    // We can use our "?" operator to allow something to be "undefined"
+    // but not *null*.
+    const y: {pos?:number, nut?:number} = {nut:4};
+    log(y.pos?.toString() +" "+y.nut?.toString());
+    const q = y.pos??0 + (y.nut??0);
+    log("q: ", q);
+}
+
+function testNesting() {
+    log("\ntestNesting(): ");
+    type thing = {
+        a?: {b?: {c?: {d?: number}}}
+    };
+    function boop(f: thing, g: thing){
+        const fb = f?.a?.b;
+        const fd = fb?.c?.d;
+        const gd = g?.a?.b?.c?.d;
+        log("boop(): json ", json(fd), " ", json(gd));
+        log("boop(): numbers ", (fd ?? 0) + (gd ?? 0));
+        log("boop(): add ", (f?.a?.b?.c?.d ?? 0) + (g?.a?.b?.c?.d ?? 0));
+    }
+    boop({a: {}}, {a: {}});
+    boop({a: {b: {c: {d: 1}}}}, {a: {b: {c:{}}}});
+    boop(
+        {a: {b: {c: {d: 12}}}},
+        {a: {b: {c: {d: 13}}}},
+    );
+}
+
+export function test() {
+    testIgnoreMissingValue();
+    testQuestionMark1();
+    testQuestionMark2();
+    testNesting();
+}
