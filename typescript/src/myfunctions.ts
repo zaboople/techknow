@@ -74,7 +74,7 @@ function testOptionalParams() {
 }
 function testDefaultParams() {
     function fn(x: string, y:number = 1, z:number = 2, a:string="3") {
-        log("testDefaultParams(): ", x, " ", y, " ", z, " ", a);
+        log("testDefaultParams(): ", x, y, z, a);
     }
     fn("hello");
     fn("hello", 33);

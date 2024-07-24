@@ -7,7 +7,7 @@ import {json, log} from "./util.js";
 function testExtraFields() {
     log("\ntestExtraFields(): ");
     function printClod(x: any) {
-        log("printClod(): ", x.clod);
+        log("printClod():", x.clod);
     }
     printClod(2);
     printClod({clod: "jupe", klang:23});
@@ -19,7 +19,7 @@ function testExtraFields() {
         clod: number | null;
     }
     function printClod1<T extends ClodHaver>(x: T) {
-        log("printClod1(): ", json(x), " ", x.clod ?? "<null>");
+        log("printClod1():", json(x), x.clod ?? "<null>");
     }
     printClod1({foo: 1, clod: 2});
     printClod1({foo: 1, clod: null});
@@ -33,7 +33,7 @@ function testExtraFields() {
     }
     function printClod3(...xx: ClodHaver3[]) {
         for (const x of xx)
-        log("printClod3(): ", json(x), " ", x.clod ?? "<null>");
+        log("printClod3():", json(x), x.clod ?? "<null>");
     }
     printClod3(
         {clod: null, foo: "bar", key: "nud"}, {clod:12}
@@ -46,7 +46,7 @@ function testExtraFields() {
     */
     type ClodHaver2 = {clod: number | null};
     function printClod2<T extends ClodHaver2>(x: T) {
-        log("printClod2(): ", json(x), " ", x.clod ?? "<null>");
+        log("printClod2(): ", json(x), x.clod ?? "<null>");
     }
     printClod2({foo: 1, clod: 2});
     printClod2({foo: 1, clod: null});
