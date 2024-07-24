@@ -7,16 +7,26 @@
             p {padding:3px;margin:0px;font-size:17px;}
         </style>
     </head>
-  <body>
-    <p id="0">
-    <p id="1">
-    <p id="2">
-
-    <script language="javascript">
-        let foo = null, foo2=undefined, bar = "Has stuff";
-        document.getElementById("0").innerHTML = foo ?? "Null variable was empty";
-        document.getElementById("1").innerHTML = foo2 ?? "Undefined variable also was empty";
-        document.getElementById("2").innerHTML = bar ?? "Shouldn't have been empty";
-    </script>
-  </body>
+    <body>
+        <code id="core">
+        </code>
+        <script language="javascript">
+            function addElems() {
+                const base = document.getElementById("core");
+                const div=document.createElement("div");
+                base.append(div);
+                for (const x of arguments) {
+                    const elem = document.createElement("p");
+                    elem.innerHTML = x;
+                    div.append(elem);
+                }
+            }
+            let foo = null, foo2=undefined, bar = "Has stuff";
+            addElems(
+                foo ?? "Null variable was empty",
+                foo2 ?? "Undefined variable also was empty",
+                bar ?? "Shouldn't have been empty",
+            );
+        </script>
+    </body>
 </html>

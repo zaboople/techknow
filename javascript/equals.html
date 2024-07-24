@@ -4,20 +4,28 @@
         <meta charset="UTF-8" />
         <title>Equality</title>
         <style>
-            p {padding:3px;margin:0px;font-size:13px;}
+            p {padding:3px;margin:0px;font-size:14px;}
             div {padding-top:20px}
+            ol {font-size:14px; margin-top: 3px; margin-bottom:3px;}
+            code {font-size:11px;}
+
         </style>
 
     </head>
     <body>
         <p><b>The things noteworthy here are:</b></p>
+        <p>1. Similar arrays & objects don't actually equal one another</p>
+        <p>2. The following are == but not ===:</p>
         <ol>
-            <li>Similar arrays & objects don't actually equal one another
-            <li>null and undefined are only different when you compare with === & !==
-            <li>false and 0 are " " " " as well
-            <li>A string can be coerced to a number - e.g. "12" to 12 - when you use ==, but not ===
+            <li>null and undefined
+            <li>false and 0
+            <li>0 and a "blank string" (empty or arbitrary # of spaces)
+            <li>A string coerced to a number - e.g. "12" == 12
+            <li><i>You never know ...?</i>
         </ol>
+        <p>
         (also note that null & 0 are not equivalent even if null is arithmetically coerced to 0)
+        </p>
         <code id="core">
         </code>
 
@@ -34,9 +42,6 @@
                 const elem = document.createElement("p");
                 elem.innerHTML = str;
                 base.append(elem);
-            }
-            function setH(id, str) {
-                document.getElementById(id).innerHTML = str;
             }
             function allCompare(id, v1, v2) {
                 makeDiv(id);
@@ -61,22 +66,22 @@
             const ii = [];
             allCompare("array", hh, ii);
 
-
             const aa = null, bb=undefined;
             allCompare("nullundef", aa, bb);
             allCompare("s1n1", "12", 12);
-
             allCompare("fals", false, 0);
+            allCompare("0blank", "", 0);
+            allCompare("0blank3", "      ", 0);
 
             makeDiv("dull").innerHTML = "<p><b>*** Below here is uneventful but hey: ***</b></p>";
             allCompare("null0", null, 0);
+            allCompare("undef0", undefined, 0);
             const a = "hello", b="hello";
             allCompare("strs", a, b);
             allCompare("nullnull", aa, aa);
             allCompare("undefundef", bb, bb);
             allCompare("strundef", b, bb);
             allCompare("objundef", ff, bb);
-
         </script>
     </body>
 </html>

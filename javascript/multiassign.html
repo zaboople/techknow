@@ -8,35 +8,32 @@
         </style>
 
     </head>
-  <body>
+    <body>
         <code id="core">
         </code>
         <script language="javascript">
-            function addH(id, str) {
+            function addElems() {
                 const base = document.getElementById("core");
-                const elem = document.createElement("p");
-                elem.id = id;
-                elem.innerHTML = str;
-                base.append(elem);
+                const div=document.createElement("div");
+                base.append(div);
+                for (const x of arguments) {
+                    const elem = document.createElement("p");
+                    elem.innerHTML = x;
+                    div.append(elem);
+                }
             }
 
-            const zipray = new Array("hi", "hello", "how are you").map(
+            const zipray = ["hi", "hello", "how are you"].map(
                 (x, index) => ({index: index+1, name: x})
             );
 
-            function setThing(id, value) {
-                document.getElementById(id).innerHTML += value;
-            }
-
             // We are assigning variables a, b, c using an array:
             const [a, b, c] = zipray
-            addH(a.index, a.name)
-            addH(b.index, b.name)
-            addH(c.index, c.name);
+            addElems(a.name, b.name, c.name);
 
             // More fun: Assign variables off an object:
             zipray.forEach(({index, name}) =>
-                addH(index+3, name + " ... from Object")
+                addElems(index+" "+name + " ... from Object")
             );
 
         </script>

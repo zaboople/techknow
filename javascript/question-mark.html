@@ -8,15 +8,26 @@
         </style>
     </head>
   <body>
-    <p id="0">
-    <p id="1">
-    <p id="2">
+    <code id="core">
+    </code>
 
     <script language="javascript">
-        const x = {foo: "bar"};
-        console.log(x.junk?.toString()+" hi ");
-        document.getElementById("0").innerHTML = x.junk?.toString()+" <= What x.junk was "
-        document.getElementById("1").innerHTML = x.foo?.toString()+" <= What x.foo was "
+        function addElems() {
+            const base = document.getElementById("core");
+            const div=document.createElement("div");
+            base.append(div);
+            for (const x of arguments) {
+                const elem = document.createElement("p");
+                elem.innerHTML = x;
+                div.append(elem);
+            }
+        }
+        const x = {foo: "bar", bar:undefined, bash:null};
+        addElems(
+            x.foo?.toString()+" <= When x.foo had a string ",
+            x.bar?.toString()+" <= When x.bar was undefined ",
+            x.bash?.toString()+" <= When x.bash was null ",
+        );
     </script>
   </body>
 </html>
