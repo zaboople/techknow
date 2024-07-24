@@ -24,6 +24,22 @@ function testExtraFields() {
     printClod1({foo: 1, clod: 2});
     printClod1({foo: 1, clod: null});
 
+    /** Oh boy, this is weird, but it works the same.
+        This brackety thing is utterly absurd, but it's a way of saying
+        that you can have any additional properties that you want. */
+    interface ClodHaver3 {
+        clod: number | null;
+        [crudBomb: string]: any;
+    }
+    function printClod3(...xx: ClodHaver3[]) {
+        for (const x of xx)
+        log("printClod3(): ", json(x), " ", x.clod ?? "<null>");
+    }
+    printClod3(
+        {clod: null, foo: "bar", key: "nud"}, {clod:12}
+    );
+
+
     /** Oh look! We don't even need an interface for this. There are some
         extraordinary quirks but in the end it's hard to recommend interfaces...
         https://www.typescriptlang.org/docs/handbook/2/everyday-types.html
@@ -35,17 +51,12 @@ function testExtraFields() {
     printClod2({foo: 1, clod: 2});
     printClod2({foo: 1, clod: null});
 
-    /** Oh boy, this is weird, but it's more straightforward than ever.
-        This brackety thing is utterly absurd, but it's a way of saying
-        that you can have any property you want. */
-    interface ClodHaver3 {
-        clod: number | null;
-        [crudBomb: string]: any;
+    /* Just for kicks */
+    function printLen<T extends {length:number}>(input: T) {
+        log("printLen():", input.length);
     }
-    function printClod3(x: ClodHaver3) {
-        log("printClod3(): ", json(x), " ", x.clod ?? "<null>");
-    }
-    printClod3({clod: null, foo: "bar", key: "nud"});
+    printLen("hi there");
+    printLen([1,2,3]);
 }
 
 /**

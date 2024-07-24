@@ -11,6 +11,7 @@ import {test as testNever} from "./mynever.js";
 import {test as testConstr} from "./myconstructor.js";
 import {test as testUnknown} from "./myunknown.js";
 import {test as testVarargs} from "./varargs.js";
+import {test as testTuple} from "./mytuple.js";
 
 //testMod();
 //testExc();
@@ -23,3 +24,4 @@ testIfc();
 //testAsConst();
 //testFunc();
 //testObjects();
+//testTuple();
