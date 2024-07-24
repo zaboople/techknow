@@ -12,10 +12,11 @@ import {test as testConstr} from "./myconstructor.js";
 import {test as testUnknown} from "./myunknown.js";
 import {test as testVarargs} from "./varargs.js";
 import {test as testTuple} from "./mytuple.js";
+import {test as testKeyOf} from "./mykeyof.js";
 
 //testMod();
 //testExc();
-testIfc();
+//testIfc();
 //testAssert();
 //testNever();
 //testConstr();
@@ -25,3 +26,4 @@ testIfc();
 //testFunc();
 //testObjects();
 //testTuple();
+testKeyOf();

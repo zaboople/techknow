@@ -30,11 +30,16 @@ function testConstObject() {
     foo3(z);
 }
 
+// Clever but stupid... varargs on the caller side:
 function testArrayFun() {
-    // Clever ... forces varargs to be used:
     function fn(a: number, b:string, c:number, d:string): void {
         log("testArrayFun():", a, b, c, d);
     }
+
+    // Dumb way:
+    fn(...[1, "hi", 2, "hey"]);
+
+    // Slightly less dumb way:
     const q = [1, "hi", 2, "hey"] as const;
     fn(...q);
 }
