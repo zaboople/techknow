@@ -57,6 +57,7 @@ function testExtraFields() {
     }
     printLen("hi there");
     printLen([1,2,3]);
+    printLen({length:4, foo:"hi", bar:[1,2,3,4]});
 }
 
 /**

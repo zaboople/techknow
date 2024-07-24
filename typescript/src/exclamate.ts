@@ -7,11 +7,11 @@ import {json, log} from "./util.js";
 */
 
 function testIgnoreMissingValue() {
-    log("\ntestIgnoreMissingValue(): ");
+    log("\ntestIgnoreMissingValue():");
 
     type KlutzNum = number | null | undefined;
     function flex(input: {pos:KlutzNum, nut:KlutzNum}) {
-        log("flex(): ", (input.pos! + input.nut!));
+        log("flex():", (input.pos! + input.nut!));
     }
     // This will work out because null ~~ 0 (sorta)
     flex({pos:null, nut:null});
@@ -23,19 +23,19 @@ function testIgnoreMissingValue() {
 }
 
 function testQuestionMark1() {
-    log("\ntestQuestionMark1(): ");
+    log("\ntestQuestionMark1():");
 
     function stiff(input: {pos:number, nut:number}) {
         // The ? operator prevents us from blowing up, of course. It only can be used
         // before a "." and results in "undefined" when confronted with null *or* undefined.
         // This is an existing javascript operator, BTW, not a new typescript thing:
-        log("stiff() inputs: ", json(input));
-        log("stiff() inputs toString()'d: ",
+        log("stiff() inputs:", json(input));
+        log("stiff() inputs toString()'d:",
             input.pos?.toString() + " " + input.nut?.toString());
 
         // Things don't actually blow up, because javascript just treats
         // undefined as NaN and null as 0.
-        log("stiff() add: ", (input.pos! + input.nut!));
+        log("stiff() add:", (input.pos! + input.nut!));
     }
     // By declaring z as "any" I can steer around uncooperative type signatures.
     let z:any = {pos: 3, nut:null};
@@ -47,18 +47,18 @@ function testQuestionMark1() {
 }
 
 function testQuestionMark2() {
-    log("\ntestQuestionMark2(): ");
+    log("\ntestQuestionMark2():");
 
     // We can use our "?" operator to allow something to be "undefined"
     // but not *null*.
     const y: {pos?:number, nut?:number} = {nut:4};
     log(y.pos?.toString() +" "+y.nut?.toString());
     const q = y.pos??0 + (y.nut??0);
-    log("q: ", q);
+    log("q:", q);
 }
 
 function testNesting() {
-    log("\ntestNesting(): ");
+    log("\ntestNesting():");
     type thing = {
         a?: {b?: {c?: {d?: number}}}
     };

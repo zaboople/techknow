@@ -1,3 +1,5 @@
+import {json, log} from "./util.js";
+
 class Circle {
   readonly kind = "circle";
   radius: number;
@@ -21,8 +23,8 @@ type Shape = Circle | Square | Dog;
     my missing `case "dog":` except... it... should?
 */
 function dub(val: Shape): number {
-    console.log("\nIncoming: "+typeof(val));
-    console.log(val);
+    log("\nIncoming:", typeof(val));
+    log(val);
     switch (val.kind) {
         case "circle":
             return val.radius ** 2 * Math.PI;
@@ -36,10 +38,10 @@ function dub(val: Shape): number {
     }
 }
 export function test() {
-    console.log("Circle: "+dub(new Circle(12)));
-    console.log("Square: "+dub(new Square(12)));
-    console.log("Dog: "+dub(new Dog()));
+    log("Circle:", dub(new Circle(12)));
+    log("Square:", dub(new Square(12)));
+    log("Dog:", dub(new Dog()));
     const x = dub(new Dog());
-    console.log("One more time with dog: "+x);
-    console.log("Well, what was the type? It's: "+typeof(x));
+    log("One more time with dog:", x);
+    log("Well, what was the type? It's:", typeof(x));
 }

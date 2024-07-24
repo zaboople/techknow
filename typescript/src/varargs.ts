@@ -11,7 +11,7 @@ import {json, log} from "./util.js";
 
 function fn(...input: any) {
     for (const z of input)
-        log("fn(): ", json(z));
+        log("fn():", json(z));
 }
 
 class Junk {
@@ -20,17 +20,17 @@ class Junk {
 }
 function fnjunk(...input: Junk[]) {
     for (const z of input)
-        log("fnjunk(): ", z);
+        log("fnjunk():", z);
 }
 
 function fnn(...input: Array<number>) {
     for (const z of input)
-        log("fnn(): ", z);
+        log("fnn():", z);
 }
 
 function un(...input: unknown[]) {
     for (const z of input)
-        log("un(): ", json(z));
+        log("un():", json(z));
 }
 
 export function test() {
