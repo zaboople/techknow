@@ -1,55 +1,65 @@
 import {json, log} from "./util.js";
 
-/* Suppose we want something that just has a .junk on it, but we don't care what else.
-   Typescript will tend to blow up if we define an object type that only has .junk
-   and something tries to pass us something with *other* fields. We can throw up our
-   hands and drop an "any" to force our way, but extends can help here: */
+/*
+    Suppose we want something that just has a .junk on it, but we don't care what
+    else. Typescript will tend to blow up if we define an object type that only
+    has the field we need, and something tries to pass us something with *other* fields
+    that we don't care about and aren't an actual problem. What to do?
+*/
 function testExtraFields() {
     log("\ntestExtraFields(): ");
+
+    /* The sloppiest, worst way: */
     function printClod(x: any) {
         log("printClod():", x.clod);
     }
     printClod(2);
     printClod({clod: "jupe", klang:23});
 
-    /** An interface like ClodHaver gets us a better solution. Note that
-        I have to do goofy T extends crap because the more straightforward
-        way doesn't work.*/
-    interface ClodHaver {
-        clod: number | null;
+    /** This is a little better, but the "extends" is obnoxious.*/
+    interface ClodHaver {clod: number | null;}
+    function printClodIfc<T extends ClodHaver>(x: T) {
+        log("printClodIfc():", json(x), x.clod ?? "<null>");
     }
-    function printClod1<T extends ClodHaver>(x: T) {
-        log("printClod1():", json(x), x.clod ?? "<null>");
-    }
-    printClod1({foo: 1, clod: 2});
-    printClod1({foo: 1, clod: null});
+    printClodIfc({foo: 1, clod: 2});
+    printClodIfc({foo: 1, clod: null});
 
-    /** Oh boy, this is weird, but it works the same.
-        This brackety thing is utterly absurd, but it's a way of saying
-        that you can have any additional properties that you want. */
-    interface ClodHaver3 {
+    /** Improved...? This brackety thing looks absurd, but it's a way of saying that
+        you can have any additional properties that you want: */
+    interface ClodHaverIfcX {
         clod: number | null;
-        [crudBomb: string]: any;
+        [___: string]: any;
     }
-    function printClod3(...xx: ClodHaver3[]) {
+    function printClodIfcX(...xx: ClodHaverIfcX[]) {
         for (const x of xx)
-        log("printClod3():", json(x), x.clod ?? "<null>");
+        log("printClodIfcX():", json(x), x.clod ?? "<null>");
     }
-    printClod3(
+    printClodIfcX(
         {clod: null, foo: "bar", key: "nud"}, {clod:12}
     );
 
-
-    /** Oh look! We don't even need an interface for this. There are some
-        extraordinary quirks but in the end it's hard to recommend interfaces...
-        https://www.typescriptlang.org/docs/handbook/2/everyday-types.html
-    */
-    type ClodHaver2 = {clod: number | null};
-    function printClod2<T extends ClodHaver2>(x: T) {
-        log("printClod2(): ", json(x), x.clod ?? "<null>");
+    /** Wait... We don't even need an interface for this. */
+    type ClodHaverObj = {clod: number | null};
+    function printClodObj<T extends ClodHaverObj>(x: T) {
+        log("printClodObj(): ", json(x), x.clod ?? "<null>");
     }
-    printClod2({foo: 1, clod: 2});
-    printClod2({foo: 1, clod: null});
+    printClodObj({foo: 1, clod: 2});
+    printClodObj({foo: 1, clod: null});
+
+    /** One better! No interface, no extends. This is the best, I think: */
+    type ClodHaverMax = {
+        clod: number | null;
+        [__: string]: any;
+    };
+    function printClodMax(...xx: ClodHaverMax[]) {
+        for (const x of xx)
+            log("printClodMax():", json(x), x.clod ?? "<null>");
+    }
+    printClodMax(
+        {clod: null, foo: "bar", key: "nud"}, {clod:12},
+        {clod: 12, meep: {a:1, b:2}},
+    );
+
 
     /* Just for kicks */
     function printLen<T extends {length:number}>(input: T) {
@@ -120,3 +130,4 @@ export function test() {
     testFunctionDeclare();
     testIntersect();
 }
+

@@ -4,6 +4,9 @@ export function log(...x: unknown[]) {
     else
         console.log(x.filter(q => q!==" ").join(" "));
 }
+export function logIntro(name: string) {
+    log("\n"+name+":");
+}
 export function json(x: unknown): string {
     return JSON.stringify(x);
 }

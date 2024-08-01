@@ -1,31 +1,39 @@
 import {json, log} from "./util.js";
 
 /**
-    This is just crap. You have to declare all the overloads, then
-    implement one function that tries to be all of them. What's the
-    point? Anyhow, the initial signatures define what you can actually
-    call. The function itself is sort of... masked? Masked, yes.
+    Ugh! You have to declare all the overloads, then implement one function
+    that tries to be all of them. Only the declared overloads are visible
+    to callers; the *implementation* function that does the actual work is
+    NOT visible.
+
+    This typically means that your implementation function has to defang
+    absurd-looking union types, and where parameter names are nearly meaningless
+    because they are actually stand-ins for completely different use-cases.
+    You have to *really* want overloads to be bothered with this.
 */
 function testOverloads() {
     log("\ntestOverloads():");
-    function fn(): string;
-    function fn(s: string): string;
-    function fn(s: string, i: number): string;
-    function fn(s?: string, i?:number): string {
-        if (i!=undefined) return ""+(i ** 2);
-        if (s!=undefined) return s+s;
-        return "" as never;
+
+    // So our overloads allow no args, two strings, or two numbers:
+    // (note our use of typeof does not force b to match a's
+    //  real-time type; it only gives us a way not to repeat ourselves)
+    function fn(): number;
+    function fn(a: string, b: string): number;
+    function fn(a: number, b: number): number;
+    function fn(a?: string | number, b?: typeof a): number {
+        if (a==null) return 0;
+        if (b==null) return 0;
+        const aa = (typeof(a)=="string") ?parseInt(a) :a;
+        const bb = (typeof(b)=="string") ?parseInt(b) :b;
+        return aa + bb;
     }
-
-    // These two make sense:
-    log("fn():", fn());
-    log("fn():", fn("test"));
-    log("fn():", fn("ferg", 1));
-
-    // There is no way to support this! If we try
-    // to define the interface it just gets in fights
-    //log("fn():", fn(1));
+    log(fn("1", "2"));
+    log(fn(3, 4));
+    log(fn());
+    // This won't compile, because we have no interface for it:
+    //log(fn(3, "4"));
 }
+
 function testArrowAsType() {
     log("\ntestArrowAsType():");
     type StringToNum = (s: string) => number;
@@ -102,8 +110,8 @@ function testAssignment() {
     // braces), or interface, even:
     type tArrow = <T>(arg: T) => T;
     type tRegular = {<T>(arg: T): T};
-    interface GenericIdentityFn {<T>(arg: T): T;};
-    type tInterface = GenericIdentityFn;
+    interface iRegular {<T>(arg: T): T;};
+    type tInterface = iRegular;
     const all: [
         tArrow, tRegular, tInterface, tArrow, tRegular, tInterface,
         ] = [
