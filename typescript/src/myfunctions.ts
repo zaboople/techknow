@@ -21,6 +21,9 @@ function testOverloads() {
     function fn(a: string, b: string): number;
     function fn(a: number, b: number): number;
     function fn(a?: string | number, b?: typeof a): number {
+        // Type narrowing is also quietly saving the day as we go,
+        // with the null checks, making sure parseInt() gets a string,
+        // etc:
         if (a==null) return 0;
         if (b==null) return 0;
         const aa = (typeof(a)=="string") ?parseInt(a) :a;

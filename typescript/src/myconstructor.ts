@@ -13,7 +13,7 @@ function runConstr(fn: ObjConstr) {
 interface BetterConstr<T> {
   new (s: string): T;
 };
-function betterConstr<T>(fn: BetterConstr<T>) {
+function betterConstr<T>(fn: BetterConstr<T>): T {
     return new fn(" ->from betterConstr()<- ");
 }
 
