@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Multi-assign off object</title>
+        <style>
+            p {padding:3px;margin:0px;font-size:17px;}
+        </style>
+
+    </head>
+    <body>
+        <code id="core">
+        </code>
+        <script language="javascript">
+            function addElems() {
+                const base = document.getElementById("core");
+                const div = document.createElement("div");
+                base.append(div);
+                for (const x of arguments) {
+                    const elem = document.createElement("p");
+                    elem.innerHTML = x;
+                    div.append(elem);
+                }
+            }
+            class Rectangle {
+                static color;
+                #area; // private variable
+                constructor(height, width) {
+                    this.height = height;
+                    this.width = width;
+                    this.#area = height * width;
+                }
+                getArea = ()=> this.#area;
+                #getArea2() {return this.#area;}
+                getArea3() {return this.#getArea2();}
+            }
+            // Note that static variables can only be referenced through
+            // the class namespace, not via an instance variable
+            // (i.e. `r.color` is undefined)
+            Rectangle.color="green";
+            const r = new Rectangle(3, 13);
+            addElems(
+                "<b>A rectangle!</b>",
+                "Height: "+r.height, "Width: "+r.width,
+                "Area v1: "+r.getArea(), "Area v3: "+r.getArea3(),
+                "Color (static): "+Rectangle.color
+            );
+
+            // Notice how we can just slap more properties on at will:
+            r.bug = "blue";
+            Rectangle.bug = "red";
+            addElems(
+                "<b>Properties being added after declaration:</b>",
+                "bug: "+r.bug,
+                "bug (static): "+Rectangle.bug,
+            );
+
+        </script>
+    </body>
+</html>
