@@ -20,7 +20,7 @@ import {test as testQuestionMark} from "./myquestion-mark.js";
 
 //testMod();
 //testExc();
-//testIfc();
+testIfc();
 //testAssert();
 //testNever();
 //testConstr();
@@ -33,4 +33,5 @@ import {test as testQuestionMark} from "./myquestion-mark.js";
 //testKeyOf();
 //testClass();
 //testMixin();
-testEnum();
+//testEnum();
+

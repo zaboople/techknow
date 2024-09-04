@@ -1,13 +1,40 @@
-import {json, log} from "./util.js";
+import {json, log, logIntro} from "./util.js";
 
 /*
+   Read this before looking at testExtraFields(), which
+   I wrote with the understanding that what is possible here
+   is actually *im*possible. Instead, only certain things
+   are impossible, which is nuts.
+*/
+function testExtraFieldsWTF() {
+    logIntro("testExtraFieldsWTF()");
+    interface Pet {name: string;}
+    function pat(p: Pet): void {
+        log("pat():", json(p));
+    }
+
+    // Wait, we can drop an extra "owner" field and get away
+    // with it? This is legal? Yes it is. We can even call our
+    // pat() function with it.
+    const dog = { name: "Lassie", owner: "Rudd Weatherwax" };
+    const pet: Pet = dog;
+    log(pet);
+    pat(pet);
+    pat(dog);
+
+    // Yet this is illegal! Well... fine! Dammit!
+    //pat({name: "Lassie", owner: "Rudd Weatherwax"});
+}
+
+/*
+    THIS IS WRONG, mostly. See testExtraFieldsWTF()
     Suppose we want something that just has a .junk on it, but we don't care what
     else. Typescript will tend to blow up if we define an object type that only
     has the field we need, and something tries to pass us something with *other* fields
     that we don't care about and aren't an actual problem. What to do?
 */
 function testExtraFields() {
-    log("\ntestExtraFields(): ");
+    logIntro("testExtraFields()");
 
     /* The sloppiest, worst way: */
     function printClod(x: any) {
@@ -70,6 +97,7 @@ function testExtraFields() {
     printLen({length:4, foo:"hi", bar:[1,2,3,4]});
 }
 
+
 /**
     Just demoing that both ways of declaring a function in an interface
     are equivalent and typescript doesn't care. Also note that readonly
@@ -77,7 +105,7 @@ function testExtraFields() {
     java's "final".
 */
 function testFunctionDeclare() {
-    log("\ntestFunctionDeclare(): ");
+    logIntro("testFunctionDeclare()");
     interface HayMaker {
         makeHay(): void;
         makeHay2: ()=>void;
@@ -104,7 +132,7 @@ function testFunctionDeclare() {
 }
 
 function testIntersect() {
-    log("\ntestIntersect(): ");
+    logIntro("testIntersect()");
     interface A {a: number;}
     interface B {b: number;}
     interface C extends A, B {c: number;};
@@ -129,5 +157,5 @@ export function test() {
     testExtraFields();
     testFunctionDeclare();
     testIntersect();
+    testExtraFieldsWTF();
 }
-
