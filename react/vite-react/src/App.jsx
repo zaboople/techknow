@@ -36,31 +36,31 @@ function App() {
     // I can't use MyRoute as a component because stupid thing gets
     // mad if it's not an actual Route instance.
     const router = createHashRouter(
-        createRoutesFromElements(<>
-            {MyRoute("/"  , <Home />)}
-            {MyRoute("/contact" , <Contact />)}
-            {MyRoute("/sign-up" , <SignUp />)}
-            {MyRoute("/chat" , <Chat />)}
-            {MyRoute("/await"   , <Wait />)}
-            {MyRoute("/await2"   , <Wait2 />)}
-            {MyRoute("/videos"   , <VideoPlayer />)}
-            {MyRoute("/cats"   , <Cats />)}
-            {MyRoute("/rerender"   , <RerenderTest />)}
-            {MyRoute("/dotchaser"   , <DotChaser />)}
-        </>)
+        createRoutesFromElements(<>{[
+            MyRoute("/"  , <Home />),
+            MyRoute("/contact" , <Contact />),
+            MyRoute("/sign-up" , <SignUp />),
+            MyRoute("/chat" , <Chat />),
+            MyRoute("/await"   , <Wait />),
+            MyRoute("/await2"   , <Wait2 />),
+            MyRoute("/videos"   , <VideoPlayer />),
+            MyRoute("/cats"   , <Cats />),
+            MyRoute("/rerender"   , <RerenderTest />),
+            MyRoute("/dotchaser"   , <DotChaser />),
+        ]}</>)
     );
 
     // For this to work correctly, it has to be all by itself.
     // Otherwise, it will *seem* to work, but it will reload
     // the application.
-    return (<>
+    return <>
         <div className="atTop">
             <RouterProvider router={router} />
         </div>
         <div className="atBottom">
             &copy; Mine <MyYear/>
         </div>
-    </>);
+    </>;
 }
 
 export default App;
