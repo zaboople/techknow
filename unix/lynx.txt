@@ -1,0 +1,4 @@
+# Un-crapping colors
+In order to un-crap lynx colors, you can edit lynx.lss; "lss" stands for "lynx style sheet". This is usually in /etc.
+In theory, your .lynxrc, env variables, -lss command-line option etc can all try to override the lynx style sheet, but none of this actually works. You just have to edit the /etc file.
+
