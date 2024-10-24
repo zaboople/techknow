@@ -1,4 +1,4 @@
-less -R handles escape codes
+less -R handles escape codes (color)
 :n Next file
 :p Previous file
 :-i Case insensitive search

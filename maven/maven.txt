@@ -1,4 +1,4 @@
-# Colors and thigns
+# Colors and things
 
 De-colorize and remove escape codes from output
     mvn --batch-mode
@@ -6,8 +6,16 @@ De-colorize and remove escape codes from output
 Maven dumps trash into cygwin et al:
     export TERM=cygwin
 
+# Integration tests
+#
+# These are done mostly by creating files named "****IT.java", emphasis on the "IT".
+# So "mvn test" will run *all* tests, but you can skip the integration tests with
+    mvn -DskipITs
+# You can also run ONLY the integration tests with:
+    mvn failsafe:integration-test
+# Or use both at once to get nothing (ha, ha...)
 
---# Alternate settings file:
+# Alternate settings file:
   -gs foo.xml
 
 #Skip tests:

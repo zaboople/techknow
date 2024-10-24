@@ -1,4 +1,7 @@
-*** Grepping for blanks/spaces/tabs
+# Grepping for blanks/spaces/tabs
   [[:blank:]]
-Example gets all non-comment lines from a conf file:
+# Example gets all non-comment lines from a conf file:
   egrep -v '^[[:blank:]]*#' postgresql.conf
+# Force color into output - works great with less -R
+  grep --color=always
+  grep --color=always | less -R  #less will now display colors

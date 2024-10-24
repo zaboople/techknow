@@ -1,5 +1,9 @@
 # Formatting Insanity And Confusion
 
+## Passwords
+You can use MYSQL_PWD to put your password in an environment variable so that it's
+automatically detected without a need for --password or -p stuff
+
 ## Skip column names
 --skip-column-names
 

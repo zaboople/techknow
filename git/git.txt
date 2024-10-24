@@ -6,26 +6,31 @@ git init
 
 
 # DIFF
-# When looking at changes between hashcodes, it's
+## Keys when navigating diff on mac
+Help: h
+Page up: w
+Page down: spacebar
+## When looking at changes between hashcodes, it's
 git diff -r <earlierhash> -r <laterhash>
-# Ignore line delimiter changes in git diff
+## Ignore line delimiter changes in git diff
 git diff --ignore-cr-at-eol
-# DIFF branches:
+## DIFF branches:
 git diff branch1 branch2
-# Also use "w" to page up because page up doesn't work because git sucks
-# Diff after you do git add:
+## Also use "w" to page up because page up doesn't work because git sucks
+## Diff after you do git add:
 git diff HEAD
-# Diff against remote (you NEED the slash here)
+## Diff against remote (you NEED the slash here)
 git diff origin/master
-# Diff when you already added
+## Diff when you already added
 git diff --staged
-# Diff output relative paths
+## Diff output relative paths
 git diff --relative
-# Diff against X as if you'd merged X first. Useful
-# when looking over somebody's crap and they don't keep
-# up with master
+## Diff against X as if you'd merged X first. Useful
+## when looking over somebody's crap and they don't keep
+## up with master
 git diff --merge-base X
-
+## Preserve color when piping to less or other things
+git diff --color=always
 
 # PULL:
 # Get up to date with master branch:
@@ -50,6 +55,11 @@ git push --set-upstream origin master
 git add .
 git add --all
 #The latter version seems to pick up deletes better.
+
+# GIT BRANCH
+# if `git branch` tries to use less, do this:
+git config --global pager.branch false
+git branch # should behave now
 
 
 # COMMIT
