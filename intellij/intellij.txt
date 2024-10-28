@@ -1,0 +1,3 @@
+# Editor / Console font
+# you do not get a separate item for console font
+Intellij Idea -> Settings -> Editor -> Font
