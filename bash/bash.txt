@@ -66,14 +66,19 @@ mystring=$(cat)
 # ****** Arrays: *******
 
 ## Push to an array:
-numbers=
-numbers+=("$1")
-numbers+=("$2")
+declare -a params=()
+params+=("qqq")
+params+=("rrr")
+params+=("sss")
+
+# Call another script or function with array as function/script parameters:
+# Array is named "params" here:
+myscript ${params[@]}
 
 ## Split a line of text into an array:
 ps -ef | while read line; do
-arr=(${line})
-echo ${arr[1]} " and " ${arr[2]}
+    arr=(${line})
+    echo ${arr[1]} " and " ${arr[2]}
 done;
 
 ## Declared array:
