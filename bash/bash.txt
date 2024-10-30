@@ -72,8 +72,10 @@ params+=("rrr")
 params+=("sss")
 
 # Call another script or function with array as function/script parameters:
-# Array is named "params" here:
-myscript ${params[@]}
+# Array is named "params" here (see above). Note that the quotes are essential when there
+# are spaces in the parameters, even though it quotes them one at a time, not
+# all in one big pair of quotes.
+myscript "${params[@]}"
 
 ## Split a line of text into an array:
 ps -ef | while read line; do
