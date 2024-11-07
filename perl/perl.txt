@@ -1,8 +1,8 @@
 -- Multiline find/replace
 Use perl -0pe
-Example: 
+Example:
     Note how I use "(.|\n)*?" to wildcard my way through multiple lines. If necessary, I can use "\r\n" on windows as well (of course the line breaks in $expr & $repl will be the file's line breaks):
-    
+
     expr='
         first(.|\n)*?
         last
@@ -13,3 +13,5 @@ Example:
     '
     perl -0pe "s|$expr|$repl|"
 
+-- Find replace multiple expressions:
+perl -pe 's/expr1/repl1/ or s/expr2/repl2/ or s/expr3/repl3/'

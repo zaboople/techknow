@@ -24,3 +24,6 @@ Command-Shift .
 
 # Resize fonts:
   command +- big/small
+
+# The monospaced mac fonts:
+Monaco, Menlo, Courier, Courier New, Andale Mono

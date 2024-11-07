@@ -1,4 +1,7 @@
 less -R handles escape codes (color)
+
 :n Next file
 :p Previous file
 :-i Case insensitive search
+
+F makes it act like tail
