@@ -4,6 +4,8 @@ http://ohshitgit.com/
 # CREATE A NEW REPO:
 git init
 
+# Get git debugging:
+export GIT_TRACE=1
 
 # DIFF
 ## Keys when navigating diff on mac
