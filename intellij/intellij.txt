@@ -7,3 +7,6 @@ ALT+SHIFT+F
 
 # Go to file:
 ALT+SHIFT+O
+
+# Avoid jumping into crap reflection and what have you during debugging:
+Intellij -> Settings -> search on "Stepping" -> add package names you don't want to step into, esp. "org.springframework.aop.*"
