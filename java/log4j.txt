@@ -3,8 +3,25 @@
   log4j.rootLogger=INFO
   # This piece of crap gets more:
   log4j.logger.org.apache.struts2=DEBUG
-  
+
 # This is another way to force control of logging, when it fights you
 # We've defined a logger named "dinkus", so we're going to set its threshold.
 # This doesn't give us thresholding by package, but fine, it helps shut everyone up:
 log4j.appender.dinkus.threshold=INFO
+
+
+# OKAY for log4j2, here is how you turn something off or restrict it:
+# No debug/trace stuff:
+logger.com.spud.name=com.spud
+logger.com.spud.level=INFO
+# Turn this one off:
+logger.com.doo.bar.name=com.doo.bar
+logger.com.doo.bar.level=OFF
+# Errors/Fatal only:
+logger.org.smut.dinkus.Flatulo.name=org.smut.dinkus.Flatulo
+logger.org.smut.dinkus.Flatulo.level=ERROR
+# Wrap it all up:
+# Should be sorted from more specific to less specific; for example. com.example.test must come before com.example:
+loggers=com.spud,com.doo.bar,org.smut.dinkus.Flatulo
+
+
