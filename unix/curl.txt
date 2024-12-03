@@ -1,5 +1,5 @@
 *********************
-# Compress:
+# Compress & gzip:
 curl --compressed
 
 # Proxy:

@@ -4,6 +4,10 @@ time <cmd>
 # Avoiding ctrl-C in cygwin:
 setsid COMMAND &
 
+# Color codes
+# This prints something in red:
+echo '\e[31 foo'
+
 # Prompt:
 ## Put this in your .bash_profile so you can choose between setting window title to
 ## the current directory, vs. setting it to an arbitrary string:
@@ -37,7 +41,7 @@ echo "${BASH_SOURCE[0]}"
 echo $0
 
 
-# Variable substitution
+# Variable substitution & replace:
 ${parameter:-defaultValue}	Get default shell variables value
 ${parameter:=defaultValue}	Set default shell variables value
 : ${parameter:="8080"}           "    " ... but more robust than previous (numbers break it) (: is a no-op)
@@ -70,6 +74,12 @@ declare -a params=()
 params+=("qqq")
 params+=("rrr")
 params+=("sss")
+
+# Declare array, loop through it:
+myray=(31 32 33 34 35 36)
+for xx in "${myray[@]}"; do
+    echo $xx
+done
 
 # Call another script or function with array as function/script parameters:
 # Array is named "params" here (see above). Note that the quotes are essential when there

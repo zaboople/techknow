@@ -102,3 +102,6 @@ docker images --format '{{.Repository}}:{{.Tag}}' | xargs docker rmi
 # MAKE LOCALHOST THE SAME FOR EVERYBODY
 # This makes it where localhost is the same for containers as for anything else on the host.
 docker run --network=host .....
+
+# Export / Env variable in Dockerfile:
+ENV MY_VARIABLE="glergh"
