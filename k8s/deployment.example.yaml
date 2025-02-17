@@ -1,0 +1,39 @@
+# Use
+#   kubectl apply -f replicaset.example.yaml
+#
+# - Notice how putting a "name:" on containers is ignored - auto-generated instead.
+# Apparently kube wants a name though if you have multiple containers; useful
+# for getting logs i.e. "kubectl logs -c aa"
+#
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    myname: my-deploy
+    myversion: "2.0"
+  name: deploy01
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      myname: rs01
+  template:
+    metadata:
+      labels:
+        myname: rs01
+    spec:
+      # Uncomment my nodeSelector if you want to play with node labels:
+      #nodeSelector:
+      #  BIGLABEL: BIGVALUE
+      containers:
+      - image: httpd
+        name: rr
+        resources: {}
+      - image: bitnami/redis:6.2.1
+        name: zz
+        resources: {}
+        env:
+        - name: REDIS_PASSWORD
+          value: "23"
+      dnsPolicy: ClusterFirst

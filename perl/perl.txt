@@ -15,3 +15,6 @@ Example:
 
 -- Find replace multiple expressions:
 perl -pe 's/expr1/repl1/ or s/expr2/repl2/ or s/expr3/repl3/'
+
+-- Replace file in place
+perl -pi.bak -e 's/gee/go/g' myfile

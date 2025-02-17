@@ -1,0 +1,23 @@
+Colima is a VM for Macintosh Linux, Docker, Containers
+
+# Profiles via -p are good so that you can run different kinds of vm's
+# This allows you to edit profile and set params with --edit.
+colima start --edit -p minikube
+
+# When using profiles, most commands accept a -p
+colima status
+colima status -p minikube
+
+# Find status of all profiles:
+colima list
+
+# Start a minikube in colima; first we need to establish location of docker sock:
+export DOCKER_HOST=unix:///Users/tmotte/.colima/minikube/docker.sock
+minikube start --nodes 2 --cpus 2 --memory 2048 --disk-size 2500m \
+    --driver docker --container-runtime docker --namespace test -p mykube
+
+## Set minikube profile for commands after this:
+minikube profile mykube
+
+## Minikube Cluster Network IP range is first 3 octets of the Minikube Cluster IP fetched, which is x.x.x.0/24.
+minikube ip
