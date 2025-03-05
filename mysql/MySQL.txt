@@ -57,7 +57,7 @@ mysqldump --lock-tables=false -h SERVER -u USER --password SCHEMA TABLE
 
 # Process list
 # This is much better than `show full processlist`
-select * from information_schema.processlist where command<>'Sleep';
+select * from information_schema.processlist where time > 60;
 
 # Get transaction isolation
 SELECT @@global.tx_isolation;

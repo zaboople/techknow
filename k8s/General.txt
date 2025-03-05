@@ -9,8 +9,9 @@ Nodes can contain many pods.
 Pods can contain more than one container, sharing network namespace and storage.
 
 
-
+#----------------------------------------
 # Minikube
+#----------------------------------------
 ## Install, seems to come with kubectl
 brew install minikube
 
@@ -28,13 +29,20 @@ minikube profile mykube
 ## Minikube Cluster Network IP range is first 3 octets of the Minikube Cluster IP fetched, which is x.x.x.0/24.
 minikube ip
 
+## To create another node in minikube (fun when you have daemonsets!):
+minikube node add
+
+## Get a dashboard web site!
+minikube dashboard
+
+#----------------------------------------
+# Kubectl basic info:
 
 # kubectl help is built in
 kubectl explain <thing>
 kubectl explain pod
 kubectl explain pod.spec
 kubectl explain pod.spec.containers.startupProbe
-
 
 # Describe nodes in cluster:
 kubectl get nodes
@@ -44,10 +52,26 @@ kubectl describe node <node-name>
 
 # Config for kubectl:
 less ~/.kube/config
-
-# Use special config file:
+## Use special config file:
 kubectl --kubeconfig <commands>
 
+# Resource Types:
+## Pod - Single instance of a running process (hmm it can have multiple containers...)
+## Deployment - Handles replicas of pods
+## Service - Exoses pods to network, load-balanced? (but not same as Ingress?)
+## ConfigMap - Non-secret configuration
+## Secret - Secrets storage
+## PersistentVolume - Storage
+## PersistentVolumeClaim - Request for storage
+## Ingress - Manages HTTP & HTTPS traffic coming in
+## Namespace
+## Uh-oh you have even more, and this is actually useful for working on yaml manifests,
+## because it lists necessary api versions, names for "kind", etc
+kubectl api-resources
+
+#-------------------------------------
+# Pod & Container Basics
+#-------------------------------------
 # Run an nginx pod named "pod01"
 kubectl run pod01 --image=nginx
 # Generate YAML manifest instead of actually creating; you can specify client or server here, not sure diff:
@@ -76,7 +100,9 @@ kubectl describe pod <pod-name>
 # Delete a freakin pod:
 kubectl delete pod <pod-name>
 
+#-------------------------------------
 # Honking around with YAML "manifest" files:
+#-------------------------------------
 ## Create arbitrary stuff (like a pod) with a yaml file:
 kubectl apply -f myfile.yml
 ## Delete it
@@ -96,21 +122,6 @@ foo:
   bash: dangle
 - bar: sworgle
   bash: doongle
-
-
-# Resource Types:
-## Pod - Single instance of a running process (hmm it can have multiple containers...)
-## Deployment - Handles replicas of pods
-## Service - Exoses pods to network, load-balanced? (but not same as Ingress?)
-## ConfigMap - Non-secret configuration
-## Secret - Secrets storage
-## PersistentVolume - Storage
-## PersistentVolumeClaim - Request for storage
-## Ingress - Manages HTTP & HTTPS traffic coming in
-## Namespace
-## Uh-oh you have even more, and this is actually useful for working on yaml manifests,
-## because it lists necessary api versions, names for "kind", etc
-kubectl api-resources
 
 # Multi-pod containers require YAML - cannot be done with plain "kubectl run"
 spec:
@@ -142,8 +153,15 @@ spec:
     ports:
       - containerPort: 8080
 
+# Delete whatever yaml defines:
+kubectl delete -f <yml file>
+
+# You can put multiple things in the same yml file
+# by just delimiting them with "---"! Convenient.
+
 # --------------------------------
 # Labels
+# --------------------------------
 ## Get labels for running pods
 kubectl get pods --show-labels
 ## This gets pod with label xxx and value yyy
@@ -181,6 +199,7 @@ kubectl delete replicaset -l myname=my-repset
 
 # --------------------------------
 # Deployment: Fancy upgrade to ReplicaSet
+# --------------------------------
 ## You can only create them by using manifest. We have one.
 ## - Note that the manifest is about the same as replicaset;
 ##   I just changed "kind: ReplicaSet" to "kind:Deployment" actually.
@@ -219,11 +238,12 @@ kubectl rollout undo deployment --to-revsion=<number>
 ## You can scale deploys just like replicas:
 kubectl scale --replicas=2 deploy/<name>
 
-
+# --------------------------------
 # NodeSelector - Label nodes for to pods to choose as destination
+# --------------------------------
 ## First you label your nodes
 kubectl label nodes <node-name> <label name>=<label value>
-## BTW, to remove label from node:
+## BTW, to remove label from node, use a "-" character (!!!):
 kubectl label nodes <node-name> <label name>-
 ## Add to the pod spec, goes parallel to the ":containers" element
 ## Picks a label assigned to a node, so that your pod goes on that node
@@ -231,3 +251,86 @@ containers:
     ....
 nodeSelector:
     <name>: <value>
+
+# --------------------------------
+# DaemonSet
+# --------------------------------
+Ensures that each NODE runs one pod for your daemonset config; when new nodes are created, a pod is
+automatically deployed in it. Often used for things like log-collection daemons,
+virus checkers, stats collection agents; things that you want on every pod as a
+universal bare-minimum for pods.
+
+Note that your daemonsset will appear as new pods, one per node. You can probably use
+Node Selectors to actually pick out which node labels to look for.
+
+## Find out what daemonsets are running
+kubectl get daemonset
+## Remove a daemonset
+kubectl delete ds <name>
+## As yaml goes, you really just do the same as Deployment, but with "kind:Daemonset"
+## (examples in this directory)
+
+# --------------------------------
+# Node Affinity
+# --------------------------------
+## Operators:
+In
+NotIn
+Exists - matches key only
+DoesNotExist - excudes nodes matching key
+Gt & Lt - works with numeric node values, < and >
+## Preferences
+Required: requiredDuringSchedulingIgnoredDuringExection
+Preferred: - a softer requirement - preferredDuringSchedulingIgnoredDuringExection
+## Example:
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: disktype
+            operator: In
+            values:
+            - ssd
+# --------------------------------
+# Resources requests & limits
+# --------------------------------
+## Goes in like so:
+      containers:
+      - name: fluentd-elasticsearch
+        image: quay.io/fluentd_elasticsearch/fluentd
+        resources:
+          requests:
+            memory: "1Mi"
+            cpu: "1"
+          limits:
+            memory: "2Mi"
+            cpu: "2"
+## How they work
+requests is what we're asking for; limits are when we need to be killed
+
+# --------------------------------
+# Service
+# --------------------------------
+Can load-balance requests from pod A to pods B/C/D
+Automatically keeps track of pod IP's
+Can also expose pods to the outside world
+## Four types
+ClusterIP: Default, accessible only inside cluster
+NodePort: Exposes service on a static port
+LoadBalancer: Exposes service using cloud provider's load balancer
+ExternalName: Maps service to external DNS name
+## But that's misleading... I know about these
+Service - Sort of gets ball rolling
+Endpoint - More roll
+# Get list of services:
+kubectl get service -o wide
+kubectl get svc -o wide
+# This will show you an "Endpoints" that indicates the endpoints assigned:
+kubectl describe service <name>
+# NodePort
+Maybe try using these internal only IP ranges:
+    10.0.0.0–10.255.255.255
+    172.16.0.0–172.31.255.255
+    192.168.0.0–192.168.255.255
