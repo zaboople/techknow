@@ -331,14 +331,9 @@ kubectl get svc -o wide
 kubectl describe service <name>
 
 ## NodePort
-Maybe try using these internal only IP ranges:
-    10.0.0.0–10.255.255.255
-    172.16.0.0–172.31.255.255
-    192.168.0.0–192.168.255.255
 ### First create a service like the contents of nodeport.yaml
 kubectl apply -f nodeport.yaml
 kubectl get services -o wide
-
 ### Now you can connect this up with minikube... via ssh tunnel? Note how
 ### "mynodeport" refers to service definition above.
 ### Refer to https://minikube.sigs.k8s.io/docs/handbook/accessing/
@@ -349,3 +344,49 @@ ps -ef | grep docker@127.0.0.1
 ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -N docker@127.0.0.1 -p 55972 -i /Users/FOO/.minikube/machines/minikube/id_rsa -L TUNNEL_PORT:CLUSTER_IP:TARGET_PORT
 ### Now you can go to TUNNEL_PORT via curl!
 curl http://localhost:<TUNNEL_PORT>
+
+## LoadBalancer
+Creates a NodePort automatically; is one step up from such. This is a little
+easier to work with than stupid nodeport.
+
+### 1 We can use the same yaml as we did in our nodeport example,
+###   and just change "type: NodePort" to "type:LoadBalancer":
+### 2 Then run some minikube magic, ez pz
+### 3 The service will be exposed on the port we picked in "port: 8081"
+###   from our yaml
+kubectl apply -f ./loadbalancer.yml
+ssh tunnel
+curl http://localhost:8081
+
+
+# Ingress
+This is like a LoadBalancer except that rather than creating a new LoadBalancer
+every time you create a service, you can create one ingress for load-balancing
+all your services at once.
+You have two kinds:
+    1. Ingress Controller
+        Implements rules found in Ingress Resources
+    2. Ingress Resource
+- Use pathType: Prefix in most cases, because "Exact" matches only one thing
+- Check ingress-controller.sh in this directory for usage
+
+# Helm
+- artifacthub.io has all the helmcharts
+## Simple commands
+helm list
+helm repo list
+## Add something
+helm repo add <name> <url>
+helm install <release> <chart>
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm install my-nginx bitnami/nginx --version 19.1.1
+### Search
+helm repo search
+helm search repo bitnami
+helm search hub nginx
+### Dump chart: Note that you can require a namespace with -n
+helm template bitnami/nginx
+helm template bitnami/nginx -n mynamespace
+### Remove thing:
+helm uninstall my-nginx
+

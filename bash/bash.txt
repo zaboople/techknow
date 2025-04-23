@@ -160,3 +160,7 @@ You can $foo special characters like $ and \.
 EOF
 )
 echo "$data"
+
+## Echo without newline
+echo -n "Hello? "
+read answer

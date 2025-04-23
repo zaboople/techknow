@@ -1,0 +1,4 @@
+# Get rid of stupid commas in numbers:
+DBeaver -> Settings ->
+    Editors -> Data Editors -> Data Formats
+        Click the "Disable numeric formatting" checkbox

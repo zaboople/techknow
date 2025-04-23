@@ -1,0 +1,57 @@
+# Use
+#   kubectl apply -f replicaset.example.yaml
+#
+# - Notice how putting a "name:" on containers is ignored - auto-generated instead.
+# Apparently kube wants a name though if you have multiple containers; useful
+# for getting logs i.e. "kubectl logs -c aa"
+#
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    myname: my-deploy
+    myversion: "2.0"
+  name: deploy01
+spec:
+  replicas: 1
+  # This says "My container needs to run on a pod labeled myname=rs01"
+  selector:
+    matchLabels:
+      myname: rs01
+  # I don't really understand why this needs to have same labels, but ok:
+  template:
+    metadata:
+      labels:
+        myname: rs01
+    spec:
+      # Uncomment my nodeSelector if you want to play with node labels:
+      #nodeSelector:
+      #  BIGLABEL: BIGVALUE
+      containers:
+      - image: nginx
+        name: rr
+        resources: {}
+      dnsPolicy: ClusterFirst
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    myname: my-deploy2
+    myversion: "2.0"
+  name: myloadbalancer
+spec:
+  type: LoadBalancer
+  # NOTE! This is selecting the Deployment above! Ref rs01
+  # Change this name and watch it break.
+  selector:
+    myname: rs01
+  # "port:" Is the port my service is listening on
+  # "targetPort:" Is the port of the nginx above that I am exposing
+  ports:
+  - port: 8081
+    targetPort: 80
