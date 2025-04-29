@@ -4,6 +4,7 @@ sudo pip install awscli --ignore-installed six
 aws ec2 describe-instances
 aws redshift describe-clusters
 aws s3 ls
+aws s3 ls --recursive <bucketname>
 
 To run queries against your json etc:
   aws blah blah --query
