@@ -314,18 +314,31 @@ This shows *previous* deploys as well as current:
 ```
 kubectl get rs --show-labels
 ```
-## This only shows current:
+
+This only shows current:
+```
 kubectl get deployment --show-labels
-## To truly delete the deployment, do like so - don't delete the rs:
+```
+
+To truly delete the deployment, do like so - don't delete the rs:
+```
 kubectl delete deployment <name>
-## Show history of deployments:
+```
+
+Show history of deployments:
+```
 kubectl rollout history deployment/<deployment name>
 kubectl rollout history deployment
-## Undo deployment! With --to-revision, you're using a number
-## from the rollout history
+```
+
+Undo deployment! With `--to-revision`, you're using a number
+from the rollout history:
+```
 kubectl rollout undo deployment
 kubectl rollout undo deployment <name>
 kubectl rollout undo deployment --to-revsion=<number>
+```
+
 ## You can scale deploys just like replicas:
 kubectl scale --replicas=2 deploy/<name>
 
