@@ -278,30 +278,42 @@ kubectl delete replicaset -l myname=my-repset
 ```
 
 
-# Deployment: Fancy upgrade to ReplicaSet
-## You can only create them by using manifest. We have one.
-## - Note that the manifest is about the same as replicaset;
-##   I just changed "kind: ReplicaSet" to "kind:Deployment" actually.
-## - If the underlying YAML changes enough to force redeploy,
-##   "apply -f" will kick off a rolling redeploy. Try changing
-##   "nginx" to "httpd" in manifest (or back). You ONLY get
-##   that redeploy if kube sees the right kind of changes to manifest,
-##   however.
-## - Deployments have underlying replicasets; they essentially
-##   *manage* those replicasets. If you delete a replicaset created
-##   by a deployment, kube does like it does with pods in an rs; it
-##   starts another replicaset up!
-##
-## Create a deployment straight off of command line! You can use yaml
-## auto-generation technique to generate a manifest as well:
+# Deployment: A fancy upgrade to ReplicaSet
+You can only create them by using manifest. We have one.
+- Note that the manifest is about the same as replicaset;
+  I just changed "kind: ReplicaSet" to "kind:Deployment" actually.
+- If the underlying YAML changes enough to force redeploy,
+  "apply -f" will kick off a rolling redeploy. Try changing
+  "nginx" to "httpd" in manifest (or back). You ONLY get
+  that redeploy if kube sees the right kind of changes to manifest,
+  however.
+- Deployments have underlying replicasets; they essentially
+  *manage* those replicasets. If you delete a replicaset created
+  by a deployment, kube does like it does with pods in an rs; it
+  starts another replicaset up!
+
+
+Create a deployment straight off of command line! You can use yaml
+auto-generation technique to generate a manifest as well:
+```
 kubectl create deployment <name> --image=nginx
 kubectl create deployment <name> --image=nginx --dry-run=client -o yaml
-## The more common way to create deployment, off of manifest:
+```
+
+The more common way to create deployment, off of manifest:
+```
 kubectl apply -f deployment.example.yaml
-## Watch pods redeploy as needed:
-$ kubectl apply -f deployment.example.yaml && kubectl get pods -w
-## This shows *previous* deploys as well as current:
+```
+
+Watch pods redeploy as needed:
+```
+kubectl apply -f deployment.example.yaml && kubectl get pods -w
+```
+
+This shows *previous* deploys as well as current:
+```
 kubectl get rs --show-labels
+```
 ## This only shows current:
 kubectl get deployment --show-labels
 ## To truly delete the deployment, do like so - don't delete the rs:
