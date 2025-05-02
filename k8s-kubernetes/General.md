@@ -28,28 +28,32 @@ minikube start --nodes 2 --cpus 2 --memory 2048 --disk-size 2500m \
 
 Note that I had a "--namespace mytest" but it seemed to break kubectl
 
-## Set minikube profile for commands after this:
-minikube profile mykube
+Set minikube profile for commands after this:
 
-## Minikube Cluster Network IP range is first 3 octets of the Minikube Cluster IP fetched, which is x.x.x.0/24.
-minikube ip
+`minikube profile mykube`
+
+Minikube Cluster Network IP range is first 3 octets of the Minikube Cluster IP fetched, which is x.x.x.0/24:
+`minikube ip`
 
 ## To create another node in minikube (fun when you have daemonsets!):
-minikube node add
+`minikube node add`
 
 ## Get a dashboard web site!
-minikube dashboard
+`minikube dashboard`
 
-#----------------------------------------
+----------------------------------------
 # Kubectl basic info:
 
-# kubectl help is built in
+Kubectl help is built in:
+
+```
 kubectl explain <thing>
 kubectl explain pod
 kubectl explain pod.spec
 kubectl explain pod.spec.containers.startupProbe
+```
 
-# Describe nodes in cluster:
+## Describe nodes in cluster:
 kubectl get nodes
 kubectl get nodes -o wide
 kubectl describe nodes
