@@ -67,8 +67,9 @@ kubectl describe node <node-name>
 `less ~/.kube/config`
 
 ## Use special config file:
+```
 kubectl --kubeconfig <commands>
-
+```
 ## Cluster info
 ```
 kubectl cluster-info
@@ -94,11 +95,14 @@ because it lists necessary api versions, names for "kind", etc
 # Pod & Container Basics
 
 Run an nginx pod named "pod01":
-
-`kubectl run pod01 --image=nginx`
+```
+kubectl run pod01 --image=nginx
+```
 
 Generate YAML manifest instead of actually creating; you can specify client or server here, not sure diff:
-`kubectl run pod01 --image=nginx --dry-run=client -o yaml`
+```
+kubectl run pod01 --image=nginx --dry-run=client -o yaml`
+```
 
 Get list of running pods:
 ```
