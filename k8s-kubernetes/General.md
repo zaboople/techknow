@@ -375,7 +375,7 @@ Note that your daemonsset will appear as new pods, one per node. You can probabl
 Node Selectors to actually pick out which node labels to look for.
 
 Find out what daemonsets are running:
-````
+```
 kubectl get daemonset
 ```
 
