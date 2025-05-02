@@ -85,8 +85,11 @@ kubectl cluster-info dump
   - PersistentVolumeClaim - Request for storage
   - Ingress - Manages HTTP & HTTPS traffic coming in
   - Namespace
-  - Uh-oh you have even more, and this is actually useful for working on yaml manifests,
-  - because it lists necessary api versions, names for "kind", etc
+
+Uh-oh you have even more, and this is actually useful for working on yaml manifests,
+because it lists necessary api versions, names for "kind", etc
+
+`kubectl api-resources`
 
 # Pod & Container Basics
 
@@ -98,10 +101,11 @@ Generate YAML manifest instead of actually creating; you can specify client or s
 `kubectl run pod01 --image=nginx --dry-run=client -o yaml`
 
 Get list of running pods:
-`kubectl get pods`
+```
+kubectl get pods
 kubectl get pods -o wide
 kubectl describe pod <pod-name>
-
+```
 # Get logs for our pod, or for a specific container in it:
 kubectl logs <pod-name>
 kubectl logs <pod-name> -c <container-name>
