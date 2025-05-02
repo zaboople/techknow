@@ -51,6 +51,8 @@ kubectl explain <thing>
 kubectl explain pod
 kubectl explain pod.spec
 kubectl explain pod.spec.containers.startupProbe
+
+kubectl api-resources
 ```
 
 ## Describe nodes in cluster:
@@ -72,30 +74,31 @@ kubectl --kubeconfig <commands>
 kubectl cluster-info
 kubectl cluster-info dump
 ```
+
 # Resource Types:
-## Pod - Single instance of a running process (hmm it can have multiple containers...)
-## Deployment - Handles replicas of pods
-## Service - Exoses pods to network, load-balanced? (but not same as Ingress?)
-## ConfigMap - Non-secret configuration
-## Secret - Secrets storage
-## PersistentVolume - Storage
-## PersistentVolumeClaim - Request for storage
-## Ingress - Manages HTTP & HTTPS traffic coming in
-## Namespace
-## Uh-oh you have even more, and this is actually useful for working on yaml manifests,
-## because it lists necessary api versions, names for "kind", etc
-kubectl api-resources
+  - Pod - Single instance of a running process (hmm it can have multiple containers...)
+  - Deployment - Handles replicas of pods
+  - Service - Exoses pods to network, load-balanced? (but not same as Ingress?)
+  - ConfigMap - Non-secret configuration
+  - Secret - Secrets storage
+  - PersistentVolume - Storage
+  - PersistentVolumeClaim - Request for storage
+  - Ingress - Manages HTTP & HTTPS traffic coming in
+  - Namespace
+  - Uh-oh you have even more, and this is actually useful for working on yaml manifests,
+  - because it lists necessary api versions, names for "kind", etc
 
-#-------------------------------------
 # Pod & Container Basics
-#-------------------------------------
-# Run an nginx pod named "pod01"
-kubectl run pod01 --image=nginx
-# Generate YAML manifest instead of actually creating; you can specify client or server here, not sure diff:
-kubectl run pod01 --image=nginx --dry-run=client -o yaml
 
-# Get list of running pods
-kubectl get pods
+Run an nginx pod named "pod01":
+
+`kubectl run pod01 --image=nginx`
+
+Generate YAML manifest instead of actually creating; you can specify client or server here, not sure diff:
+`kubectl run pod01 --image=nginx --dry-run=client -o yaml`
+
+Get list of running pods:
+`kubectl get pods`
 kubectl get pods -o wide
 kubectl describe pod <pod-name>
 
