@@ -121,7 +121,7 @@ Get logs for our pod, or for a specific container in it:
 ```
 kubectl logs <pod-name>
 kubectl logs <pod-name> -c <container-name>
-
+```
 ## Bash interaction / SSH
 ```
 Run a bash command in our freakin pod:
