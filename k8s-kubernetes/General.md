@@ -146,7 +146,7 @@ Another way but it creates a dead pod that tries to restart many times:
 kubectl run stupid --image=busybox:latest --command -- ping "-c" "30" "google.com'
 ```
 
-# Honking around with YAML "manifest" files:
+# YAML "manifest" Files:
 Create arbitrary stuff (like a pod) with a yaml file:
 ```
 kubectl apply -f myfile.yml
@@ -156,9 +156,9 @@ Delete it:
 kubectl delete -f myfile.yml
 ```
 
-Note that yaml files can have many objects delimited by a "---" on a line by itself between objects
+Note that yaml files can have many objects delimited by a "---" on a line by itself between objects!
 
-## Primary things in a yaml
+Primary things in a yaml:
 ```
     apiVersion: [ What it says, usually "v1"]
     kind: [Resource type, like "Pod"]
@@ -167,9 +167,8 @@ Note that yaml files can have many objects delimited by a "---" on a line by its
     spec:
         [all the config crud]
 ```
-* SPECIAL NOTE: Dash in yaml *
-
-The dash indicates the start of a member of a list of things
+SPECIAL NOTE - Dash in yaml: The dash indicates the start of a member of a list of things. Here
+we have foo as a list with two elements, each element being a map with two members:
 ```
     foo:
     - bar: swangle
@@ -180,40 +179,43 @@ The dash indicates the start of a member of a list of things
 
 Multi-pod containers require YAML - cannot be done with plain "kubectl run":
 ```
-spec:
-  containers:
-    - name: foo
-    image: <image1>
-    - name: bar
-    image: <image2>
+    spec:
+      containers:
+        - name: foo
+        image: <image1>
+        - name: bar
+        image: <image2>
 ```
-# To specify command and arguments to that command, add a couple things.
-# Note that "command" overrides ENTRYPOINT in dockerfile and "args" overrides "CMD"
-# (you could also just command & args as one "command" yaml list)
+
+## Command & Arguments
+To specify command and arguments to that command, add a couple things.
+Note that "command" overrides ENTRYPOINT in dockerfile and "args" overrides "CMD"
+(you could also just command & args as one "command" yaml list)
+```
 spec:
   containers:
     - name: foo
     image: <image1>
     command: ["/bin/echo"]
     args: ["hello", "world"]
-## Alternate form:
+
+    # Alternate form:
     command:
         - "/bin/echo"
         - "hello"
         - "world"
-
-# Port exposing. The port will be exposed no matter what, but we can make it
-# more explicit. Apparently there are ways to map to different port/IP in here
+```
+## Port exposing.
+The port will be exposed no matter what, but we can make it
+more explicit. Apparently there are ways to map to different port/IP in here
+```
 spec:
   containers:
     ports:
       - containerPort: 8080
+```
 
-# Delete whatever yaml defines:
-kubectl delete -f <yml file>
 
-# You can put multiple things in the same yml file
-# by just delimiting them with "---"! Convenient.
 
 # --------------------------------
 # Labels
