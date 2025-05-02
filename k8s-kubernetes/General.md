@@ -215,49 +215,70 @@ spec:
       - containerPort: 8080
 ```
 
-
-
-# --------------------------------
 # Labels
-# --------------------------------
-## Get labels for running pods
+Get labels for running pods:
+```
 kubectl get pods --show-labels
-## This gets pod with label xxx and value yyy
+```
+This gets pod with label xxx and value yyy:
+```
 kubectl get pods -l xxx=yyy
-## Add labels
+```
+Add labels:
+```
 kubectl label pod <podname> <labelname>=<value>
-## Yaml version, top level:
+```
+Yaml version, top level:
+```
 metadata:
   name: thingie
   labels:
     <labelname>: <value>
+```
 
-# --------------------------------
 # Replicaset
+
 This allows you to have a set number of copies of a pod, and can change the number of
 instances on the fly. Dead pods are automatically restart by the replicaset.
 Note: When you use "apply -f" to a running replicaset, it doesn't actually restart
 or reconfigure pods; you have to kill pods off and then they will restart with new config.
-## You can only create them by using manifest. We have one: replicaset.example.yaml
+
+You can only create them by using manifest. We have one: replicaset.example.yaml
+```
 kubectl apply -f replicaset.example.yaml
-## Get replicasets... second version is shorter
+```
+
+Get replicasets... second version is shorter
+```
 kubectl get replicaset --show-labels
 kubectl get rs --show-labels
-## Try deleting a pod and it bounces back as new pod
+```
+
+Try deleting a pod and it bounces back as new pod:
+```
 kubectl get pods --show-labels
 kubectl delete pod -l myname=rs01
 kubectl get pods --show-labels
-## Rescale the replicaset; notice how we have to put "rs/"
-## in front of the name or it won't work:
-kubectl scale --replicas=2 rs/repset01
-## Delete replicaset:
-kubectl delete replicaset repset01
-## Delete replicaset by label
-kubectl delete replicaset -l myname=my-repset
+```
 
-# --------------------------------
+Rescale the replicaset; notice how we have to put "rs/"
+in front of the name or it won't work:
+```
+kubectl scale --replicas=2 rs/repset01
+```
+
+Delete replicaset:
+```
+kubectl delete replicaset repset01
+```
+
+Delete replicaset by label
+```
+kubectl delete replicaset -l myname=my-repset
+```
+
+
 # Deployment: Fancy upgrade to ReplicaSet
-# --------------------------------
 ## You can only create them by using manifest. We have one.
 ## - Note that the manifest is about the same as replicaset;
 ##   I just changed "kind: ReplicaSet" to "kind:Deployment" actually.
