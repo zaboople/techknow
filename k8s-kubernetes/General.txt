@@ -16,6 +16,7 @@ Pods can contain more than one container, sharing network namespace and storage.
 brew install minikube
 ```
 ## Start a minikube in colima
+
 First we need to establish location of docker sock: Note that this will create a minikube profile under ~/.minikube/profiles/mykube
 and later starts will just boot up with "minikube start"
 
