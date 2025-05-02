@@ -55,6 +55,10 @@ less ~/.kube/config
 ## Use special config file:
 kubectl --kubeconfig <commands>
 
+# Cluster info
+kubectl clusterinfo
+kubectl clusterinfo dump
+
 # Resource Types:
 ## Pod - Single instance of a running process (hmm it can have multiple containers...)
 ## Deployment - Handles replicas of pods
@@ -390,3 +394,37 @@ helm template bitnami/nginx -n mynamespace
 ### Remove thing:
 helm uninstall my-nginx
 
+# Namespaces
+You can usually append --namespace <name> to a command to specify a namespace
+Or just use -n <name> for short!
+## Built-in namespaces we know about are
+default - For resources without a namespace
+kube-system - For objects created by Kube
+kube-public - A namespace for all users, usually for public data
+kube-node-lease - Used for node heartbeat leases
+## Set a default namespace
+kubectl config set-context --current --namespace=<your-namespace-name>
+## List all namespaces
+kubectl get namespace
+## Get pods for all namespaces:
+kubectl get pods --all-namespaces -o wide
+## Create
+kubectl create namespace <name>
+kubectl delete ns <name>
+
+# Service accounts
+kubectl get serviceaccounts --all-namespaces
+kubectl get sa --all-namespaces
+## There is a "default" service account that gets assigned to pods.
+## Every namespace actually has its own "default" service account.
+##
+## Look at pod service account (pod name is derp here):
+kubectl exec -it derp -- bash
+root@derp:/# cd /var/run/secrets/kubernetes.io/serviceaccount/
+root@derp:/var/run/secrets/kubernetes.io/serviceaccount# ls
+ca.crt	namespace  token
+### Note that the token file is used to talk to the dns & control plane servers
+### inside servers, e.g.
+    curl --insecure --header "Authorization: Bearer $token" https://....
+### Remember that you can get those web server urls from
+    kubectl cluster-info
