@@ -523,37 +523,56 @@ helm list
 helm repo list
 ```
 Add something:
+```
 helm repo add <name> <url>
 helm install <release> <chart>
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm install my-nginx bitnami/nginx --version 19.1.1
-### Search
+```
+Search:
+```
 helm repo search
 helm search repo bitnami
 helm search hub nginx
-### Dump chart: Note that you can require a namespace with -n
+```
+Dump chart: Note that you can require a namespace with -n:
+```
 helm template bitnami/nginx
 helm template bitnami/nginx -n mynamespace
-### Remove thing:
+```
+
+Remove thing:
+```
 helm uninstall my-nginx
+```
 
 # Namespaces
-You can usually append --namespace <name> to a command to specify a namespace
-Or just use -n <name> for short!
-## Built-in namespaces we know about are
-default - For resources without a namespace
-kube-system - For objects created by Kube
-kube-public - A namespace for all users, usually for public data
-kube-node-lease - Used for node heartbeat leases
-## Set a default namespace
+You can usually append `--namespace <name>` to a command to specify a namespace,
+or just use `-n <name>` for short!
+
+Built-in namespaces we know about are
+- default - For resources without a namespace
+- kube-system - For objects created by Kube
+- kube-public - A namespace for all users, usually for public data
+- kube-node-lease - Used for node heartbeat leases
+
+Set a default namespace:
+```
 kubectl config set-context --current --namespace=<your-namespace-name>
-## List all namespaces
+```
+List all namespaces:
+```
 kubectl get namespace
-## Get pods for all namespaces:
+```
+Get pods for all namespaces:
+```
 kubectl get pods --all-namespaces -o wide
-## Create
+```
+Create & delete:
+```
 kubectl create namespace <name>
 kubectl delete ns <name>
+```
 
 # Service accounts
 kubectl get serviceaccounts --all-namespaces
