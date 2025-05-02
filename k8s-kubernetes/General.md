@@ -54,20 +54,24 @@ kubectl explain pod.spec.containers.startupProbe
 ```
 
 ## Describe nodes in cluster:
+```
 kubectl get nodes
 kubectl get nodes -o wide
 kubectl describe nodes
 kubectl describe node <node-name>
+```
 
-# Config for kubectl:
-less ~/.kube/config
+## Config for kubectl:
+`less ~/.kube/config`
+
 ## Use special config file:
 kubectl --kubeconfig <commands>
 
-# Cluster info
-kubectl clusterinfo
-kubectl clusterinfo dump
-
+## Cluster info
+```
+kubectl cluster-info
+kubectl cluster-info dump
+```
 # Resource Types:
 ## Pod - Single instance of a running process (hmm it can have multiple containers...)
 ## Deployment - Handles replicas of pods
