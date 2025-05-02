@@ -415,7 +415,8 @@ spec:
 ```
 
 # Resources requests & limits
-## Goes in like so:
+Goes in like so:
+```
       containers:
       - name: fluentd-elasticsearch
         image: quay.io/fluentd_elasticsearch/fluentd
@@ -426,75 +427,103 @@ spec:
           limits:
             memory: "2Mi"
             cpu: "2"
-## How they work
-requests is what we're asking for; limits are when we need to be killed
+```
+How they work: Requests is what we're asking for; limits are when we need to be killed
 
-# --------------------------------
 # Service
-# --------------------------------
-Can load-balance requests from pod A to pods B/C/D
-Automatically keeps track of pod IP's
-Can also expose pods to the outside world
-## Four types
-ClusterIP: Default, accessible only inside cluster
-NodePort: Exposes service on a static port
-LoadBalancer: Exposes service using cloud provider's load balancer
-ExternalName: Maps service to external DNS name
-## But that's misleading... I know about these
-Service - Sort of gets ball rolling
-Endpoint - More roll
-# Get list of services:
+- Can load-balance requests from pod A to pods B/C/D
+- Automatically keeps track of pod IP's
+- Can also expose pods to the outside world
+
+Four types:
+- ClusterIP: Default, accessible only inside cluster
+- NodePort: Exposes service on a static port
+- LoadBalancer: Exposes service using cloud provider's load balancer
+- ExternalName: Maps service to external DNS name
+
+But that's misleading... I know about these too:
+- Service - Sort of gets ball rolling
+- Endpoint - More roll
+
+Get list of services:
+```
 kubectl get service -o wide
 kubectl get svc -o wide
-# This will show you an "Endpoints" that indicates the endpoints assigned:
-kubectl describe service <name>
+```
 
-## NodePort
-### First create a service like the contents of nodeport.yaml
+This will show you an "Endpoints" that indicates the endpoints assigned:
+```
+kubectl describe service <name>
+```
+
+## NodePort Service
+First create a service like the contents of nodeport.yaml:
+```
 kubectl apply -f nodeport.yaml
 kubectl get services -o wide
-### Now you can connect this up with minikube... via ssh tunnel? Note how
-### "mynodeport" refers to service definition above.
-### Refer to https://minikube.sigs.k8s.io/docs/handbook/accessing/
+```
+
+### With minikube
+Now you can connect this up with minikube... via ssh tunnel? Note how
+"mynodeport" refers to service definition above. Refer to
+https://minikube.sigs.k8s.io/docs/handbook/accessing/
+```
 minikube service mynodeport --url
-### Now find the tunnel in another terminal:
+```
+
+Now find the tunnel in another terminal:
+```
 ps -ef | grep docker@127.0.0.1
-### That will get you something like this, except with actual numbers for TUNNEL_PORT:CLUSTER_IP:TARGET_PORT
+```
+
+That will get you output like this, except with actual numbers for TUNNEL_PORT:CLUSTER_IP:TARGET_PORT
+```
 ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -N docker@127.0.0.1 -p 55972 -i /Users/FOO/.minikube/machines/minikube/id_rsa -L TUNNEL_PORT:CLUSTER_IP:TARGET_PORT
-### Now you can go to TUNNEL_PORT via curl!
+```
+
+Now you can go to TUNNEL_PORT via curl!
+```
 curl http://localhost:<TUNNEL_PORT>
+```
 
 ## LoadBalancer
+
 Creates a NodePort automatically; is one step up from such. This is a little
 easier to work with than stupid nodeport.
 
-### 1 We can use the same yaml as we did in our nodeport example,
-###   and just change "type: NodePort" to "type:LoadBalancer":
-### 2 Then run some minikube magic, ez pz
-### 3 The service will be exposed on the port we picked in "port: 8081"
-###   from our yaml
+We can use the same yaml as we did in our nodeport example,
+and just change "type: NodePort" to "type:LoadBalancer". Then run some minikube magic, ez pz
+The service will be exposed on the port we picked in "port: 8081" from our yaml:
+```
 kubectl apply -f ./loadbalancer.yml
 ssh tunnel
 curl http://localhost:8081
-
+```
 
 # Ingress
+
 This is like a LoadBalancer except that rather than creating a new LoadBalancer
 every time you create a service, you can create one ingress for load-balancing
 all your services at once.
 You have two kinds:
+
     1. Ingress Controller
         Implements rules found in Ingress Resources
     2. Ingress Resource
-- Use pathType: Prefix in most cases, because "Exact" matches only one thing
-- Check ingress-controller.sh in this directory for usage
+
+Use pathType: Prefix in most cases, because "Exact" matches only one thing
+
+Check ingress-controller.sh in this directory for usage
 
 # Helm
-- artifacthub.io has all the helmcharts
-## Simple commands
+artifacthub.io has all the helmcharts
+
+Simple commands:
+```
 helm list
 helm repo list
-## Add something
+```
+Add something:
 helm repo add <name> <url>
 helm install <release> <chart>
 helm repo add bitnami https://charts.bitnami.com/bitnami
