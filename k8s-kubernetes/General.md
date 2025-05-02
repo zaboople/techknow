@@ -9,19 +9,24 @@ Nodes can contain many pods.
 Pods can contain more than one container, sharing network namespace and storage.
 
 
-#----------------------------------------
+----------------------------------------
 # Minikube
-#----------------------------------------
 ## Install, seems to come with kubectl
+```
 brew install minikube
+```
+## Start a minikube in colima
 
-## Start a minikube in colima; first we need to establish location of docker sock:
-## Note that this will create a minikube profile under ~/.minikube/profiles/mykube
-## and later starts will just boot up with "minikube start"
+First we need to establish location of docker sock: Note that this will create a minikube profile under ~/.minikube/profiles/mykube
+and later starts will just boot up with "minikube start"
+
+```
 export DOCKER_HOST=unix:///Users/tmotte/.colima/minikube/docker.sock
 minikube start --nodes 2 --cpus 2 --memory 2048 --disk-size 2500m \
     --driver docker --container-runtime docker -p mykube
-## Note that I had a "--namespace mytest" but it seemed to break kubectl
+```
+
+Note that I had a "--namespace mytest" but it seemed to break kubectl
 
 ## Set minikube profile for commands after this:
 minikube profile mykube
