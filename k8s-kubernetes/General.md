@@ -496,7 +496,7 @@ and just change "type: NodePort" to "type:LoadBalancer". Then run some minikube 
 The service will be exposed on the port we picked in "port: 8081" from our yaml:
 ```
 kubectl apply -f ./loadbalancer.yml
-ssh tunnel
+minikube tunnel #This locks up the terminal! You have to open up another for next part:
 curl http://localhost:8081
 ```
 
@@ -507,9 +507,8 @@ every time you create a service, you can create one ingress for load-balancing
 all your services at once.
 You have two kinds:
 
-    1. Ingress Controller
-        Implements rules found in Ingress Resources
-    2. Ingress Resource
+1. Ingress Controller:  Implements rules found in Ingress Resources
+2. Ingress Resource
 
 Use pathType: Prefix in most cases, because "Exact" matches only one thing
 
