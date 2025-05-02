@@ -397,8 +397,8 @@ As manifest yaml goes, you really just do the same as Deployment, but with "kind
 - `Gt` & `Lt` - works with numeric node values, < and >
 
 ## Preferences
-`Required`: requiredDuringSchedulingIgnoredDuringExection
-`Preferred`: - a softer requirement - preferredDuringSchedulingIgnoredDuringExection
+- `Required`: requiredDuringSchedulingIgnoredDuringExection
+- `Preferred`: - a softer requirement - preferredDuringSchedulingIgnoredDuringExection
 
 ## Example:
 ```
