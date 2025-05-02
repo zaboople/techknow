@@ -98,7 +98,14 @@ Run an nginx pod named "pod01":
 ```
 kubectl run pod01 --image=nginx
 ```
-
+Describe a pod:
+```
+kubectl describe pod <pod-name>
+```
+Delete a freakin pod:
+```
+kubectl delete pod <pod-name>
+```
 Generate YAML manifest instead of actually creating; you can specify client or server here, not sure diff:
 ```
 kubectl run pod01 --image=nginx --dry-run=client -o yaml`
@@ -110,23 +117,26 @@ kubectl get pods
 kubectl get pods -o wide
 kubectl describe pod <pod-name>
 ```
-# Get logs for our pod, or for a specific container in it:
+Get logs for our pod, or for a specific container in it:
+```
 kubectl logs <pod-name>
 kubectl logs <pod-name> -c <container-name>
 
-# Run a bash command in our freakin pod:
+## Bash interaction / SSH
+```
+Run a bash command in our freakin pod:
+```
 kubectl exec -it <pod-name> -- bash -c 'ls; df'
-# Or run bash interactively - effectively an ssh into container:
+```
+Or run bash interactively - effectively an ssh into container:
+```
 kubectl exec -it <pod-name> -- bash
 kubectl exec -it <pod-name> -c <container-name> -- bash
-# Another way but it creates a dead pod that tries to restart many times
+```
+Another way but it creates a dead pod that tries to restart many times:
+```
 kubectl run stupid --image=busybox:latest --command -- ping "-c" "30" "google.com'
-
-# Describe a pod
-kubectl describe pod <pod-name>
-
-# Delete a freakin pod:
-kubectl delete pod <pod-name>
+```
 
 #-------------------------------------
 # Honking around with YAML "manifest" files:
