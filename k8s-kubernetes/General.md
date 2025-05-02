@@ -149,33 +149,44 @@ kubectl run stupid --image=busybox:latest --command -- ping "-c" "30" "google.co
 # Honking around with YAML "manifest" files:
 Create arbitrary stuff (like a pod) with a yaml file:
 ```
-kubectl apply -f myfile.yml```
-## Delete it
+kubectl apply -f myfile.yml
+```
+Delete it:
+```
 kubectl delete -f myfile.yml
-## Note that yaml files can have many objects delimited by a "---" on a line by itself between objects
-## Primary things in a yaml
-apiVersion: [ What it says, usually "v1"]
-kind: [Resource type, like "Pod"]
-metadata:
-    name: [Resource name]
-spec:
-    [all the config crud
-## SPECIAL NOTE: Dash in yaml
-## The dash indicates the start of a member of a list of things
-foo:
-- bar: swangle
-  bash: dangle
-- bar: sworgle
-  bash: doongle
+```
 
-# Multi-pod containers require YAML - cannot be done with plain "kubectl run"
+Note that yaml files can have many objects delimited by a "---" on a line by itself between objects
+
+## Primary things in a yaml
+```
+    apiVersion: [ What it says, usually "v1"]
+    kind: [Resource type, like "Pod"]
+    metadata:
+        name: [Resource name]
+    spec:
+        [all the config crud]
+```
+* SPECIAL NOTE: Dash in yaml *
+
+The dash indicates the start of a member of a list of things
+```
+    foo:
+    - bar: swangle
+      bash: dangle
+    - bar: sworgle
+      bash: doongle
+```
+
+Multi-pod containers require YAML - cannot be done with plain "kubectl run":
+```
 spec:
   containers:
     - name: foo
     image: <image1>
     - name: bar
     image: <image2>
-
+```
 # To specify command and arguments to that command, add a couple things.
 # Note that "command" overrides ENTRYPOINT in dockerfile and "args" overrides "CMD"
 # (you could also just command & args as one "command" yaml list)
