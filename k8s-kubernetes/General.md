@@ -575,18 +575,27 @@ kubectl delete ns <name>
 ```
 
 # Service accounts
+```
 kubectl get serviceaccounts --all-namespaces
 kubectl get sa --all-namespaces
-## There is a "default" service account that gets assigned to pods.
-## Every namespace actually has its own "default" service account.
-##
-## Look at pod service account (pod name is derp here):
+```
+There is a "default" service account that gets assigned to pods.
+Every namespace actually has its own "default" service account.
+
+Look at pod service account (pod name is derp here):
+```
 kubectl exec -it derp -- bash
 root@derp:/# cd /var/run/secrets/kubernetes.io/serviceaccount/
 root@derp:/var/run/secrets/kubernetes.io/serviceaccount# ls
 ca.crt	namespace  token
-### Note that the token file is used to talk to the dns & control plane servers
-### inside servers, e.g.
-    curl --insecure --header "Authorization: Bearer $token" https://....
-### Remember that you can get those web server urls from
+```
+Note that the token file is used to talk to the dns & control plane servers
+inside servers, e.g.
+```
+curl --insecure --header "Authorization: Bearer $token" https://....
+```
+
+Remember that you can get those web server urls from
+```
     kubectl cluster-info
+```
