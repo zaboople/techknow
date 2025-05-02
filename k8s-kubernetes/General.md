@@ -131,7 +131,7 @@ kubectl logs <pod-name>
 kubectl logs <pod-name> -c <container-name>
 ```
 ## Bash interaction / SSH
-```
+
 Run a bash command in our freakin pod:
 ```
 kubectl exec -it <pod-name> -- bash -c 'ls; df'
