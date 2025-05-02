@@ -30,16 +30,16 @@ Note that I had a "--namespace mytest" but it seemed to break kubectl
 
 Set minikube profile for commands after this:
 
-`minikube profile mykube`
+```minikube profile mykube```
 
 Minikube Cluster Network IP range is first 3 octets of the Minikube Cluster IP fetched, which is x.x.x.0/24:
-`minikube ip`
+```minikube ip```
 
 ## To create another node in minikube (fun when you have daemonsets!):
-`minikube node add`
+```minikube node add```
 
 ## Get a dashboard web site!
-`minikube dashboard`
+```minikube dashboard```
 
 ----------------------------------------
 # Kubectl basic info:
@@ -88,9 +88,10 @@ kubectl cluster-info dump
   - Namespace
 
 Uh-oh you have even more, and this is actually useful for working on yaml manifests,
-because it lists necessary api versions, names for "kind", etc
-
-`kubectl api-resources`
+because it lists necessary api versions, names for "kind", etc:
+```
+kubectl api-resources
+```
 
 # Pod & Container Basics
 
