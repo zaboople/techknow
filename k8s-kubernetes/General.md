@@ -146,11 +146,10 @@ Another way but it creates a dead pod that tries to restart many times:
 kubectl run stupid --image=busybox:latest --command -- ping "-c" "30" "google.com'
 ```
 
-#-------------------------------------
 # Honking around with YAML "manifest" files:
-#-------------------------------------
-## Create arbitrary stuff (like a pod) with a yaml file:
-kubectl apply -f myfile.yml
+Create arbitrary stuff (like a pod) with a yaml file:
+```
+kubectl apply -f myfile.yml```
 ## Delete it
 kubectl delete -f myfile.yml
 ## Note that yaml files can have many objects delimited by a "---" on a line by itself between objects
