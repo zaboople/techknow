@@ -339,26 +339,33 @@ kubectl rollout undo deployment <name>
 kubectl rollout undo deployment --to-revsion=<number>
 ```
 
-## You can scale deploys just like replicas:
+You can scale deploys just like replicas:
+```
 kubectl scale --replicas=2 deploy/<name>
+```
 
-# --------------------------------
 # NodeSelector - Label nodes for to pods to choose as destination
-# --------------------------------
-## First you label your nodes
-kubectl label nodes <node-name> <label name>=<label value>
-## BTW, to remove label from node, use a "-" character (!!!):
-kubectl label nodes <node-name> <label name>-
-## Add to the pod spec, goes parallel to the ":containers" element
-## Picks a label assigned to a node, so that your pod goes on that node
-containers:
-    ....
-nodeSelector:
-    <name>: <value>
 
-# --------------------------------
+First you label your nodes:
+```
+kubectl label nodes <node-name> <label name>=<label value>
+```
+
+BTW, to remove label from node, use a "-" character (!!!):
+```
+kubectl label nodes <node-name> <label name>-
+```
+
+Add to the pod mainfest, goes parallel to the ":containers" element
+Picks a label assigned to a node, so that your pod goes on that node
+```
+    containers:
+        ....
+    nodeSelector:
+        <name>: <value>
+```
+
 # DaemonSet
-# --------------------------------
 Ensures that each NODE runs one pod for your daemonset config; when new nodes are created, a pod is
 automatically deployed in it. Often used for things like log-collection daemons,
 virus checkers, stats collection agents; things that you want on every pod as a
@@ -367,26 +374,34 @@ universal bare-minimum for pods.
 Note that your daemonsset will appear as new pods, one per node. You can probably use
 Node Selectors to actually pick out which node labels to look for.
 
-## Find out what daemonsets are running
+Find out what daemonsets are running:
+````
 kubectl get daemonset
-## Remove a daemonset
-kubectl delete ds <name>
-## As yaml goes, you really just do the same as Deployment, but with "kind:Daemonset"
-## (examples in this directory)
+```
 
-# --------------------------------
+Remove a daemonset:
+```
+kubectl delete ds <name>
+```
+
+As manifest yaml goes, you really just do the same as Deployment, but with "kind:Daemonset"
+(examples in this directory).
+
 # Node Affinity
-# --------------------------------
+
 ## Operators:
-In
-NotIn
-Exists - matches key only
-DoesNotExist - excudes nodes matching key
-Gt & Lt - works with numeric node values, < and >
+- `In`
+- `NotIn`
+- `Exists` - matches key only
+- `DoesNotExist` - excudes nodes matching key
+- `Gt` & `Lt` - works with numeric node values, < and >
+
 ## Preferences
-Required: requiredDuringSchedulingIgnoredDuringExection
-Preferred: - a softer requirement - preferredDuringSchedulingIgnoredDuringExection
+`Required`: requiredDuringSchedulingIgnoredDuringExection
+`Preferred`: - a softer requirement - preferredDuringSchedulingIgnoredDuringExection
+
 ## Example:
+```
 spec:
   affinity:
     nodeAffinity:
@@ -397,9 +412,9 @@ spec:
             operator: In
             values:
             - ssd
-# --------------------------------
+```
+
 # Resources requests & limits
-# --------------------------------
 ## Goes in like so:
       containers:
       - name: fluentd-elasticsearch
