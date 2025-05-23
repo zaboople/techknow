@@ -575,14 +575,25 @@ kubectl delete ns <name>
 ```
 
 # Service accounts
+Using "sa" as short for "serviceaccounts":
 ```
 kubectl get serviceaccounts --all-namespaces
 kubectl get sa --all-namespaces
+kubectl create sa my-token-acct
+kubectl delete sa my-token-acct
 ```
 There is a "default" service account that gets assigned to pods.
 Every namespace actually has its own "default" service account.
 
-Look at pod service account (pod name is derp here):
+To specify the service account for your pod:
+```
+...
+spec:
+    serviceAccountName: <my service account name>
+...
+```
+
+## Look at pod service account (pod name is derp here):
 ```
 kubectl exec -it derp -- bash
 root@derp:/# cd /var/run/secrets/kubernetes.io/serviceaccount/
@@ -597,5 +608,36 @@ curl --insecure --header "Authorization: Bearer $token" https://....
 
 Remember that you can get those web server urls from
 ```
-    kubectl cluster-info
+kubectl cluster-info
+```
+
+# Named Port
+
+This is done by adding `name: myspecialport` to `ports` below:
+```
+spec:
+    containers:
+    - image: nginx
+      ports:
+      - containerPort: 80
+        name: myspecialport
+```
+
+This allows a service to target my port by name:
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    myname: my-deploy2
+    myversion: "2.0"
+  name: mynodeport
+spec:
+  type: NodePort
+  selector:
+    myname: rs01
+  ports:
+  - port: 8081
+    targetPort: myspecialport
 ```

@@ -22,10 +22,11 @@ for x in ${ray[*]}; do
   echo "ray $x"
 done
 
-# A better way to loop thru associative arrays (!)
-for x in "${!ray[@]}"; do
-  echo "ray $x"
+# A better way to loop thru associative array keys (!)
+for ix in "${!aray[@]}"; do
+  echo "$ix -> ${aray[$ix]}"
 done
+
 
 # Okay while is good too:
 while read line; do
