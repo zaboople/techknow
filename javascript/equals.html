@@ -2,36 +2,60 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>Equality</title>
+        <title>JavaScript Equality</title>
         <style>
-            p {padding:3px;margin:0px;font-size:14px;}
+            p {padding:3px;margin:0px;font-size:16px;}
             div {padding-top:20px}
-            ol {font-size:14px; margin-top: 3px; margin-bottom:3px;}
-            code {font-size:11px;}
-
+            ol {font-size:16px; margin-top: 3px; margin-bottom:3px;}
+            code {font-size:12px;}
+            h2 {margin: 36px 0px 4px 0px; color: #900090}
+            body {margin-left: 36px; margin-bottom: 36px;}
         </style>
-
     </head>
     <body>
-        <p><b>The things noteworthy here are:</b></p>
-        <p>1. Similar arrays & objects don't actually equal one another</p>
-        <p>2. The following are == but not ===:</p>
-        <ol>
+
+
+        <h2>Surprising things:</h2>
+        <p>1. Similar arrays & objects don't actually equal one another (even though strings and numbers do).</p>
+        <p>2. The following are == but not === :</p>
+        <ul>
             <li>null and undefined
             <li>false and 0
             <li>0 and a "blank string" (empty or arbitrary # of spaces)
             <li>A string coerced to a number - e.g. "12" == 12
             <li><i>You never know ...?</i>
-        </ol>
-        <p>
-        (also note that null & 0 are not equivalent even if null is arithmetically coerced to 0)
+        </ul>
+        <p>By the way, if you write <code>if (x != null)</code> you are implicitly
+            covering both cases of null AND undefined, which is (just about) always exactly what you
+            intended, and much more concise than <code>if (x !== null && x !== undefined)</code>.
         </p>
-        <code id="core">
+        <p>
+            Some folks will blow a fuse over <code>if (x != null)</code>, but they shouldn't; it isn't your fault that
+            JavaScript has only one kind of number but two kinds of equals and two kinds of null.
+        </p>
+        <code id="codeCore1">
         </code>
 
+
+        <h2>Un-Surprising things:</h2>
+        <p>Perhaps at this point, <i>everything</i> is surprising, but these
+            all act as you'd expect (even if you didn't know the crazy parts above) and do NOT
+            give different behavior according to which kind of equals you use.</p>
+        <code id="codeCore2">
+        </code>
+
+
+        <h2>Flat-out Duh:</h2>
+        <p>Just for completeness...</p>
+        <code id="codeCore3">
+        </code>
+
+        <h2>- End -</h2>
+
         <script language="javascript">
+            let whichSection = 1;
             function makeDiv(id) {
-                const base = document.getElementById("core");
+                const base = document.getElementById("codeCore" + whichSection);
                 const div=document.createElement("div");
                 div.id = id;
                 base.append(div);
@@ -58,30 +82,49 @@
                 res("!=", v1!=v2);
                 res("!==", v1!==v2);
             }
-            const ff = {};
-            const gg = {};
-            allCompare("obj", ff, gg);
+            const obj1 = {};
+            const obj2 = {};
+            const array1 = [];
+            const array2 = [];
+            const aNull = null, aUndef=undefined;
+            const bNull = null, bUndef=undefined;
+            const num1="1234.0", num2=1234.0; //ha-ha
 
-            const hh = [];
-            const ii = [];
-            allCompare("array", hh, ii);
 
-            const aa = null, bb=undefined;
-            allCompare("nullundef", aa, bb);
-            allCompare("s1n1", "12", 12);
+            whichSection = 1;
+            allCompare("obj", obj1, obj2);
+            allCompare("array", array1, array2);
+
+            allCompare("nullundef", aNull, aUndef);
             allCompare("fals", false, 0);
             allCompare("0blank", "", 0);
             allCompare("0blank3", "      ", 0);
+            allCompare("s1n1", "12", 12);
+            allCompare("numnum", num1, num2);
 
-            makeDiv("dull").innerHTML = "<p><b>*** Below here is uneventful but hey: ***</b></p>";
-            allCompare("null0", null, 0);
-            allCompare("undef0", undefined, 0);
+
+            whichSection = 2;
+            allCompare("null0", aNull, 0);
+            allCompare("undef0", aUndef, 0);
+            allCompare("nullnull", aNull, bNull);
+            allCompare("undefundef", aUndef, bUndef);
+            allCompare("objundef", obj1, aUndef);
+
+            allCompare("nullblank1", aNull, "");
+            allCompare("nullblank2", aUndef, "");
+
+
+            whichSection = 3;
+            allCompare("objnull", aNull, obj1);
+            allCompare("objray", aNull, array1);
+            allCompare("undefnull", aUndef, obj1);
+            allCompare("undefray", aUndef, array1);
+
             const a = "hello", b="hello";
             allCompare("strs", a, b);
-            allCompare("nullnull", aa, aa);
-            allCompare("undefundef", bb, bb);
-            allCompare("strundef", b, bb);
-            allCompare("objundef", ff, bb);
+            allCompare("strundef", b, aUndef);
+            allCompare("strnull", b, aNull);
+
         </script>
     </body>
 </html>
