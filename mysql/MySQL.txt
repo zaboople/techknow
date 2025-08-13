@@ -9,6 +9,8 @@ automatically detected without a need for --password or -p stuff
 
 ## Do tab-delimited instead of happy format
 --batch
+## No Do happy format not tab!
+--table
 
 ## Strangely, when you pipe a query in, it suddenly defaults to tab-delimited;
 ## Here's how to put the happy format back:
