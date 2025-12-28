@@ -104,6 +104,7 @@ for x in ${array[@]}
     echo $x
     done
 
+
 ## Associative array/map
 declare -A myMap
 myMap["foo"]="bar"
@@ -160,3 +161,7 @@ You can $foo special characters like $ and \.
 EOF
 )
 echo "$data"
+
+## Echo without newline
+echo -n "Hello? "
+read answer

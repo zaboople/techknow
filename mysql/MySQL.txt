@@ -9,6 +9,8 @@ automatically detected without a need for --password or -p stuff
 
 ## Do tab-delimited instead of happy format
 --batch
+## No Do happy format not tab!
+--table
 
 ## Strangely, when you pipe a query in, it suddenly defaults to tab-delimited;
 ## Here's how to put the happy format back:
@@ -57,7 +59,7 @@ mysqldump --lock-tables=false -h SERVER -u USER --password SCHEMA TABLE
 
 # Process list
 # This is much better than `show full processlist`
-select * from information_schema.processlist where command<>'Sleep';
+select * from information_schema.processlist where time > 60;
 
 # Get transaction isolation
 SELECT @@global.tx_isolation;

@@ -5,3 +5,10 @@
 # Force color into output - works great with less -R
   grep --color=always
   grep --color=always | less -R  #less will now display colors
+
+# Multi-line grep with ggrep
+## This example finds everything with:
+##   "db:" + newline,  then
+##   "    lims:" + newline, then
+##   <everything up to the next newline>
+find . -type f | xargs ggrep  -Pzo 'db:\n    lims:\n    .*\n'

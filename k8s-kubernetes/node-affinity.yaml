@@ -1,0 +1,55 @@
+# Use
+#   kubectl apply -f node-affinity.example.yaml
+#
+#
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    myname: my-deploy
+    myversion: "2.0"
+  name: deploy01
+spec:
+  replicas: 2
+  # This says "My container needs to run on a pod labeled myname=rs01"
+  selector:
+    matchLabels:
+      myname: rs01
+  # I don't really understand why this needs to have same labels, but ok:
+  template:
+    metadata:
+      labels:
+        myname: rs01
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            preference:
+                matchExpressions:
+                - key: FOO
+                  operator: In
+                  values:
+                  - BAR
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: BIGLABEL
+                operator: Exists
+                #values:
+                #- BIGVALUE
+              - key: NUM
+                operator: Gt
+                values: ["3"]
+      containers:
+      - image: httpd
+        name: rr
+        resources: {}
+      - image: bitnami/redis:6.2.1
+        name: zz
+        resources: {}
+        env:
+        - name: REDIS_PASSWORD
+          value: "23"
+      dnsPolicy: ClusterFirst

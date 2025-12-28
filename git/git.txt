@@ -33,6 +33,9 @@ git diff --relative
 git diff --merge-base X
 ## Preserve color when piping to less or other things
 git diff --color=always
+## Diff this branch against unknown "whatever came before"
+## Notice the tilde:
+git diff <hash>~ <hash>
 
 # PULL:
 # Get up to date with master branch:
@@ -119,6 +122,9 @@ git branch --merged master | grep g 'master$' | xargs git branch -d
 
 
 # HELP!!!! UNDO!!!!
+
+## Get rid of bad merge before pushing - use commit-hash from last known good one.
+git reset --hard <commit-hash>
 
 ## Undo commits, merges, when you haven't pushed yet:
 ## Here we're resetting master back to our remote "origin"

@@ -1,51 +1,71 @@
-# Colors and things
+# SPECIAL COMMANDS
 
-De-colorize and remove escape codes from output
-    mvn --batch-mode
+## Figure out what versions of plugins we are using
+mvn help:effective-pom
 
-Maven dumps trash into cygwin et al:
-    export TERM=cygwin
+## Find out where local maven repo is
+mvn help:evaluate -Dexpression=settings.localRepository
 
-# Integration tests
-#
-# These are done mostly by creating files named "****IT.java", emphasis on the "IT".
-# So "mvn test" will run *all* tests, but you can skip the integration tests with
-    mvn -DskipITs
-# You can also run ONLY the integration tests with:
-    mvn failsafe:integration-test
-# Or use both at once to get nothing (ha, ha...)
+## Cough up dependency tree:
+mvn dependency:tree
 
-# Alternate settings file:
-  -gs foo.xml
+## Clean up the f***ing mess when things are f***ed:
+mvn dependency:purge-local-repository
 
-#Skip tests:
-  -Dmaven.test.skip=true
+## Maven build up to a war but skip the war part:
+mvn prepare-package war:exploded
 
-  Example:
-    mvn -Dmaven.test.skip=true install
 
-#Find out where local maven repo is
-  mvn help:evaluate -Dexpression=settings.localRepository
+# SPECIAL COMMAND-LINE FLAGS:
 
-#Run one test:
-  mvn test -Dtest=classname
-  mvn test -Dtest=classname#function
+## Build offline and stop trying to redownload dependencies
+mvn -o
 
-#Clean up the f***ing mess when things are f***ed:
-  mvn dependency:purge-local-repository
-#Force updates when building, kinda makes it want to refresh the local repo, helps sometimes:
-  mvn -U
+## Force updates when building, kinda makes it want to refresh the local repo, helps sometimes:
+mvn -U
 
-#Compile tests:
-  test-compile
+## Alternate settings file:
+-gs foo.xml
 
-#Maven build up to a war but skip the war part:
-  mvn prepare-package war:exploded
+## De-colorize and remove escape codes from output:
+mvn --batch-mode
 
-#Add memory help and so forth:
-  export MAVEN_OPTS="-Xms256m -Xmx512m"
 
-# Allow jar files for distribution to be added:
+# SPECIAL ENVIRONMENT VARIABLES:
+
+## Maven dumps trash into cygwin et al:
+export TERM=cygwin
+
+## Add memory help and so forth:
+export MAVEN_OPTS="-Xms256m -Xmx512m"
+
+
+# TESTS
+
+##Compile tests:
+test-compile
+
+## Skip tests:
+-Dmaven.test.skip=true
+### Example:
+mvn -Dmaven.test.skip=true install
+
+##Run one test:
+mvn test -Dtest=classname
+mvn test -Dtest=classname#function
+
+## Integration tests
+### These are done mostly by creating files named "****IT.java", emphasis on the "IT".
+### So "mvn test" will run *all* tests, but you can skip the integration tests with
+mvn -DskipITs
+### You can also run ONLY the integration tests with:
+mvn failsafe:integration-test
+### Or use both at once to get nothing (ha, ha...)
+
+
+# SPECIAL BUILD CONFIGURATIONS
+
+## Allow jar files for distribution to be added:
   # Add this to pom.xml, and then 'mvn install' will put jar files in target/JARS
   <plugin>
     <groupId>org.apache.maven.plugins</groupId>
@@ -65,7 +85,7 @@ Maven dumps trash into cygwin et al:
   </plugin>
 
 
-# Shade plugin for uberjar:
+## Shade plugin for uberjar:
 <project>
     <build>
         <plugins>

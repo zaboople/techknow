@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>??</title>
+        <style>
+            p {padding:3px;margin:0px;font-size:17px;}
+        </style>
+    </head>
+    <body>
+        <code id="core">
+        </code>
+        <script language="javascript">
+            function addElems() {
+                const base = document.getElementById("core");
+                const div=document.createElement("div");
+                base.append(div);
+                for (const x of arguments) {
+                    const elem = document.createElement("p");
+                    elem.innerHTML = x;
+                    div.append(elem);
+                }
+            }
+            const x1 = {foo: "Variable was there", foo1: null}
+            const y1 = x1.foo || "Assigned variable was empty";
+            const y2 = x1.foo1 || "Assigned variable was empty";
+            const y3 = x1.foo2 || "Assigned variable was empty";
+            addElems(
+                x1.foo || "Null variable was empty",
+                x1.foo1 || "Null variable was empty",
+                x1.foo2 || "Null variable was empty",
+                y1, y2, y3
+            );
+        </script>
+    </body>
+</html>

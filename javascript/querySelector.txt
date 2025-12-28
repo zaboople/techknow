@@ -1,0 +1,38 @@
+🔹 Basic Selectors
+What You Want	Selector	Example
+By ID	#id	document.querySelector('#header')
+By Class	.class	document.querySelector('.nav')
+By Tag	tag	document.querySelector('footer')
+First matching element	element	document.querySelector('button')
+
+🔹 Nested & Combined Selectors
+What You Want	Selector	Example
+Class inside ID	#id .class	#menu .item
+Element inside element	parent child	ul li
+Direct child only	parent > child	nav > ul
+Element with multiple classes	.class1.class2	.btn.primary
+Element with class inside class	.parent .child	.card .card-body
+
+🔹 Attribute Selectors
+What You Want	Selector	Example
+By attribute	[attr]	input[type]
+By exact attribute value	[attr="value"]	input[type="checkbox"]
+Attribute starts with	[attr^="start"]	a[href^="https"]
+Attribute ends with	[attr$=".pdf"]	a[href$=".pdf"]
+Attribute contains substring	[attr*="part"]	img[src*="thumbnail"]
+
+🔹 Pseudo-Classes
+What You Want	Selector	Example
+First child	:first-child	li:first-child
+Last child	:last-child	li:last-child
+Nth child	:nth-child(n)	tr:nth-child(2)
+Hovered/Focused state	:hover, :focus	.button:hover, input:focus
+Checked checkbox/input	:checked	input[type="checkbox"]:checked
+
+🔹 Form-Specific Selectors
+What You Want	Selector	Example
+All inputs	input	document.querySelector('input')
+Input of specific type	input[type="email"]	document.querySelector('input[type="email"]')
+Required fields	:required	input:required
+Disabled fields	:disabled	textarea:disabled
+
