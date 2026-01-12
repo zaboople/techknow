@@ -1,2 +1,6 @@
+# Errors:
+@level:ERROR
+
 # Doing Nots in database queries:
 !*NSTX* !@logger.thread_name:*Kafka*
+

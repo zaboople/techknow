@@ -5,6 +5,9 @@ curl --compressed
 # Proxy:
 curl --proxy
 
+# Get headers along with output:
+curl -i
+
 
 
 # Uploading a file but not multipart:

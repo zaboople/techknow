@@ -1,0 +1,12 @@
+
+keytool -import -trustcacerts -alias myome_api_ca \
+    -file /Users/tmotte/Downloads/myome.com.pem \
+    -storepass changeit
+
+keytool -delete -alias myome_api_ca \
+   -keystore <path_to_truststore> -storepass <truststore_password>
+
+keytool -list -storepass changeit -cacerts
+
+CACERTS="${JAVA_HOME}/lib/security/cacerts"
+keytool -list -keystore "$CACERTS" -storepass changeit

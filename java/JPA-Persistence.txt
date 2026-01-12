@@ -1,0 +1,2 @@
+# @JoinColumn
+In @JoinColumn(name="ADDR_ID", referencedColumnName="ID"), "name" is in my table (the table this java file is tied to) and "referencedColumnName" is in the *other* table (in a different java file).

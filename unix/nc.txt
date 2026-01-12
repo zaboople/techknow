@@ -5,3 +5,31 @@ nc -vz host port
 
 # Proxy through socks proxy:
 nc -X connect -x proxy:3128 <rest of stuff>
+
+
+# Basic network server/client
+function bigprogram() {
+
+    # Talk to this by doing `nc localhost 22222` and banging out gibberish.
+    #
+    # This runs a main listener() that receives input from the user
+    # but also this funny backtalk() thing, which is actually receiving
+    # messages from listener() via its *own* netcat listener on 22223,
+    # and then send them to the first netcat's stdin!
+    # Note that netcat will automatically feed stdin back to whoever connected
+    # to its listener() on port 22222.
+
+    function backtalk() {
+        nc -k -l 22223 |  while read yyy; do
+            echo "$yyy"
+        done
+    }
+    function listener() {
+         nc -k -l 22222 | while read xxx;
+            echo "You said: $xxx" | nc localhost 22223
+            do echo "Received: $xxx";
+        done
+    }
+    backtalk | listener
+}
+
