@@ -1,0 +1,2 @@
+# How to tell sonarqube to bypass something by adding a flag to source logic
+//NOSONAR
