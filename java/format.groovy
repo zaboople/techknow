@@ -19,3 +19,6 @@ println(String.format("%5d", 13))
 println("\n*** Right justify with zeroes:");
 println(String.format("%05d", 1))
 println(String.format("%05d", 13))
+
+println("\n*** Left justify a string:")
+println("-> "+ String.format("%-8s", "hello") +"<- ");

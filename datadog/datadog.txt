@@ -4,3 +4,8 @@
 # Doing Nots in database queries:
 !*NSTX* !@logger.thread_name:*Kafka*
 
+# JSON crap
+Something is logging HTTP requests as JSON and flooding us,
+so I am going to yank everything with a "remote_user" JSON field
+
+    -@remote_user:*
