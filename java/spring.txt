@@ -21,3 +21,14 @@ Overriding environment variables:
 Answer 1: Do it like this: @PostMapping(path = "/test", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE,
         MediaType.MULTIPART_FORM_DATA_VALUE}, produces = MediaType.APPLICATION_JSON_VALUE)
 Answer 2: Remove the @RequestBody annotation
+
+# Spring scheduler crontab
+ ┌───────────── second (0-59)
+ │ ┌───────────── minute (0 - 59)
+ │ │ ┌───────────── hour (0 - 23)
+ │ │ │ ┌───────────── day of the month (1 - 31)
+ │ │ │ │ ┌───────────── month (1 - 12) (or JAN-DEC)
+ │ │ │ │ │ ┌───────────── day of the week (0 - 7)
+ │ │ │ │ │ │          (0 or 7 is Sunday, or MON-SUN)
+ │ │ │ │ │ │
+ * * * * * *

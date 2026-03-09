@@ -1,0 +1,14 @@
+# Use this technique for processing parameters and rebuilding
+# an array to be passed to other scripts:
+
+declare -a params=();
+while [[ $1 ]]; do
+    if [[ $1 == "--notest" || $1 == "--no-test" || $1 == "-notest" || $1 == "-no-test" ]]; then
+        notest="--notest"
+    else
+        params+=("$1")
+    fi
+    shift
+done
+
+doThing $notest | doOtherThing "${params[@]}"
