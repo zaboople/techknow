@@ -84,3 +84,7 @@ alter table upmc.dailydata add avgCoolingSetbackSP float(12,2) DEFAULT NULL;
 # User access
 show grants for BOB_USER;
 GRANT SELECT, INSERT, UPDATE, DELETE, CREATE TEMPORARY TABLES, LOCK TABLES ON `ymca`.* TO 'glblrw'@'%'
+
+# FORMAT DATE
+## yyyymmdd.hhmmss.microseconds
+date_format(spr.resultDate, '%Y%m%d.%H%i%s.%f') as toMicroDate,

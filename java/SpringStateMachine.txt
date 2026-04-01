@@ -1,0 +1,71 @@
+External Transition:
+    Behavior: Always executes the exit action of the source state and the entry action of the target state.
+    Use Case: Standard movement from State A to State B, or a "self-transition" (A to A) where you want to reset/re-initialize the state.
+Internal Transition:
+    Behavior: Executes an action without leaving the state. No exit or entry actions are triggered.
+    Use Case: Handling an event that needs to run logic (like updating a counter) but shouldn't disrupt the current state's lifecycle.
+Local Transition:
+    Behavior: Used in hierarchical (nested) states. It doesn't exit the superstate if the transition is between that superstate and one of its own substates.
+    Use Case: Moving between parent and child states without triggering the parent's full exit/entry logic.
+
+
+public interface ExternalTransitionConfigurer<S,E>
+    extends TransitionConfigurer<ExternalTransitionConfigurer<S,E>,S,E>
+        extends AnnotationConfigurerBuilder<StateMachineTransitionConfigurer<S,E>>
+
+    public Interface AnnotationConfigurerBuilder<I>
+        I and()
+        Get a parent AnnotationBuilder working with a AnnotationConfigurer.
+
+    public interface TransitionConfigurer<T,S,E>
+        extends AnnotationConfigurerBuilder<StateMachineTransitionConfigurer<S,E>>
+            T action(Action<S,E> action)
+            Specify Action for this Transition.
+            T action(Action<S,E> action, Action<S,E> error)
+            Specify Action for this Transition.
+            T actionFunction(Function<StateContext<S,E>,reactor.core.publisher.Mono<Void>> action)
+            Specify Function for this Transition.
+            T event(E event)
+            Specify event E for this Transition which will be triggered by a event trigger.
+            T guard(Guard<S,E> guard)
+            Specify a Guard for this Transition.
+            T guardExpression(String expression)
+            Specify a Guard backed by a SpEL expression for this Transition.
+            T name(String name)
+            Specify a name for this Transition.
+            T secured(String expression)
+            Specify a security expression for this Transition.
+            T secured(String attributes, SecurityRule.ComparisonType match)
+            Specify a security attributes for this Transition.
+            T source(S source)
+            Specify a source state S for this Transition.
+            T state(S state)
+            Specify a state this transition should belong to.
+            T timer(long period)
+            Specify that this transition is triggered by a time.
+            T timerOnce(long period)
+            Specify that this transition is triggered once by a time after a delay.
+
+    public interface StateMachineTransitionConfigurer<S,E>
+        ChoiceTransitionConfigurer<S,E> withChoice()
+            Gets a configurer for transition from a choice pseudostate.
+        EntryTransitionConfigurer<S,E> withEntry()
+            Gets a configurer for transition from an entrypoint pseudostate.
+        ExitTransitionConfigurer<S,E> withExit()
+            Gets a configurer for transition from an exitpoint pseudostate.
+        ExternalTransitionConfigurer<S,E> withExternal()
+            Gets a configurer for external transition.
+        ForkTransitionConfigurer<S,E> withFork()
+            Gets a configurer for transition from a fork pseudostate.
+        HistoryTransitionConfigurer<S,E> withHistory()
+            Gets a configurer for default history transition.
+        InternalTransitionConfigurer<S,E> withInternal()
+            Gets a configurer for internal transition.
+        JoinTransitionConfigurer<S,E> withJoin()
+            Gets a configurer for transition from a join pseudostate.
+        JunctionTransitionConfigurer<S,E> withJunction()
+            Gets a configurer for transition from a junction pseudostate.
+        LocalTransitionConfigurer<S,E> withLocal()
+            Gets a configurer for local transition.
+
+

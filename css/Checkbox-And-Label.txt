@@ -1,0 +1,17 @@
+Notice how I can vertically center text & checkbox SO THAT THEY LINE UP CORRECTLY
+
+The trick is to use: display:inline-block; vertical-align:middle
+
+        <div style="margin:0.4em; padding:0px;">
+
+            <div style="display:inline-block; vertical-align:middle">
+                <input type="checkbox" class="checkbox" name="physicianNotProvided"
+                    id="physicianNotProvided" ${physicianNotProvided ? 'checked':''}
+                    style="margin:0px; padding:0px; background-color:blue;"/>
+            </div>
+
+            <div style="display:inline-block; vertical-align:middle">
+                <label>Ordering clinician is not provided, or not available within the clinic</label>
+            </div>
+
+        </div>
