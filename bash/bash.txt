@@ -165,3 +165,6 @@ echo "$data"
 ## Echo without newline
 echo -n "Hello? "
 read answer
+
+## ls Auto complete being whiny and asking if you really want to see all those filenames
+bind "set completion-query-items 1000"

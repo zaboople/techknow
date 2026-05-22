@@ -1,0 +1,7 @@
+Ticket search JQL:
+
+"Team[Team]" = fb45efd1-fedc-4be4-870f-06eb2738eb47
+AND type NOT IN (subTaskIssueTypes(), Epic, Initiative)
+AND textfields ~ "PHR"
+AND status != Closed AND status != Done and status != Verified
+ORDER BY updatedDate DESC, createdDate DESC

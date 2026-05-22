@@ -1,3 +1,7 @@
+# Change my password
+## Notice how you don't need to enter your new password:
+    ALTER USER CURRENT_USER() IDENTIFIED BY 'new_password';
+
 # Formatting Insanity And Confusion
 
 ## Passwords

@@ -8,64 +8,128 @@ Local Transition:
     Behavior: Used in hierarchical (nested) states. It doesn't exit the superstate if the transition is between that superstate and one of its own substates.
     Use Case: Moving between parent and child states without triggering the parent's full exit/entry logic.
 
+public class StateMachineConfigurerAdapter<S,E> extends AbstractStateMachineConfigurerAdapter<S,E>
+    All Implemented Interfaces:
+        AnnotationConfigurer<StateMachineConfig<S,E>
+        StateMachineConfigBuilder<S,E>>
+        StateMachineConfigurer<S,E>
+    void configure(StateMachineConfigBuilder<S,E> config)
+        Configure the AnnotationBuilder by setting the necessary properties on the AnnotationBuilder.
+    void configure(StateMachineConfigurationConfigurer<S,E> config)
+        Callback for StateMachineConfigurationConfigurer.
+    void configure(StateMachineModelConfigurer<S,E> model)
+        Callback for StateMachineModelConfigurer.
+    void configure(StateMachineStateConfigurer<S,E> states)
+        Callback for StateMachineStateConfigurer.
+    void configure(StateMachineTransitionConfigurer<S,E> transitions)
+        Callback for StateMachineTransitionConfigurer.
+    protected final StateMachineConfigurationBuilder<S,E> getStateMachineConfigurationBuilder()
+    protected final StateMachineModelBuilder<S,E> getStateMachineModelBuilder()
+    protected final StateMachineStateBuilder<S,E> getStateMachineStateBuilder()
+    protected final StateMachineTransitionBuilder<S,E> getStateMachineTransitionBuilder()
+    final void init(StateMachineConfigBuilder<S,E> config)
+        Initialise the AnnotationBuilder.
+    boolean isAssignable(AnnotationBuilder<StateMachineConfig<S,E>> builder)
+
+
+public interface StateMachineConfigurationConfigurer<S,E>
+    ConfigurationConfigurer<S,E> withConfiguration()
+        Gets a configurer for generic config.
+        THIS IS THE ONE WE LIKE O USE
+    DistributedStateMachineConfigurer<S,E> withDistributed()
+        Gets a configurer for distributed state machine config.
+    MonitoringConfigurer<S,E> withMonitoring()
+        Gets a configurer for state machine monitoring.
+    PersistenceConfigurer<S,E> withPersistence()
+        Gets a configurer for state machine persistence.
+    SecurityConfigurer<S,E> withSecurity()
+        Gets a configurer for securing state machine.
+    VerifierConfigurer<S,E> withVerifier()
+        Gets a configurer for state machine model verifier.
+
+public interface StateMachineTransitionConfigurer<S,E>
+    All of these methods get you a TransitionConfigurer:
+    ChoiceTransitionConfigurer<S,E> withChoice()
+        Gets a configurer for transition from a choice pseudostate.
+    EntryTransitionConfigurer<S,E> withEntry()
+        Gets a configurer for transition from an entrypoint pseudostate.
+    ExitTransitionConfigurer<S,E> withExit()
+        Gets a configurer for transition from an exitpoint pseudostate.
+    ExternalTransitionConfigurer<S,E> withExternal()
+        Gets a configurer for external transition.
+    ForkTransitionConfigurer<S,E> withFork()
+        Gets a configurer for transition from a fork pseudostate.
+    HistoryTransitionConfigurer<S,E> withHistory()
+        Gets a configurer for default history transition.
+    InternalTransitionConfigurer<S,E> withInternal()
+        Gets a configurer for internal transition.
+    JoinTransitionConfigurer<S,E> withJoin()
+        Gets a configurer for transition from a join pseudostate.
+    JunctionTransitionConfigurer<S,E> withJunction()
+        Gets a configurer for transition from a junction pseudostate.
+    LocalTransitionConfigurer<S,E> withLocal()
+        Gets a configurer for local transition.
+
+public Interface AnnotationConfigurerBuilder<I>
+    I and()
+    Get a parent AnnotationBuilder working with a AnnotationConfigurer.
+    In reality, this takes you back to StateMachineTransitionConfigurer
+
+    All Known Subinterfaces:
+        TransitionConfigurer<T,S,E>,
+
+        ChoiceTransitionConfigurer<S,E>,
+        ConfigurationConfigurer<S,E>,
+        DistributedStateMachineConfigurer<S,E>,
+        EntryTransitionConfigurer<S,E>,
+        ExitTransitionConfigurer<S,E>,
+        ExternalTransitionConfigurer<S,E>,
+        ForkTransitionConfigurer<S,E>,
+        HistoryTransitionConfigurer<S,E>,
+        InternalTransitionConfigurer<S,E>,
+        JoinTransitionConfigurer<S,E>,
+        JunctionTransitionConfigurer<S,E>,
+        LocalTransitionConfigurer<S,E>,
+        ModelConfigurer<S,E>,
+        MonitoringConfigurer<S,E>,
+        PersistenceConfigurer<S,E>,
+        PropertiesConfigurer<I>,
+        ResourceConfigurer<I>,
+        SecurityConfigurer<S,E>,
+        StateConfigurer<S,E>,
+        VerifierConfigurer<S,E>
+
+
+public interface TransitionConfigurer<T,S,E>
+    extends AnnotationConfigurerBuilder<StateMachineTransitionConfigurer<S,E>>
+        T action(Action<S,E> action)
+        Specify Action for this Transition.
+        T action(Action<S,E> action, Action<S,E> error)
+        Specify Action for this Transition.
+        T actionFunction(Function<StateContext<S,E>,reactor.core.publisher.Mono<Void>> action)
+        Specify Function for this Transition.
+        T event(E event)
+        Specify event E for this Transition which will be triggered by a event trigger.
+        T guard(Guard<S,E> guard)
+        Specify a Guard for this Transition.
+        T guardExpression(String expression)
+        Specify a Guard backed by a SpEL expression for this Transition.
+        T name(String name)
+        Specify a name for this Transition.
+        T secured(String expression)
+        Specify a security expression for this Transition.
+        T secured(String attributes, SecurityRule.ComparisonType match)
+        Specify a security attributes for this Transition.
+        T source(S source)
+        Specify a source state S for this Transition.
+        T state(S state)
+        Specify a state this transition should belong to.
+        T timer(long period)
+        Specify that this transition is triggered by a time.
+        T timerOnce(long period)
+        Specify that this transition is triggered once by a time after a delay.
+
 
 public interface ExternalTransitionConfigurer<S,E>
     extends TransitionConfigurer<ExternalTransitionConfigurer<S,E>,S,E>
         extends AnnotationConfigurerBuilder<StateMachineTransitionConfigurer<S,E>>
-
-    public Interface AnnotationConfigurerBuilder<I>
-        I and()
-        Get a parent AnnotationBuilder working with a AnnotationConfigurer.
-
-    public interface TransitionConfigurer<T,S,E>
-        extends AnnotationConfigurerBuilder<StateMachineTransitionConfigurer<S,E>>
-            T action(Action<S,E> action)
-            Specify Action for this Transition.
-            T action(Action<S,E> action, Action<S,E> error)
-            Specify Action for this Transition.
-            T actionFunction(Function<StateContext<S,E>,reactor.core.publisher.Mono<Void>> action)
-            Specify Function for this Transition.
-            T event(E event)
-            Specify event E for this Transition which will be triggered by a event trigger.
-            T guard(Guard<S,E> guard)
-            Specify a Guard for this Transition.
-            T guardExpression(String expression)
-            Specify a Guard backed by a SpEL expression for this Transition.
-            T name(String name)
-            Specify a name for this Transition.
-            T secured(String expression)
-            Specify a security expression for this Transition.
-            T secured(String attributes, SecurityRule.ComparisonType match)
-            Specify a security attributes for this Transition.
-            T source(S source)
-            Specify a source state S for this Transition.
-            T state(S state)
-            Specify a state this transition should belong to.
-            T timer(long period)
-            Specify that this transition is triggered by a time.
-            T timerOnce(long period)
-            Specify that this transition is triggered once by a time after a delay.
-
-    public interface StateMachineTransitionConfigurer<S,E>
-        ChoiceTransitionConfigurer<S,E> withChoice()
-            Gets a configurer for transition from a choice pseudostate.
-        EntryTransitionConfigurer<S,E> withEntry()
-            Gets a configurer for transition from an entrypoint pseudostate.
-        ExitTransitionConfigurer<S,E> withExit()
-            Gets a configurer for transition from an exitpoint pseudostate.
-        ExternalTransitionConfigurer<S,E> withExternal()
-            Gets a configurer for external transition.
-        ForkTransitionConfigurer<S,E> withFork()
-            Gets a configurer for transition from a fork pseudostate.
-        HistoryTransitionConfigurer<S,E> withHistory()
-            Gets a configurer for default history transition.
-        InternalTransitionConfigurer<S,E> withInternal()
-            Gets a configurer for internal transition.
-        JoinTransitionConfigurer<S,E> withJoin()
-            Gets a configurer for transition from a join pseudostate.
-        JunctionTransitionConfigurer<S,E> withJunction()
-            Gets a configurer for transition from a junction pseudostate.
-        LocalTransitionConfigurer<S,E> withLocal()
-            Gets a configurer for local transition.
-
-
