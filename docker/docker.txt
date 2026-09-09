@@ -81,6 +81,8 @@ docker ip hubba
 
 # Can I get stdout from a running image? YES just get the id from docker ps
 docker logs awfoijawefoijwefoi
+## Follow i.e. tail
+docker logs -f containername
 
 # STOP THEM AND KILL THEM:
 # Stop the darn thing. Using "web" because that's the --name we started with:

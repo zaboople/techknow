@@ -540,10 +540,14 @@ Dump chart: Note that you can require a namespace with -n:
 helm template bitnami/nginx
 helm template bitnami/nginx -n mynamespace
 ```
-
 Remove thing:
 ```
 helm uninstall my-nginx
+```
+Build kube config off of your template:
+```
+helm update dependencies
+helm template .
 ```
 
 # Namespaces

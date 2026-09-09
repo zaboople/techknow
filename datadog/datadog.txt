@@ -9,3 +9,6 @@ Something is logging HTTP requests as JSON and flooding us,
 so I am going to yank everything with a "remote_user" JSON field
 
     -@remote_user:*
+
+# Logger name
+@logger.name:com.finkle.doo.WubClass

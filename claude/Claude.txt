@@ -1,0 +1,22 @@
+# Do source review
+/code-review
+
+# Skills are slash-commands
+mkdir -p ~/.claude/skills/my-first-skill
+edit ~/.claude/skills/my-first-skill/SKILL.md
+## Inside claude:
+/my-first-skill
+## Note that you can prompt for skills by typing "/" and even use auto-complete
+
+## "commands" are legacy version of skills
+
+# Use shift-tab to cycle permissions
+
+# Use -p to feed it a prompt at command line
+
+# General purpose things
+
+## This is some sort of how-to-make-a-skill documentation:
+https://agentskills.io/specification.md
+## Plugins
+https://code.claude.com/docs/en/plugin-dependencies

@@ -11,17 +11,13 @@ log4j.appender.dinkus.threshold=INFO
 
 
 # OKAY for log4j2, here is how you turn something off or restrict it:
-# No debug/trace stuff:
-logger.com.spud.name=com.spud
-logger.com.spud.level=INFO
-# Turn this one off:
-logger.com.doo.bar.name=com.doo.bar
-logger.com.doo.bar.level=OFF
-# Errors/Fatal only:
-logger.org.smut.dinkus.Flatulo.name=org.smut.dinkus.Flatulo
-logger.org.smut.dinkus.Flatulo.level=ERROR
-# Wrap it all up:
-# Should be sorted from more specific to less specific; for example. com.example.test must come before com.example:
-loggers=com.spud,com.doo.bar,org.smut.dinkus.Flatulo
 
+# Example idiot
+logger.springbutt1.name=org.springframework.beans.factory.support.DefaultListableBeanFactory
+logger.springbutt1.level=ERROR
+logger.springbutt2.name=org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker
+logger.springbutt2.level=ERROR
 
+# SHUT UPS PART II:
+# Should be sorted from more specific to less specific. For example. com.example.test must come before com.example
+loggers=micrometer.tard,org.hibernate.orm.deprecation,com.natera.lims.constellation.service,com.natera,springbutt1,springbutt2
